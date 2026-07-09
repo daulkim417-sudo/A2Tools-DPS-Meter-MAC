@@ -3,14 +3,17 @@
   "productName": "A2Tools DPS Meter",
   "version": "2.0.18",
   "identifier": "com.a2tools.dps-meter",
+
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
+
   "app": {
     "withGlobalTauri": true,
+    "macOSPrivateApi": true,
     "windows": [
       {
         "title": "A2Tools DPS Meter",
@@ -29,7 +32,10 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["msi"],
+    "targets": [
+      "app",
+      "dmg"
+    ],
     "resources": [
       "../src/data"
     ],
@@ -40,11 +46,8 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "windows": {
-      "allowDowngrades": true,
-      "webviewInstallMode": {
-        "type": "skip"
-      }
+    "macOS": {
+      "minimumSystemVersion": "11.0",
+      "entitlements": "entitlements.mac.plist"
     }
   }
-}
