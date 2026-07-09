@@ -28,6 +28,7 @@ parking_lot = "0.12"
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream"] }
 futures-util = "0.3"
 urlencoding = "2"
+pcap = "1.2"
 
 [target.'cfg(windows)'.dependencies]
 windows = { version = "0.59", features = [

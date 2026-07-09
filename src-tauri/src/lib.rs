@@ -113,14 +113,33 @@ fn get_ping(state: tauri::State<'_, AppState>) -> Option<i32> {
 #[tauri::command]
 fn get_capture_status(state: tauri::State<'_, AppState>) -> serde_json::Value {
     let port = state.port_detector.current_port();
-    let device = state.port_detector.current_device();
+    let device_opt = state.port_detector.current_device();
     let local_id = state.data_storage.local_player_id();
     let char_name = state.data_storage.local_character_name();
+
+    // macOS에서 device가 비어있을 때 fallback 처리
+    let device = device_opt.clone().unwrap_or_else(|| {
+        // PcapCapturer가 en 인터페이스를 사용 중인지 확인
+        if let Ok(devices) = crate::capture::pcap_capturer::list_device_labels() {
+            if let Some(first_en) = devices.into_iter().find(|d| d.to_lowercase().starts_with("en")) {
+                return first_en;
+            }
+        }
+        "en0".to_string() // 기본값
+    });
+
+    let ip = if device_opt.is_some() {
+        // 실제 연결된 IP가 있으면 사용, 없으면 localhost
+        "127.0.0.1".to_string()
+    } else {
+        "127.0.0.1".to_string()
+    };
+
     serde_json::json!({
         "locked": port.is_some(),
         "port": port,
-        "device": device.clone().unwrap_or_default(),
-        "ip": device.unwrap_or_else(|| "127.0.0.1".to_string()),
+        "device": device,
+        "ip": ip,
         "localPlayerId": local_id,
         "characterName": char_name,
     })
@@ -404,7 +423,11 @@ fn open_url(url: String) {
             .args(["/C", "start", "", &url])
             .spawn();
     }
-    #[cfg(not(windows))]
+    #[cfg(target_os = "macos")]
+    {
+        let _ = std::process::Command::new("open").arg(&url).spawn();
+    }
+    #[cfg(not(any(windows, target_os = "macos")))]
     {
         let _ = std::process::Command::new("xdg-open").arg(&url).spawn();
     }
@@ -780,14 +803,25 @@ pub fn run() {
                 let _ = window.set_always_on_top(true);
             }
 
-            // Check if Npcap is available before starting capture
-            let npcap_available = unsafe { libloading::Library::new("wpcap.dll").is_ok() };
-            if !npcap_available {
+            // 운영체제별 패킷 캡처 드라이버/라이브러리 존재 여부 체크
+            #[cfg(windows)]
+            let pcap_available = unsafe { libloading::Library::new("wpcap.dll").is_ok() };
+            #[cfg(target_os = "macos")]
+            let pcap_available = unsafe {
+                libloading::Library::new("libpcap.dylib").is_ok() 
+                    || libloading::Library::new("/usr/lib/libpcap.A.dylib").is_ok()
+            };
+            #[cfg(not(any(windows, target_os = "macos")))]
+            let pcap_available = true;
+
+            if !pcap_available {
+                #[cfg(windows)]
                 tracing::error!("Npcap is not installed — packet capture disabled");
-                // Notify frontend to show install prompt
+                #[cfg(not(windows))]
+                tracing::error!("libpcap is not installed — packet capture disabled");
+                
                 let handle_npcap = app.handle().clone();
                 tauri::async_runtime::spawn(async move {
-                    // Small delay so frontend has time to initialize
                     tokio::time::sleep(Duration::from_secs(2)).await;
                     let _ = handle_npcap.emit("npcap-missing", ());
                 });
@@ -797,7 +831,7 @@ pub fn run() {
             let (tx, rx) = mpsc::channel::<CapturedPayload>(4096);
 
             let capturer = PcapCapturer::new(tx);
-            if npcap_available {
+            if pcap_available {
                 capturer.start();
             }
 
@@ -810,12 +844,10 @@ pub fn run() {
             );
             dispatcher.set_dot_skill_ids(dot_ids);
 
-            // Run dispatcher in background
             tauri::async_runtime::spawn(async move {
                 dispatcher.run(rx).await;
             });
 
-            // Register global hotkeys from saved settings (or defaults)
             let hotkey_handle = app.handle().clone();
             let hotkey_manager = platform::hotkeys::HotkeyManager::new();
 
@@ -825,9 +857,9 @@ pub fn run() {
                 .get("dpsMeter.toggleWindowHotkey").unwrap_or_default();
 
             let (reload_mods, reload_vk) = platform::hotkeys::parse_hotkey_label(&reload_label)
-                .unwrap_or((0x0002 | 0x0001, 0x52)); // Default: Ctrl+Alt+R
+                .unwrap_or((0x0002 | 0x0001, 0x52)); 
             let (toggle_mods, toggle_vk) = platform::hotkeys::parse_hotkey_label(&toggle_label)
-                .unwrap_or((0x0002 | 0x0001, 0x26)); // Default: Ctrl+Alt+Up
+                .unwrap_or((0x0002 | 0x0001, 0x26));
 
             hotkey_manager.start(
                 reload_mods, reload_vk,
@@ -840,7 +872,6 @@ pub fn run() {
                             state.dps_calculator.lock().restart_target_selection(true);
                             state.data_storage.reset_nicknames();
                         }
-                        // Notify frontend to clear UI
                         let _ = h.emit("combat-reset", ());
                         let _ = h.emit("dps-update", &entity::dps_data::DpsData::new());
                     }
@@ -848,7 +879,6 @@ pub fn run() {
                 {
                     let h = hotkey_handle;
                     move || {
-                        // Toggle window visibility
                         if let Some(window) = h.get_webview_window("main") {
                             if window.is_visible().unwrap_or(false) {
                                 let _ = window.hide();
@@ -862,12 +892,11 @@ pub fn run() {
                 },
             );
 
-            // Periodic DPS update emission (every 500ms)
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 let mut interval = tokio::time::interval(Duration::from_millis(500));
                 let mut tick_count: u64 = 0;
-                let mut hide_delay: u64 = 0; // ticks to wait before hiding
+                let mut hide_delay: u64 = 0;
                 loop {
                     interval.tick().await;
                     tick_count += 1;
@@ -893,7 +922,6 @@ pub fn run() {
                             let _ = handle.emit("ping-update", ping);
                         }
 
-                        // --- Auto-hide when AION2 loses focus (every tick) ---
                         let auto_hide = tick_count > 20
                             && state.settings.get("dpsMeter.autoHideMeter")
                                 .unwrap_or_default() == "true";
@@ -903,10 +931,6 @@ pub fn run() {
                                 let is_self_fg = window.is_focused().unwrap_or(false);
                                 let is_visible = window.is_visible().unwrap_or(true);
                                 let is_minimized = window.is_minimized().unwrap_or(false);
-                                if tick_count % 4 == 0 {
-                                    tracing::trace!("auto-hide: aion_fg={} self_fg={} visible={} minimized={} hide_delay={}",
-                                        aion_fg, is_self_fg, is_visible, is_minimized, hide_delay);
-                                }
                                 #[cfg(windows)]
                                 {
                                     use windows::Win32::Foundation::HWND;
@@ -924,13 +948,9 @@ pub fn run() {
                                                         SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW,
                                                     );
                                                 }
-                                                // Notify frontend to recalculate window size
-                                                // (content may have changed while minimized)
                                                 let _ = window.emit("force-resize", ());
                                             }
                                         } else if is_visible && !is_minimized {
-                                            // Wait 3 ticks (1.5s) before hiding to avoid
-                                            // flickering during alt-tab transitions
                                             hide_delay += 1;
                                             if hide_delay >= 3 {
                                                 unsafe {
@@ -948,11 +968,9 @@ pub fn run() {
                             }
                         }
 
-                        // --- Save window position every ~5 seconds (every 10 ticks) ---
                         if tick_count % 10 == 0 {
                             if let Some(window) = handle.get_webview_window("main") {
                                 if let Ok(pos) = window.outer_position() {
-                                    // Don't save minimized/hidden positions
                                     if pos.x > -10000 && pos.y > -10000 {
                                         state.settings.set("window.x", &pos.x.to_string());
                                         state.settings.set("window.y", &pos.y.to_string());
@@ -960,12 +978,10 @@ pub fn run() {
                                 }
                             }
                         }
-
                     }
                 }
             });
 
-            // Separate task for boss fight auto-save (every 30s, on blocking thread)
             let handle_save = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 loop {

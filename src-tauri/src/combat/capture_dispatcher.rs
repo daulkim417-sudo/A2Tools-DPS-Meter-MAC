@@ -92,23 +92,24 @@ impl CaptureDispatcher {
         self.suspended.store(suspended, Ordering::SeqCst);
     }
 
-    /// Run the dispatch loop, consuming packets from the channel.
-    pub async fn run(&self, mut receiver: mpsc::Receiver<CapturedPayload>) {
+pub async fn run(&self, mut receiver: mpsc::Receiver<CapturedPayload>) {
         let mut assemblers: HashMap<(u16, u16), (StreamAssembler, StreamProcessor)> = HashMap::new();
-        // Per-flow count of signature-bearing packets seen while still unlocked, used
-        // for the no-combat-needed signature lock (see SIGNATURE_LOCK_THRESHOLD).
-        // Per-flow signature-rate tracker: (count_in_window, last_hit_ms).
         let mut sig_hits: HashMap<(u16, u16), (u32, i64)> = HashMap::new();
         let mut last_window_check_ms: i64 = 0;
-        let mut is_aion_running = false;
+        
+        // [핵심 변경 1] macOS(PlayCover) 환경에서는 윈도우 프로세스 이름 탐지가 불가하므로, 
+        // 게임이 항상 켜져 있다고 강제로(true) 인식시킵니다.
+        let mut is_aion_running = true;
 
         while let Some(cap) = receiver.recv().await {
             if self.suspended.load(Ordering::SeqCst) {
                 continue;
             }
 
-            // Check AION window
             let now = now_ms();
+
+            // [핵심 변경 2] macOS에서 모든 패킷을 버리게 만들었던 윈도우 창 검사 로직을 주석 처리(무력화)합니다.
+            /*
             let interval = if is_aion_running { WINDOW_CHECK_RUNNING_MS } else { WINDOW_CHECK_STOPPED_MS };
             if now - last_window_check_ms >= interval {
                 last_window_check_ms = now;
@@ -124,6 +125,12 @@ impl CaptureDispatcher {
 
             if !is_aion_running {
                 continue;
+            }
+            */
+
+            // [핵심 변경 3] 13328 포트를 발견하면 무의미한 서명 검사 없이 즉각 하이패스로 락(Lock)을 겁니다.
+            if self.port_detector.current_port().is_none() && (cap.src_port == 13328 || cap.dst_port == 13328) {
+                self.port_detector.confirm_candidate(cap.src_port, cap.dst_port, cap.device_name.as_deref());
             }
 
             // Stale connection check
