@@ -1,14 +1,13 @@
 # A2Tools DPS Meter
 
+⚠️ Work In Progress (WIP)
+이 프로젝트는 원작자 taengu 님의 훌륭한 오픈소스 프로젝트를 macOS 환경에서 사용할 수 있도록 이식(Porting) 중인 버전입니다. 원작의 뛰어난 기능을 macOS와 PlayCover 환경에서 즐기기 위해 작업하고 있습니다. 개발의 길을 열어주신 원작자님께 깊은 감사를 드립니다.
+
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/taengu/A2Tools-DPS-Meter)](https://github.com/taengu/A2Tools-DPS-Meter/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/taengu/A2Tools-DPS-Meter)](https://github.com/taengu/A2Tools-DPS-Meter/pulls)
 
 Real-time DPS meter overlay for AION 2. Captures game network packets to display damage, skills, and combat statistics.
 
 **[Download Latest Release](https://github.com/taengu/A2Tools-DPS-Meter/releases)** | **[A2Tools.app](https://a2tools.app)**
-
-[한국어](README_KO.md) | [简体中文](README_ZH.md) | [繁體中文](README_ZH-TW.md)
 
 ## Features
 
@@ -26,17 +25,13 @@ Real-time DPS meter overlay for AION 2. Captures game network packets to display
 
 ## Requirements
 
-- **Windows 10/11** (x86_64)
-- **[Npcap](https://npcap.com)** — required for packet capture
-  - During Npcap installation, check **"Install Npcap in WinPcap API-compatible Mode"**
-- **Administrator privileges** — required for raw packet capture
+- **macOS** (Apple Silicon & Intel)
+  - Native support for packet capture via system `libpcap`
+  - Requires read permission on `/dev/bpf*` devices
 
 ## Installation
 
-1. Install [Npcap](https://npcap.com) with WinPcap API-compatible mode enabled
-2. Download the latest MSI installer from [Releases](https://github.com/taengu/A2Tools-DPS-Meter/releases)
-3. Run the installer
-4. Launch A2Tools DPS Meter (run as Administrator)
+npm install && npm run tauri build
 
 ## Building from Source
 
@@ -44,7 +39,6 @@ Real-time DPS meter overlay for AION 2. Captures game network packets to display
 
 - [Rust](https://rustup.rs/) (latest stable)
 - [Node.js](https://nodejs.org/) (v18+)
-- [Npcap](https://npcap.com) installed
 
 ### Build
 
