@@ -1,3 +1,8 @@
+#[cfg(target_os = "macos")]
+use cocoa::appkit::{NSWindow, NSWindowCollectionBehavior};
+#[cfg(target_os = "macos")]
+use cocoa::base::id;
+
 pub mod capture;
 pub mod combat;
 pub mod config;
@@ -1512,7 +1517,7 @@ pub fn run() {
                 }
             }
 
-            // Restore saved window position and ensure always-on-top
+// Restore saved window position and ensure always-on-top
             if let Some(window) = app.get_webview_window("main") {
                 let state_ref = app.state::<AppState>();
                 if let (Some(x), Some(y)) = (state_ref.settings.get("window.x"), state_ref.settings.get("window.y")) {
@@ -1524,6 +1529,25 @@ pub fn run() {
                     }
                 }
                 let _ = window.set_always_on_top(true);
+
+                // ===== macOS 창 드래그 경계/잘림 방지 및 자유 이동 설정 =====
+                #[cfg(target_os = "macos")]
+                {
+                    if let Ok(ns_window) = window.ns_window() {
+                        let ns_window = ns_window as id;
+                        unsafe {
+                            // 화면 밖이나 메뉴바/Dock 영역으로 스르륵 튕기지 않고 자유롭게 배치 허용
+                            ns_window.setMovableByWindowBackground_(cocoa::base::YES);
+
+                            // 모든 가상 데스크톱 및 풀스크린 앱 위에서도 오버레이 유지
+                            ns_window.setCollectionBehavior_(
+                                NSWindowCollectionBehavior::NSWindowCollectionBehaviorCanJoinAllSpaces
+                                    | NSWindowCollectionBehavior::NSWindowCollectionBehaviorFullScreenAuxiliary,
+                            );
+                        }
+                    }
+                }
+                // =========================================================
             }
 
             // 운영체제별 패킷 캡처 드라이버/라이브러리 존재 여부 체크
