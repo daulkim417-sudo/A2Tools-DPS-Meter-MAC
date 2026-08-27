@@ -12,7 +12,7 @@ fn now_ms() -> i64 {
 }
 
 /// Manages pcap device handles and captures TCP traffic from network interfaces.
-/// macOS optimized version - only captures from 'en' interfaces (Wi-Fi/Ethernet).
+/// macOS optimized version - captures from 'en' interfaces (Wi-Fi/Ethernet).
 pub struct PcapCapturer {
     running: std::sync::Arc<std::sync::atomic::AtomicBool>,
     sender: mpsc::Sender<CapturedPayload>,
@@ -43,7 +43,7 @@ impl PcapCapturer {
             }
         };
 
-        // en으로 시작하는 물리적 인터페이스만 선택
+        // 'en'으로 시작하는 물리적 네트워크 인터페이스 필터링
         let valid_devices: Vec<_> = devices
             .into_iter()
             .filter(|d| {
@@ -52,7 +52,7 @@ impl PcapCapturer {
             .collect();
 
         if valid_devices.is_empty() {
-            error!("No 'en' capture devices found. Wi-Fi 또는 Ethernet 인터페이스가 활성화되어 있는지 확인하세요.");
+            error!("No 'en' capture devices found. Wi-Fi 또는 Ethernet 인터페이스 상태를 확인하세요.");
             self.running.store(false, std::sync::atomic::Ordering::SeqCst);
             return;
         }
@@ -77,7 +77,7 @@ impl PcapCapturer {
     }
 }
 
-/// List available 'en' device labels
+/// List available 'en' device labels (UI 드롭다운 연동용)
 pub fn list_device_labels() -> Result<Vec<String>, String> {
     let devices = Device::list().map_err(|e| e.to_string())?;
     Ok(devices
@@ -95,7 +95,6 @@ fn start_capture_thread(
     let label = device.desc.clone().unwrap_or_else(|| device.name.clone());
 
     std::thread::spawn(move || {
-        // Correct chaining for pcap crate
         let inactive = match Capture::from_device(device) {
             Ok(inactive) => inactive,
             Err(e) => {
@@ -114,7 +113,7 @@ fn start_capture_thread(
             Err(e) => {
                 warn!("Failed to open capture on {}: {}", label, e);
                 if e.to_string().contains("permission") {
-                    warn!("macOS 권한 문제: sudo로 실행하거나 BPF 권한을 부여하세요.");
+                    warn!("macOS 권한 문제: sudo로 실행하거나 /dev/bpf 권한을 설정하세요.");
                 }
                 return;
             }
