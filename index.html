@@ -10,64 +10,71 @@
       href="/src/styles.css"
       rel="stylesheet"
       type="text/css" />
+    <!--
+      CJK webfonts, loaded without blocking first paint. Every window pulls the
+      whole head before it renders, so as plain stylesheets these four put
+      unpkg.com on the critical path of opening Settings, Details or History —
+      measured at ~770ms each on a cold cache, and unbounded when offline. The
+      media="print" swap lets the browser fetch them at low priority and apply
+      them when they land; Latin text renders immediately in the fallback stack
+      and CJK text reflows once, rather than everything waiting on the network.
+    -->
     <link
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
       href="https://unpkg.com/spoqa-han-sans@3.3.0/css/SpoqaHanSansNeo.min.css" />
     <link
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
       href="https://unpkg.com/pretendard@1.3.9/dist/web/variable/pretendardvariable.css" />
     <link
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
       href="https://unpkg.com/@fontsource/noto-sans-sc@5.0.19/index.css" />
     <link
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
       href="https://unpkg.com/@fontsource/noto-sans-tc@5.0.19/index.css" />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!--
+      Vendored, and pinned. This is a render-blocking script that every icon in
+      the UI waits on, so fetching it from a CDN meant no icons until the
+      network answered — and "@latest" meant the version could change under us
+      between launches. Update by replacing the file.
+    -->
+    <script src="/vendor/lucide.min.js"></script>
   </head>
 
   <body>
     <div class="container">
       <div class="meter">
         <div class="header">
-          <div class="bossIcon">
-            <img src="/src/assets/logo.png" alt="Logo" />
+          <div class="bossIcon" role="button" tabindex="0" aria-label="Copy screenshot">
+            <img src="/src/assets/logo.png" alt="" />
             <div class="bossIconOverlay" aria-hidden="true">
               <i data-lucide="camera"></i>
             </div>
           </div>
           <div class="bossNames">
             <span class="bossName"></span>
-            <div class="bossHpBar" style="display:none">
-              <div class="bossHpFill"></div>
-              <span class="bossHpText"></span>
-            </div>
           </div>
 
           <div class="headerBtns">
             <div class="headerBtn suspendBtn" style="display:none"><i data-lucide="power"></i></div>
+            <div class="headerBtn historyBtn" role="button" tabindex="0" aria-label="Fight history" data-i18n-aria-label="history.title"><i data-lucide="scroll-text"></i></div>
             <div class="headerBtn resetBtn"><i data-lucide="rotate-ccw"></i></div>
             <div class="headerBtn settingsBtn"><i data-lucide="settings"></i></div>
           </div>
         </div>
-        <div class="footerBtns">
-          <button
-            class="footerBtn targetModeBtn"
-            type="button"
-            aria-label="Target mode">
-            TARGET
-          </button>
-          <button
-            class="footerBtn metricToggleBtn"
-            type="button"
-            data-i18n="header.display.dps"
-            aria-label="Showing DPS">
-            DPS
-          </button>
-          <div class="footerBtn collapseBtn">
-            <i
-              class="collapseIcon"
-              data-lucide="arrow-up-wide-narrow"></i>
-          </div>
+        <div class="bossHpBar" style="display:none">
+          <div class="bossHpFill"></div>
+          <span class="bossHpText">
+            <span class="bossHpPct"></span>
+            <span class="bossHpAmt"></span>
+          </span>
         </div>
         <div
           class="detailsPanel"
@@ -287,6 +294,13 @@
                 </div>
               </div>
               <div class="closeX detailsClose">×</div>
+              <button
+                class="detailsWindowClose"
+                type="button"
+                aria-label="Close Details window"
+                title="Close Details window">
+                <i data-lucide="x"></i>
+              </button>
             </div>
           </div>
 
@@ -329,9 +343,9 @@
                     <div class="cell center perfect" data-sort-key="perfect" data-i18n="details.skills.perfect" data-tip="Perfect %" data-i18n-tip="details.skills.perfectTooltip">Per</div>
                     <div class="cell center double" data-sort-key="double" data-i18n="details.skills.double" data-tip="Double %" data-i18n-tip="details.skills.doubleTooltip">Dbl</div>
                     <div class="cell center back" data-sort-key="back" data-i18n="details.skills.back" data-tip="Back Attack %" data-i18n-tip="details.skills.backTooltip">Back</div>
-                    <div class="cell center frontal" data-sort-key="frontal" data-tip="Frontal %">Front</div>
-                    <div class="cell center powershard" data-sort-key="powershard" data-tip="PowerShard %">PS</div>
-                    <div class="cell center regen" data-sort-key="regen" data-tip="Life-steal Regen">Reg</div>
+                    <div class="cell center frontal" data-sort-key="frontal" data-i18n="details.skills.frontal" data-tip="Frontal %" data-i18n-tip="details.skills.frontalTooltip">Front</div>
+                    <div class="cell center powershard" data-sort-key="powershard" data-i18n="details.skills.powershard" data-tip="PowerShard %" data-i18n-tip="details.skills.powershardTooltip">PS</div>
+                    <div class="cell center regen" data-sort-key="regen" data-i18n="details.skills.regen" data-tip="Life-steal Regen" data-i18n-tip="details.skills.regenTooltip">Reg</div>
                     <div class="cell center mindmg" data-sort-key="mindmg" data-i18n="details.skills.minDmg" data-tip="Min Damage" data-i18n-tip="details.skills.minDmgTooltip">Min</div>
                     <div class="cell center avgdmg" data-sort-key="avgdmg" data-i18n="details.skills.avgDmg" data-tip="Avg Damage" data-i18n-tip="details.skills.avgDmgTooltip">Avg</div>
                     <div class="cell center maxdmg" data-sort-key="maxdmg" data-i18n="details.skills.maxDmg" data-tip="Max Damage" data-i18n-tip="details.skills.maxDmgTooltip">Max</div>
@@ -369,229 +383,285 @@
           aria-modal="true">
           <div class="settingsHeader">
             <div class="settingsTitle" data-i18n="settings.title">Settings</div>
-            <div class="closeX settingsClose">×</div>
+            <button
+              class="settingsFooterValue settingsVersionLink"
+              type="button"
+              data-i18n-aria-label="settings.version"
+              aria-label="Version">
+              <span class="settingsVersionValue">-</span>
+            </button>
+            <button class="closeX settingsClose" type="button" aria-label="Close">×</button>
           </div>
           <div class="settingsBody">
-            <div class="settingsRow settingsRowInput">
-              <label
-                class="settingsLabel"
-                for="characterNameInput"
-                data-i18n="settings.characterName">
-                Name#ID
-              </label>
-              <div class="settingsCharacterIdentity">
-                <input
-                  id="characterNameInput"
-                  class="characterNameInput"
-                  readonly
-                  placeholder="Enter your character name"
-                  data-i18n-placeholder="settings.characterNamePlaceholder" />
-                <div class="settingsActorInline">
-                  <label for="localActorIdInput" class="settingsActorPrefix">#</label>
-                  <input
-                    id="localActorIdInput"
-                    class="localActorIdInput"
-                    inputmode="numeric"
-                    placeholder="1234" />
+            <section class="settingsGroup">
+              <div class="settingsMiniTitle" data-i18n="settings.connection">Connection</div>
+              <div class="settingsGroupBody settingsGroupStrip">
+                <div class="settingsRow settingsRowInput settingsRowStacked">
+                  <label
+                    class="settingsLabel"
+                    for="characterNameInput"
+                    data-i18n="settings.characterName">
+                    Name#ID
+                  </label>
+                  <div class="settingsCharacterIdentity">
+                    <input
+                      id="characterNameInput"
+                      class="characterNameInput"
+                      readonly
+                      placeholder="Enter your character name"
+                      data-i18n-placeholder="settings.characterNamePlaceholder" />
+                    <div class="settingsActorInline">
+                      <label for="localActorIdInput" class="settingsActorPrefix">#</label>
+                      <input
+                        id="localActorIdInput"
+                        class="localActorIdInput"
+                        inputmode="numeric"
+                        placeholder="1234" />
+                    </div>
+                  </div>
+                </div>
+                <div class="settingsRow settingsRowSelect settingsRowStacked">
+                  <div class="settingsInfo">
+                    <div class="settingsLabel" data-i18n="settings.device.label">Capture device</div>
+                  </div>
+                  <div class="settingsDeviceRow">
+                    <label class="settingsCheckboxLabel autoDetectDeviceLabel">
+                      <input type="checkbox" class="autoDetectDeviceCheckbox" checked />
+                      <span data-i18n="settings.device.autoDetect">Auto-detect</span>
+                    </label>
+                    <div class="settingsDropdownWrapper deviceDropdownWrapper">
+                      <button class="settingsDropdownBtn deviceDropdownBtn" type="button" disabled>
+                        <span class="settingsDropdownText">-</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu deviceDropdownMenu" role="menu"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="settingsRow settingsRowStacked">
+                  <div class="settingsInfo">
+                    <div class="settingsLabel" data-i18n="settings.lockedPort">Detected device/port</div>
+                  </div>
+                  <div class="settingsRowEnd">
+                    <div class="settingsValue">
+                      <span class="lockedIp">-</span>
+                      <span class="lockedPort">-</span>
+                    </div>
+                    <button
+                      class="settingsAction resetDetectBtn"
+                      type="button"
+                      data-i18n="settings.resetDetection">
+                      Reset
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="settingsRow settingsRowSelect">
-              <div class="settingsInfo">
-                <div class="settingsLabel" data-i18n="settings.device.label">Capture device</div>
-              </div>
-              <div class="settingsDeviceRow">
-                <label class="settingsCheckboxLabel autoDetectDeviceLabel">
-                  <input type="checkbox" class="autoDetectDeviceCheckbox" checked />
-                  <span data-i18n="settings.device.autoDetect">Auto-detect</span>
-                </label>
-                <div class="settingsDropdownWrapper deviceDropdownWrapper">
-                  <button class="settingsDropdownBtn deviceDropdownBtn" type="button" disabled>
-                    <span class="settingsDropdownText">-</span>
-                    <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
-                  </button>
-                  <div class="settingsDropdownMenu deviceDropdownMenu" role="menu"></div>
-                </div>
-              </div>
-            </div>
-            <div class="settingsRow">
-              <div class="settingsInfo">
-                <div class="settingsLabel" data-i18n="settings.lockedPort">Detected device/port</div>
-                <div class="settingsValue">
-                  <span class="lockedIp">-</span>
-                  <span class="lockedPort">-</span>
-                </div>
-              </div>
-              <button class="settingsAction resetDetectBtn" data-i18n="settings.resetDetection">
-                Reset
-              </button>
-            </div>
+            </section>
             <div class="settingsColumns">
-              <div class="settingsColumn">
+              <section class="settingsGroup settingsColumn">
                 <div class="settingsMiniTitle" data-i18n="settings.appearance">Appearance</div>
-                <div class="settingsRow settingsRowSelect">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.language.label">Language</div>
+                <div class="settingsGroupBody">
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.language.label">Language</div>
+                    </div>
+                    <div class="settingsDropdownWrapper languageDropdownWrapper">
+                      <button class="settingsDropdownBtn languageDropdownBtn" type="button">
+                        <span class="settingsDropdownText">-</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu languageDropdownMenu" role="menu"></div>
+                    </div>
                   </div>
-                  <div class="settingsDropdownWrapper languageDropdownWrapper">
-                    <button class="settingsDropdownBtn languageDropdownBtn" type="button">
-                      <span class="settingsDropdownText">-</span>
-                      <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="settingsDropdownMenu languageDropdownMenu" role="menu"></div>
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.theme.label">Theme</div>
+                    </div>
+                    <div class="settingsDropdownWrapper themeDropdownWrapper">
+                      <button class="settingsDropdownBtn themeDropdownBtn" type="button">
+                        <span class="settingsDropdownText">-</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu themeDropdownMenu" role="menu"></div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.meterLayout.label">Meter layout</div>
+                    </div>
+                    <div class="settingsDropdownWrapper meterLayoutDropdownWrapper">
+                      <button class="settingsDropdownBtn meterLayoutDropdownBtn" type="button">
+                        <span class="settingsDropdownText">Beta UI</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu meterLayoutDropdownMenu" role="menu"></div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.detailsMonitor.label">Show Details on monitor</div>
+                      <div class="settingsHint detailsMonitorHint"></div>
+                    </div>
+                    <div class="settingsDropdownWrapper detailsMonitorDropdownWrapper">
+                      <button class="settingsDropdownBtn detailsMonitorDropdownBtn" type="button">
+                        <span class="settingsDropdownText">Off</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu detailsMonitorDropdownMenu" role="menu"></div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowInput">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.windowOpacity.label">Main window opacity</div>
+                    </div>
+                    <div class="settingsRangeInline">
+                      <input
+                        id="windowOpacityInput"
+                        class="settingsRange windowOpacityInput"
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="5"
+                        value="40"
+                        aria-label="Main window opacity"
+                        data-i18n-aria-label="settings.windowOpacity.label" />
+                      <div class="settingsValue windowOpacityValue">40%</div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowInput">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.meterOpacity.label">Meter bar opacity</div>
+                    </div>
+                    <div class="settingsRangeInline">
+                      <input
+                        id="meterOpacityInput"
+                        class="settingsRange meterOpacityInput"
+                        type="range"
+                        min="10"
+                        max="100"
+                        step="5"
+                        value="80"
+                        aria-label="Meter bar opacity"
+                        data-i18n-aria-label="settings.meterOpacity.label" />
+                      <div class="settingsValue meterOpacityValue">80%</div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowInput">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.bossNameSize.label">Target name size</div>
+                    </div>
+                    <div class="settingsRangeInline">
+                      <input
+                        id="bossNameSizeInput"
+                        class="settingsRange bossNameSizeInput"
+                        type="range"
+                        min="8"
+                        max="20"
+                        step="0.5"
+                        value="15"
+                        aria-label="Target name size"
+                        data-i18n-aria-label="settings.bossNameSize.label" />
+                      <div class="settingsValue bossNameSizeValue">15px</div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowBoldToggles">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.bold.label">Bold</div>
+                    </div>
+                    <div class="settingsBoldToggleGroup">
+                      <label class="settingsToggle settingsToggleInline">
+                        <span class="settingsToggleLabel" data-i18n="settings.bold.names">Names</span>
+                        <span class="settingsToggleControl">
+                          <input type="checkbox" class="playerNamesBoldCheckbox" />
+                          <span class="settingsToggleTrack" aria-hidden="true"></span>
+                        </span>
+                      </label>
+                      <label class="settingsToggle settingsToggleInline">
+                        <span class="settingsToggleLabel" data-i18n="settings.bold.dps">DPS</span>
+                        <span class="settingsToggleControl">
+                          <input type="checkbox" class="playerDpsBoldCheckbox" />
+                          <span class="settingsToggleTrack" aria-hidden="true"></span>
+                        </span>
+                      </label>
+                    </div>
                   </div>
                 </div>
-                <div class="settingsRow settingsRowSelect">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.theme.label">Theme</div>
-                  </div>
-                  <div class="settingsDropdownWrapper themeDropdownWrapper">
-                    <button class="settingsDropdownBtn themeDropdownBtn" type="button">
-                      <span class="settingsDropdownText">-</span>
-                      <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="settingsDropdownMenu themeDropdownMenu" role="menu"></div>
-                  </div>
-                </div>
-                <div class="settingsRow settingsRowInput">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.windowOpacity.label">Main window opacity</div>
-                  </div>
-                  <div class="settingsRangeInline">
-                    <input
-                      id="windowOpacityInput"
-                      class="settingsRange windowOpacityInput"
-                      type="range"
-                      min="0"
-                      max="100"
-                      step="5"
-                      value="40"
-                      aria-label="Main window opacity" />
-                    <div class="settingsValue windowOpacityValue">40%</div>
-                  </div>
-                </div>
-                <div class="settingsRow settingsRowInput">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.meterOpacity.label">Meter bar opacity</div>
-                  </div>
-                  <div class="settingsRangeInline">
-                    <input
-                      id="meterOpacityInput"
-                      class="settingsRange meterOpacityInput"
-                      type="range"
-                      min="10"
-                      max="100"
-                      step="5"
-                      value="80"
-                      aria-label="Meter bar opacity" />
-                    <div class="settingsValue meterOpacityValue">80%</div>
-                  </div>
-                </div>
-                <div class="settingsRow settingsRowBoldToggles">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.bold.label">Bold</div>
-                  </div>
-                  <div class="settingsBoldToggleGroup">
-                    <label class="settingsToggle settingsToggleInline">
-                      <span class="settingsToggleLabel" data-i18n="settings.bold.names">Names</span>
-                      <span class="settingsToggleControl">
-                        <input type="checkbox" class="playerNamesBoldCheckbox" />
-                        <span class="settingsToggleTrack" aria-hidden="true"></span>
-                      </span>
-                    </label>
-                    <label class="settingsToggle settingsToggleInline">
-                      <span class="settingsToggleLabel" data-i18n="settings.bold.dps">DPS</span>
-                      <span class="settingsToggleControl">
-                        <input type="checkbox" class="playerDpsBoldCheckbox" />
-                        <span class="settingsToggleTrack" aria-hidden="true"></span>
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.slimMode">Slim mode</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="slimModeCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.showPing">Show ping</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="showPingCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.showTotalDps">Show total DPS/DMG</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="showTotalDpsCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.autoHideMeter">Auto-hide meter</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="autoHideMeterCheckbox" checked />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.showSuspendBtn">Show suspend button</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="showSuspendBtnCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-              </div>
-              <div class="settingsColumn">
+              </section>
+              <section class="settingsGroup settingsColumn">
                 <div class="settingsMiniTitle" data-i18n="settings.meterSettings">Meter Settings</div>
-                <div class="settingsRow settingsRowSelect">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.defaultMeterMode.label">Default mode</div>
+                <div class="settingsGroupBody">
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.defaultMeterMode.label">Default mode</div>
+                    </div>
+                    <div class="settingsDropdownWrapper defaultMeterModeDropdownWrapper">
+                      <button class="settingsDropdownBtn defaultMeterModeDropdownBtn" type="button">
+                        <span class="settingsDropdownText">TARGET</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu defaultMeterModeDropdownMenu" role="menu"></div>
+                    </div>
                   </div>
-                  <div class="settingsDropdownWrapper defaultMeterModeDropdownWrapper">
-                    <button class="settingsDropdownBtn defaultMeterModeDropdownBtn" type="button">
-                      <span class="settingsDropdownText">TARGET</span>
-                      <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="settingsDropdownMenu defaultMeterModeDropdownMenu" role="menu"></div>
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.playerLimit.label">Max players shown</div>
+                    </div>
+                    <div class="settingsDropdownWrapper playerLimitDropdownWrapper playerLimitNarrow">
+                      <button class="settingsDropdownBtn playerLimitDropdownBtn" type="button">
+                        <span class="settingsDropdownText">6</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu playerLimitDropdownMenu" role="menu"></div>
+                    </div>
                   </div>
+                  <label class="settingsToggle">
+                    <span class="settingsToggleLabel settingsLabel" data-i18n="settings.pinMeToTop">Always show me at the top</span>
+                    <span class="settingsToggleControl">
+                      <input type="checkbox" class="pinMeToTopCheckbox" />
+                      <span class="settingsToggleTrack" aria-hidden="true"></span>
+                    </span>
+                  </label>
+                  <label class="settingsToggle">
+                    <span class="settingsToggleLabel settingsLabel" data-i18n="settings.autoHideMeter">Auto-hide meter</span>
+                    <span class="settingsToggleControl">
+                      <input type="checkbox" class="autoHideMeterCheckbox" checked />
+                      <span class="settingsToggleTrack" aria-hidden="true"></span>
+                    </span>
+                  </label>
+                  <label class="settingsToggle">
+                    <span class="settingsToggleLabel settingsLabel" data-i18n="settings.showPing">Show ping</span>
+                    <span class="settingsToggleControl">
+                      <input type="checkbox" class="showPingCheckbox" />
+                      <span class="settingsToggleTrack" aria-hidden="true"></span>
+                    </span>
+                  </label>
+                  <label class="settingsToggle">
+                    <span class="settingsToggleLabel settingsLabel" data-i18n="settings.showTotalDps">Show total DPS/DMG</span>
+                    <span class="settingsToggleControl">
+                      <input type="checkbox" class="showTotalDpsCheckbox" />
+                      <span class="settingsToggleTrack" aria-hidden="true"></span>
+                    </span>
+                  </label>
+                  <label class="settingsToggle">
+                    <span class="settingsToggleLabel settingsLabel" data-i18n="settings.roundDps">Round DPS</span>
+                    <span class="settingsToggleControl">
+                      <input type="checkbox" class="roundDpsCheckbox" />
+                      <span class="settingsToggleTrack" aria-hidden="true"></span>
+                    </span>
+                  </label>
+                  <label class="settingsToggle">
+                    <span class="settingsToggleLabel settingsLabel" data-i18n="settings.showSuspendBtn">Show suspend button</span>
+                    <span class="settingsToggleControl">
+                      <input type="checkbox" class="showSuspendBtnCheckbox" />
+                      <span class="settingsToggleTrack" aria-hidden="true"></span>
+                    </span>
+                  </label>
                 </div>
-                <div class="settingsRow settingsRowSelect">
-                  <div class="settingsInfo">
-                    <div class="settingsLabel" data-i18n="settings.playerLimit.label">Max players shown</div>
-                  </div>
-                  <div class="settingsDropdownWrapper playerLimitDropdownWrapper playerLimitNarrow">
-                    <button class="settingsDropdownBtn playerLimitDropdownBtn" type="button">
-                      <span class="settingsDropdownText">6</span>
-                      <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="settingsDropdownMenu playerLimitDropdownMenu" role="menu"></div>
-                  </div>
-                </div>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.pinMeToTop">Always show me at the top</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="pinMeToTopCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.debugLogging">Enable debug logging</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="debugLoggingCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <label class="settingsToggle">
-                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.saveRawPackets">Enable packet logging</span>
-                  <span class="settingsToggleControl">
-                    <input type="checkbox" class="saveRawPacketsCheckbox" />
-                    <span class="settingsToggleTrack" aria-hidden="true"></span>
-                  </span>
-                </label>
-                <div class="settingsMiniTitle" data-i18n="settings.keybinds">Keybinds</div>
+              </section>
+            </div>
+            <section class="settingsGroup">
+              <div class="settingsMiniTitle" data-i18n="settings.keybinds">Keybinds</div>
+              <div class="settingsGroupBody settingsGroupSplit">
                 <div class="settingsRow settingsRowKeybind">
                   <div class="settingsInfo">
                     <div class="settingsLabel" data-i18n="settings.keybind.reload">Reload data</div>
@@ -608,13 +678,34 @@
                     <span class="keybindText">Ctrl+Alt+Up</span>
                   </button>
                 </div>
-                <div class="settingsAdvancedToggle">
-                  <button class="settingsAdvancedBtn" type="button">
-                    <span class="settingsLabel" data-i18n="settings.advanced">Advanced</span>
-                    <span class="settingsAdvancedCaret" aria-hidden="true">▾</span>
-                  </button>
-                </div>
-                <div class="settingsAdvancedBody" style="display: none;">
+              </div>
+            </section>
+            <section class="settingsGroup">
+              <div class="settingsMiniTitle" data-i18n="settings.diagnostics">Diagnostics</div>
+              <div class="settingsGroupBody settingsGroupSplit">
+                <label class="settingsToggle">
+                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.debugLogging">Enable debug logging</span>
+                  <span class="settingsToggleControl">
+                    <input type="checkbox" class="debugLoggingCheckbox" />
+                    <span class="settingsToggleTrack" aria-hidden="true"></span>
+                  </span>
+                </label>
+                <label class="settingsToggle">
+                  <span class="settingsToggleLabel settingsLabel" data-i18n="settings.saveRawPackets">Enable packet logging</span>
+                  <span class="settingsToggleControl">
+                    <input type="checkbox" class="saveRawPacketsCheckbox" />
+                    <span class="settingsToggleTrack" aria-hidden="true"></span>
+                  </span>
+                </label>
+              </div>
+              <div class="settingsAdvancedToggle">
+                <button class="settingsAdvancedBtn" type="button">
+                  <span class="settingsAdvancedCaret" aria-hidden="true">▾</span>
+                  <span class="settingsLabel" data-i18n="settings.advanced">Advanced</span>
+                </button>
+              </div>
+              <div class="settingsAdvancedBody" style="display: none;">
+                <div class="settingsGroupBody settingsGroupSplit">
                   <div class="settingsRow settingsRowSelect">
                     <div class="settingsInfo">
                       <div class="settingsLabel" data-i18n="settings.targetWindow.label">
@@ -631,20 +722,6 @@
                   </div>
                   <div class="settingsRow settingsRowSelect">
                     <div class="settingsInfo">
-                      <div class="settingsLabel" data-i18n="settings.allTargetsWindow.label">
-                        All Targets time range
-                      </div>
-                    </div>
-                    <div class="settingsDropdownWrapper allTargetsWindowDropdownWrapper">
-                      <button class="settingsDropdownBtn allTargetsWindowDropdownBtn" type="button">
-                        <span class="settingsDropdownText">-</span>
-                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
-                      </button>
-                      <div class="settingsDropdownMenu allTargetsWindowDropdownMenu" role="menu"></div>
-                    </div>
-                  </div>
-                  <div class="settingsRow settingsRowSelect">
-                    <div class="settingsInfo">
                       <div class="settingsLabel" data-i18n="settings.trainingMode.label">
                         Training Mode target
                       </div>
@@ -657,40 +734,48 @@
                       <div class="settingsDropdownMenu trainSelectionModeDropdownMenu" role="menu"></div>
                     </div>
                   </div>
-                  <button class="settingsAction resetAllSettingsBtn" type="button" data-i18n="settings.resetAllSettings">
-                    Reset all settings
-                  </button>
+                  <div class="settingsRow settingsRowSelect">
+                    <div class="settingsInfo">
+                      <div class="settingsLabel" data-i18n="settings.allTargetsWindow.label">
+                        All Targets time range
+                      </div>
+                    </div>
+                    <div class="settingsDropdownWrapper allTargetsWindowDropdownWrapper">
+                      <button class="settingsDropdownBtn allTargetsWindowDropdownBtn" type="button">
+                        <span class="settingsDropdownText">-</span>
+                        <span class="settingsDropdownCaret" aria-hidden="true">▾</span>
+                      </button>
+                      <div class="settingsDropdownMenu allTargetsWindowDropdownMenu" role="menu"></div>
+                    </div>
+                  </div>
+                  <div class="settingsRow settingsRowAction">
+                    <button
+                      class="settingsAction settingsActionDanger resetAllSettingsBtn"
+                      type="button"
+                      data-i18n="settings.resetAllSettings">
+                      Reset all settings
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 4px;">
-              <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            </section>
+            <div class="settingsFooter">
+              <div class="settingsFooterLinks">
                 <button class="discordButton" type="button">
-                  <span data-i18n="settings.discord">Discord</span>
                   <span class="discordIcon" aria-hidden="true">
                     <svg viewBox="0 0 126.644 96" role="img" focusable="false" aria-hidden="true">
                       <path d="M81.15,0c-1.2376,2.1973-2.3489,4.4704-3.3591,6.794-9.5975-1.4396-19.3718-1.4396-28.9945,0-.985-2.3236-2.1216-4.5967-3.3591-6.794-9.0166,1.5407-17.8059,4.2431-26.1405,8.0568C2.779,32.5304-1.6914,56.3725.5312,79.8863c9.6732,7.1476,20.5083,12.603,32.0505,16.0884,2.6014-3.4854,4.8998-7.1981,6.8698-11.0623-3.738-1.3891-7.3497-3.1318-10.8098-5.1523.9092-.6567,1.7932-1.3386,2.6519-1.9953,20.281,9.547,43.7696,9.547,64.0758,0,.8587.7072,1.7427,1.3891,2.6519,1.9953-3.4601,2.0457-7.0718,3.7632-10.835,5.1776,1.97,3.8642,4.2683,7.5769,6.8698,11.0623,11.5419-3.4854,22.3769-8.9156,32.0509-16.0631,2.626-27.2771-4.496-50.9172-18.817-71.8548C98.9811,4.2684,90.1918,1.5659,81.1752.0505l-.0252-.0505ZM42.2802,65.4144c-6.2383,0-11.4159-5.6575-11.4159-12.6535s4.9755-12.6788,11.3907-12.6788,11.5169,5.708,11.4159,12.6788c-.101,6.9708-5.026,12.6535-11.3907,12.6535ZM84.3576,65.4144c-6.2637,0-11.3907-5.6575-11.3907-12.6535s4.9755-12.6788,11.3907-12.6788,11.4917,5.708,11.3906,12.6788c-.101,6.9708-5.026,12.6535-11.3906,12.6535Z"/>
                     </svg>
                   </span>
+                  <span data-i18n="settings.discord">Discord</span>
                 </button>
-                <button type="button" class="a2toolsButton"
-                  style="padding: 8px 24px; font-size: 15px; font-weight: 700; min-width: 140px;
-                    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
-                    background-size: 300% 300%;
-                    animation: a2toolsPulse 0.6s ease-out, a2toolsShimmer 6s ease infinite;
-                    color: #fff;
-                    border: none; border-radius: 6px; cursor: pointer; letter-spacing: 0.3px;
-                    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
-                    display: inline-flex; align-items: center; justify-content: center;
-                    transition: transform 0.15s ease;
-                    opacity: 0.9;"
-                  onmouseover="this.style.filter='brightness(1.15)';this.style.transform='translateY(-1px)'"
-                  onmouseout="this.style.filter='';this.style.transform=''"
+                <button
+                  type="button"
+                  class="a2toolsButton"
                   onclick="window.javaBridge?.openBrowser?.('https://A2Tools.app')">
                   A2Tools.app
                 </button>
                 <button class="supportButton" type="button">
-                  <span data-i18n="support.button">Support Me</span>
                   <span class="supportIcon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M10 2v2"/>
@@ -699,15 +784,10 @@
                       <path d="M6 2v2"/>
                     </svg>
                   </span>
+                  <span data-i18n="support.button">Support Me</span>
                 </button>
               </div>
-              <div style="display: flex; align-items: center; justify-content: center; width: 100%; position: relative;">
-                <button class="settingsFooterValue settingsVersionLink" type="button"
-                  style="font-size: 14px; opacity: 0.7;">
-                  <span class="settingsVersionValue">-</span>
-                </button>
-                <button class="quitButton" data-i18n="settings.quit" style="position: absolute; right: 0;">Quit</button>
-              </div>
+              <button class="quitButton" type="button" data-i18n="settings.quit">Quit</button>
             </div>
           </div>
         </div>
@@ -747,23 +827,49 @@
           </div>
         </div>
         <div class="list"></div>
-        <div class="meterTotalBar" style="display:none">
-          <span class="meterTotalDps"></span>
-          <span class="meterTotalSep">|</span>
-          <span class="meterTotalDmg"></span>
-        </div>
-        <div class="battleTime">
-          <div class="status"></div>
-          <div class="tick"></div>
-          <div class="analysisStatus" data-i18n="battleTime.analysing">
-            Monitoring data...
+        <div class="meterFooter">
+          <div class="battleTime">
+            <div class="status"></div>
+            <div class="tick"></div>
+            <div class="analysisStatus" data-i18n="battleTime.analysing">
+              Monitoring data...
+            </div>
+          </div>
+          <div class="meterTotalBar" style="display:none">
+            <span class="meterTotalDps"></span>
+            <span class="meterTotalSep">/</span>
+            <span class="meterTotalDmg"></span>
+          </div>
+          <div class="footerBtns">
+            <button
+              class="footerBtn targetModeBtn"
+              type="button"
+              aria-label="Target mode">
+              TARGET
+            </button>
+            <button
+              class="footerBtn metricToggleBtn"
+              type="button"
+              data-i18n="header.display.dps"
+              aria-label="Showing DPS">
+              DPS
+            </button>
+            <div class="footerBtn collapseBtn" role="button" tabindex="0" aria-label="Sort direction">
+              <i
+                class="collapseIcon"
+                data-lucide="arrow-up-wide-narrow"></i>
+            </div>
+          </div>
+          <div class="pingDisplay">
+            <i data-lucide="wifi" class="pingIcon"></i>
+            <span class="pingText"></span>
           </div>
         </div>
         <div class="resizeHandle" aria-hidden="true"></div>
-      </div>
-      <div class="pingDisplay">
-        <i data-lucide="wifi" class="pingIcon"></i>
-        <span class="pingText"></span>
+        <div class="detailsMonitorBadge" role="status" aria-live="polite">
+          <div class="detailsMonitorBadgeNum"></div>
+          <div class="detailsMonitorBadgeText"></div>
+        </div>
       </div>
       <div
         class="console"
@@ -900,7 +1006,7 @@
     <script src="/src/js/battleTime.js"></script>
     <script src="/src/js/meter.js"></script>
     <script src="/src/js/skillIcons.js"></script>
-    <script src="/src/js/details.js?v=2015a"></script>
+    <script src="/src/js/details.js?v=2021a"></script>
     <script src="/src/js/history.js?v=2018a"></script>
 
     <!-- 추가 -->

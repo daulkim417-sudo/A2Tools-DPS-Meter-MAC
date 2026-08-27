@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "水錶",
+    "title": "A2Tools DPS Meter",
     "display": {
       "dps": "DPS",
       "total": "DMG",
@@ -59,6 +59,12 @@
       "doubleTooltip": "雙重 %",
       "back": "背擊",
       "backTooltip": "背擊 %",
+      "frontal": "正面",
+      "frontalTooltip": "正面攻擊 %",
+      "powershard": "碎片",
+      "powershardTooltip": "能量碎片 %",
+      "regen": "回復",
+      "regenTooltip": "吸血回復量",
       "multiHit": "MH%",
       "multiHitTooltip": "多段打擊 %",
       "multiHitDamage": "MHD",
@@ -120,8 +126,34 @@
     "characterNamePlaceholder": "輸入你的角色名稱",
     "pinMeToTop": "將我置頂",
     "slimMode": "精簡模式",
+    "meterLayout": {
+      "label": "儀表佈局",
+      "beta": "Beta 介面",
+      "betaSlim": "Beta 精簡",
+      "classic": "經典介面",
+      "classicSlim": "經典精簡"
+    },
+    "detailsMonitor": {
+      "label": "在螢幕上顯示詳情",
+      "off": "關閉",
+      "primary": "主螢幕",
+      "missing": "該螢幕未連接。",
+      "single": "僅偵測到一個螢幕 — 請連接第二块螢幕。",
+      "badge": "螢幕",
+      "side": {
+        "left": "左側",
+        "right": "右側",
+        "above": "上方",
+        "below": "下方"
+      }
+    },
     "appearance": "外觀",
     "connection": "連線",
+    "diagnostics": "診斷",
+    "device": {
+      "label": "擷取網卡",
+      "autoDetect": "自動偵測"
+    },
     "advanced": "進階",
     "bossLogs": "啟用每場Boss記錄",
     "saveRawPackets": "啟用封包日誌",
@@ -133,6 +165,7 @@
     },
     "showPing": "顯示延遲",
     "showTotalDps": "顯示總DPS/DMG",
+    "roundDps": "DPS取整",
     "autoHideMeter": "自動隱藏面板",
     "showSuspendBtn": "顯示暫停按鈕",
     "playerLimit": {
@@ -165,6 +198,9 @@
     },
     "meterOpacity": {
       "label": "計量條不透明度"
+    },
+    "bossNameSize": {
+      "label": "目標名稱大小"
     },
     "targetWindow": {
       "label": "目標時間範圍",

@@ -46,9 +46,19 @@ impl Settings {
         self.values.read().get(key).cloned()
     }
 
-    pub fn set(&self, key: &str, value: &str) {
-        self.values.write().insert(key.to_string(), value.to_string());
+    /// Store a value. Returns true when it actually changed, which is what gates
+    /// the cross-window `setting-changed` broadcast — re-emitting on a no-op
+    /// write would bounce the event back and forth between the windows.
+    pub fn set(&self, key: &str, value: &str) -> bool {
+        {
+            let mut values = self.values.write();
+            if values.get(key).is_some_and(|existing| existing == value) {
+                return false;
+            }
+            values.insert(key.to_string(), value.to_string());
+        }
         self.save();
+        true
     }
 
     pub fn remove(&self, key: &str) {

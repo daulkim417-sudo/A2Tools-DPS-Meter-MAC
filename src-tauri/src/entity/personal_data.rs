@@ -15,6 +15,9 @@ pub struct PersonalData {
     #[serde(skip)]
     pub analyzed_data: HashMap<i32, AnalyzedSkill>,
     pub nickname: String,
+    /// Combat power from the party roster packet, or 0 when this player isn't in
+    /// your party (the roster is the only source, so non-party players have none).
+    pub combat_power: i64,
 }
 
 impl PersonalData {
@@ -26,6 +29,7 @@ impl PersonalData {
             damage_contribution: 0.0,
             analyzed_data: HashMap::new(),
             nickname,
+            combat_power: 0,
         }
     }
 
@@ -37,6 +41,7 @@ impl PersonalData {
             damage_contribution: 0.0,
             analyzed_data: HashMap::new(),
             nickname,
+            combat_power: 0,
         }
     }
 

@@ -175,9 +175,12 @@ impl StreamProcessor {
         // Bind the local player from the account character-select list, which
         // arrives as plaintext (uncompressed) and can land in a standalone packet.
         self.scan_char_list_self(buffer);
-        // Also from the in-world self-detail record (covers the already-loaded
-        // case where no login char-list is in the capture).
-        self.scan_self_detail_name(buffer);
+        // Mask-driven id↔name records: the self record (33 36) and every other
+        // player's record (45 36). This is the primary naming source — it covers
+        // the already-loaded case where no login char-list is in the capture.
+        self.scan_masked_identity(buffer);
+        // Party roster (names, levels, gear score, combat power).
+        self.scan_party_roster(buffer);
 
         offset
     }
@@ -255,7 +258,8 @@ impl StreamProcessor {
         self.scan_for_entity_hp(&decompressed);
         self.scan_for_embedded_40_36(&decompressed);
         self.scan_char_list_self(&decompressed);
-        self.scan_self_detail_name(&decompressed);
+        self.scan_masked_identity(&decompressed);
+        self.scan_party_roster(&decompressed);
 
         self.pending_compact_skill_context = None;
     }
@@ -811,105 +815,202 @@ impl StreamProcessor {
         }
     }
 
-    /// Bind the local player from the self-detail record.
+    /// Bind entity ids to character names from the game's masked identity records.
     ///
-    /// The client emits a single detail record about the character you are
-    /// playing:
-    ///   `36 <entity_id varint> <b0> <b1> <b2> 0B 37 <name_len u8> <utf8 name>`
-    /// The three bytes after the id are class/appearance-specific (Cleric = `5F
-    /// ?? CB`, Assassin = `5E ?? C3`, …) — only the trailing `0B 37` marker is
-    /// constant, so we match on that alone and rely on the configured character
-    /// name to reject false positives. Verified across live captures: this
-    /// identifies you even when already loaded in-world — no login char-list, and
-    /// you never see your own 45 36 spawn. Bound authoritatively so it reclaims
-    /// the name onto the correct id if a stale/earlier id held it.
-    fn scan_self_detail_name(&self, data: &[u8]) {
-        let local_name = match self.data_storage.local_character_name() {
-            Some(n) => n.trim().to_string(),
-            None => return,
-        };
-        if local_name.is_empty() {
+    /// The self record (`33 36`) and the other-player record (`45 36`) share one
+    /// layout:
+    ///
+    /// ```text
+    /// <opcode 2B> <entity_id varint> <mask1 u32 LE> <mask2 u8> [mask2 & 0x01] <len u8><utf8 name>
+    /// ```
+    ///
+    /// The name is present exactly when bit 0 of `mask2` is set; the remaining
+    /// bits of `mask2` vary with whatever else the record carries. Earlier
+    /// versions of this parser keyed off the literal bytes that happened to sit
+    /// in that position — `0B 37` for the self record, a bare `07` for player
+    /// spawns — but those are just two observed `mask2` values. A patch that set
+    /// any other bit silently stopped resolving names: in the reference capture
+    /// the self record carries `mask2 = 0x37` and player records `0x07`, so the
+    /// `0B 37` matcher found nothing and every party member stayed as `#id`.
+    /// Reading the mask bit is version-stable across that kind of change.
+    ///
+    /// `33 36` is the record for the character *you* are playing. It appears for
+    /// exactly one entity, so it identifies the local player outright — no need
+    /// for the user to have typed their character name into settings, and it
+    /// works when you are already loaded into a zone (where there is no login
+    /// char-list and you never see your own spawn).
+    fn scan_masked_identity(&self, data: &[u8]) {
+        if data.len() < 9 {
             return;
         }
         let mut i = 0;
-        while i + 6 < data.len() {
-            if data[i] != 0x36 {
+        while i + 8 < data.len() {
+            if data[i + 1] != 0x36 {
                 i += 1;
                 continue;
             }
-            let id = read_varint(data, i + 1);
-            if id.length <= 0 || !(100..=9_999_999).contains(&id.value) {
+            // 0x33 = self, 0x45/0x44 = another player (pre/post the June 2026 shift).
+            let is_self = data[i] == 0x33;
+            if !is_self && data[i] != 0x45 && data[i] != 0x44 {
                 i += 1;
                 continue;
             }
-            let s = i + 1 + id.length as usize;
-            // Class-agnostic signature: <b0> <b1> <b2> 0B 37 <len> <name>
-            if s + 6 > data.len() || data[s + 3] != 0x0B || data[s + 4] != 0x37 {
+            let id = read_varint(data, i + 2);
+            if id.length <= 0 || !(1..=9_999_999).contains(&id.value) {
                 i += 1;
                 continue;
             }
-            let name_len = data[s + 5] as usize;
-            if !(2..=36).contains(&name_len) {
+            // mask1 is 4 bytes; mask2 is the byte after it and gates the name.
+            let mask2_idx = i + 2 + id.length as usize + 4;
+            if mask2_idx + 1 >= data.len() || data[mask2_idx] & 0x01 == 0 {
                 i += 1;
                 continue;
             }
-            let ns = s + 6;
-            let ne = ns + name_len;
-            if ne > data.len() {
+            let name_len = data[mask2_idx + 1] as usize;
+            if !(2..=36).contains(&name_len) || mask2_idx + 2 + name_len > data.len() {
                 i += 1;
                 continue;
             }
-            if let Ok(name) = std::str::from_utf8(&data[ns..ne]) {
-                if let Some(sanitized) = sanitize_nickname(name) {
-                    if sanitized.trim() == local_name {
-                        self.data_storage
-                            .append_nickname_authoritative(id.value, &sanitized);
-                        tracing::info!(
-                            "self-detail: bound local player '{}' -> entity {}",
-                            sanitized,
-                            id.value
-                        );
-                        return;
-                    }
+            let raw = match std::str::from_utf8(&data[mask2_idx + 2..mask2_idx + 2 + name_len]) {
+                Ok(s) => s,
+                Err(_) => {
+                    i += 1;
+                    continue;
                 }
+            };
+            let sanitized = match sanitize_nickname(raw) {
+                Some(s) => s,
+                None => {
+                    i += 1;
+                    continue;
+                }
+            };
+            // Require the whole field to be one clean name: sanitize_nickname
+            // stops at the first non-name character, so a shorter result means we
+            // landed mid-record rather than on a real name string.
+            if sanitized.len() != name_len {
+                i += 1;
+                continue;
             }
-            i += 1;
+
+            self.data_storage.note_low_id_entity(id.value);
+            self.data_storage
+                .append_nickname_authoritative(id.value, &sanitized);
+            if is_self {
+                self.data_storage.set_local_player_id(Some(id.value as i64));
+                // Adopt the name as the configured character name when the user
+                // hasn't set one, so every "is this me?" check downstream lines up.
+                if self
+                    .data_storage
+                    .local_character_name()
+                    .is_none_or(|n| n.trim().is_empty())
+                {
+                    self.data_storage
+                        .set_local_character_name(Some(sanitized.clone()));
+                }
+                tracing::info!("self record: local player '{}' -> entity {}", sanitized, id.value);
+            } else {
+                tracing::debug!("player record: '{}' -> entity {}", sanitized, id.value);
+            }
+            i = mask2_idx + 2 + name_len;
         }
     }
 
-    /// Extract player name from a 44 36 player spawn sub-packet.
-    /// Structure: <actor_varint> <data...> 07 <name_length> <name_bytes>
+    // ===== PARTY ROSTER (02 97) =====
+
+    /// Read the party roster the server broadcasts on any party change.
+    ///
+    /// ```text
+    /// 02 97
+    /// party_key    u32
+    /// party_name   str            (u8 len + utf8)
+    /// party_size   u8             party max size
+    /// dungeon_id   u32
+    /// unnamed      u8, u8
+    /// leader_dbid  u64
+    /// unnamed      u8, u8, u8
+    /// member_count varint
+    /// member × member_count:
+    ///   presence_mask u8
+    ///   slot          u8          1-based party slot
+    ///   dbid          u64         account-level id; high u16 is the world id
+    ///   nickname      str
+    ///   unnamed       u32
+    ///   level         u32
+    ///   gear_score    u32         equip item level
+    ///   server        u16, u16
+    ///   unnamed       u8
+    ///   combat_power  u64
+    ///   unnamed       u16, u8
+    /// ```
+    ///
+    /// This is the only packet that states who is in your party outright, so it
+    /// is the authoritative roster — and it is where combat power comes from.
+    /// It joins to in-world entities by NAME: `dbid` is an account id, unrelated
+    /// to the session-scoped entity ids everything else uses.
+    ///
+    /// Empty slots are encoded with a zero mask and an empty name; parsing stops
+    /// there because their short form would desync the walk.
+    fn scan_party_roster(&self, data: &[u8]) {
+        if data.len() < 32 {
+            return;
+        }
+        let mut i = 0;
+        while i + 24 < data.len() {
+            if data[i] != 0x02 || data[i + 1] != 0x97 {
+                i += 1;
+                continue;
+            }
+            match parse_party_roster_at(data, i + 2) {
+                Some((members, complete)) => {
+                    tracing::debug!(
+                        "Party roster: {} members (complete={})",
+                        members.len(),
+                        complete
+                    );
+                    self.data_storage.set_party_roster(members, complete);
+                    i += 2;
+                }
+                None => i += 1,
+            }
+        }
+    }
+
+    /// Extract the player name from a `44/45 36` player spawn sub-packet.
+    ///
+    /// Uses the same mask-gated layout as `scan_masked_identity`
+    /// (`<id varint> <mask1 u32> <mask2 u8> [mask2 & 0x01] <len><utf8>`) rather
+    /// than hunting for the literal `0x07` that older builds happened to put in
+    /// the `mask2` slot.
     fn parse_player_spawn_name(&self, data: &[u8], offset_after_opcode: usize) {
         let actor_info = read_varint(data, offset_after_opcode);
         // Raid/invasion player ids run well past 99,999, so accept the full entity-id
         // range (matching the embedded-scan gate) or those spawns are silently dropped.
-        if actor_info.length <= 0 || !(100..=9_999_999).contains(&actor_info.value) {
+        if actor_info.length <= 0 || !(1..=9_999_999).contains(&actor_info.value) {
             return;
         }
         let actor_id = actor_info.value;
-        let scan_start = offset_after_opcode + actor_info.length as usize;
-        let scan_end = std::cmp::min(data.len().saturating_sub(2), scan_start + 40);
-
-        for j in scan_start..scan_end {
-            if data[j] == 0x07 {
-                let len_idx = j + 1;
-                if len_idx >= data.len() { break; }
-                let name_len = data[len_idx] as usize;
-                if !(1..=36).contains(&name_len) { continue; }
-                let name_start = len_idx + 1;
-                let name_end = name_start + name_len;
-                if name_end > data.len() { break; }
-                if let Ok(name) = std::str::from_utf8(&data[name_start..name_end]) {
-                    if let Some(sanitized) = sanitize_nickname(name) {
-                        if sanitized.len() >= 2 {
-                            // 45/44 36 player spawn is an authoritative id↔name source.
-                            self.data_storage.append_nickname_authoritative(actor_id, &sanitized);
-                            return;
-                        }
-                    }
-                }
-            }
+        let mask2_idx = offset_after_opcode + actor_info.length as usize + 4;
+        if mask2_idx + 1 >= data.len() || data[mask2_idx] & 0x01 == 0 {
+            return;
         }
+        let name_len = data[mask2_idx + 1] as usize;
+        if !(2..=36).contains(&name_len) || mask2_idx + 2 + name_len > data.len() {
+            return;
+        }
+        let Ok(raw) = std::str::from_utf8(&data[mask2_idx + 2..mask2_idx + 2 + name_len]) else {
+            return;
+        };
+        let Some(sanitized) = sanitize_nickname(raw) else {
+            return;
+        };
+        if sanitized.len() != name_len {
+            return;
+        }
+        // 45/44 36 player spawn is an authoritative id↔name source.
+        self.data_storage.note_low_id_entity(actor_id);
+        self.data_storage
+            .append_nickname_authoritative(actor_id, &sanitized);
     }
 
     // ===== SUMMON PACKET (40 36) =====
@@ -938,6 +1039,25 @@ impl StreamProcessor {
         self.parse_summon_spawn_at(packet, offset + 2)
     }
 
+    /// Parse a `41 36` spawn record (NPCs, summons/pets and transient
+    /// skill-effect entities — never a real player, who gets a `45 36`/`33 36`
+    /// record instead).
+    ///
+    /// ```text
+    /// 41 36 <entity_id varint> <mask u16 LE> <subtree…> ×3 … [mask & 0x0010] <parent_key u32 LE>
+    /// ```
+    ///
+    /// The low byte of `mask` doubles as the entity kind: `0x0C`/`0x0D` = NPC,
+    /// `0x5F` = summon/pet, `0x1C` = a short-lived skill-effect entity parented
+    /// to the skill's *target*. The first subtree opens with its own `mask2` byte
+    /// whose bit 0 signals an inline name string (for a summon that name is the
+    /// owner's), followed by the `u32` model / NPC-type id.
+    ///
+    /// `mask & 0x0010` declares a `parent_key`, and for a summon that is its
+    /// owner's entity id — the one link that works even when nobody has been
+    /// named yet. It sits past three variable-length subtrees, so instead of
+    /// walking those we anchor on the owner block that directly follows it (see
+    /// `find_spawn_parent_key`).
     fn parse_summon_spawn_at(&mut self, packet: &[u8], offset_after_opcode: usize) -> bool {
         let mut offset = offset_after_opcode;
         let target_info = read_varint(packet, offset);
@@ -955,50 +1075,118 @@ impl StreamProcessor {
         // spawn. Record it so a summon / spell-effect that deals class-band damage
         // isn't mistaken for a player and can be attributed to its owner.
         self.data_storage.note_summon_spawn(real_actor_id);
+        self.data_storage.note_low_id_entity(real_actor_id);
 
-        // Detect summon spawn: [xx] 10 00 pattern
-        if offset + 2 < packet.len()
-            && packet[offset + 1] == 0x10
-            && packet[offset + 2] == 0x00
+        if offset + 2 >= packet.len() {
+            self.extract_and_register_mob_type(packet, offset, real_actor_id);
+            return false;
+        }
+        let mask = u16::from_le_bytes([packet[offset], packet[offset + 1]]);
+        let kind = packet[offset];
+        let sub_mask2 = packet[offset + 2];
+
+        // Optional inline name, gated by bit 0 of the first subtree's mask byte.
+        let mut cursor = offset + 3;
+        let mut spawn_name: Option<String> = None;
+        if sub_mask2 & 0x01 != 0 && cursor < packet.len() {
+            let name_len = packet[cursor] as usize;
+            if (1..=36).contains(&name_len)
+                && cursor + 1 + name_len <= packet.len()
+                && let Ok(raw) = std::str::from_utf8(&packet[cursor + 1..cursor + 1 + name_len])
+                && let Some(sanitized) = sanitize_nickname(raw)
+                // A shorter result means sanitising trimmed something, i.e. this
+                // is not cleanly a name field.
+                && sanitized.len() == name_len
+            {
+                spawn_name = Some(sanitized);
+                cursor += 1 + name_len;
+            }
+        }
+
+        // Mob type / boss flag / HP still come from the existing scan, which
+        // anchors on the model field this cursor now sits on.
+        self.extract_and_register_mob_type(packet, offset, real_actor_id);
+
+        // A `0x1C` effect entity is parented to the skill's TARGET, not its
+        // caster, so its parent_key must never be treated as an owner. Its name,
+        // when present, IS the caster's — that is the usable link for those.
+        let is_summon = kind == 0x5F;
+
+        if is_summon
+            && mask & 0x0010 != 0
+            && let Some(owner_id) = self.find_spawn_parent_key(packet, cursor, real_actor_id)
         {
+            self.data_storage.note_low_id_entity(owner_id);
+            self.data_storage
+                .register_confirmed_summon_by_id(real_actor_id, owner_id);
+            tracing::debug!(
+                "Summon {} linked to owner {} via parent_key",
+                real_actor_id,
+                owner_id
+            );
+            return true;
+        }
+
+        // Fall back to the name the spawn carries: summons and skill-effect
+        // entities are both labelled with their caster's character name.
+        if let Some(name) = &spawn_name
+            && let Some(owner_id) = self.data_storage.find_id_by_nickname(name)
+            && owner_id != real_actor_id
+        {
+            self.data_storage
+                .register_confirmed_summon_by_id(real_actor_id, owner_id);
+            tracing::trace!(
+                "Summon {} linked to owner {} via spawn name '{}'",
+                real_actor_id,
+                owner_id,
+                name
+            );
+            return true;
+        }
+
+        // Last resort for summons: the caster recorded on the entity's own buff
+        // block. It reads back as the summon itself for some skills, so `!= self`
+        // plus the known-player check keeps that from creating a bogus link.
+        if is_summon {
             let owner_id = self.extract_summon_owner_from_spawn(packet, offset);
-            if owner_id > 0 && owner_id != real_actor_id {
-                self.extract_and_register_mob_type(packet, offset, real_actor_id);
-                self.data_storage.register_confirmed_summon_by_id(real_actor_id, owner_id);
+            if owner_id > 0
+                && owner_id != real_actor_id
+                && self.data_storage.is_known_player(owner_id)
+            {
+                self.data_storage
+                    .register_confirmed_summon_by_id(real_actor_id, owner_id);
                 return true;
             }
         }
 
-        // Detect summon spawn with embedded owner name: [xx] 00 01 <name_len> <name>
-        // Used by summons like Divine Aura where the owner's name is in the spawn packet.
-        if offset + 3 < packet.len()
-            && packet[offset + 1] == 0x00
-            && packet[offset + 2] == 0x01
-        {
-            let name_len = packet[offset + 3] as usize;
-            if (2..=36).contains(&name_len) && offset + 4 + name_len <= packet.len() {
-                if let Ok(name) = std::str::from_utf8(&packet[offset + 4..offset + 4 + name_len]) {
-                    if let Some(sanitized) = sanitize_nickname(name) {
-                        if sanitized.len() >= 2 {
-                            if let Some(owner_id) = self.data_storage.find_id_by_nickname(&sanitized) {
-                                if owner_id != real_actor_id {
-                                    self.extract_and_register_mob_type(packet, offset, real_actor_id);
-                                    self.data_storage.register_confirmed_summon_by_id(real_actor_id, owner_id);
-                                    tracing::trace!(
-                                        "Summon confirmed (00 01 name): {} owned by {} ({})",
-                                        real_actor_id, owner_id, sanitized
-                                    );
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        self.extract_and_register_mob_type(packet, offset, real_actor_id);
         false
+    }
+
+    /// Find the `parent_key` a `41 36` spawn declares via `mask & 0x0010`.
+    ///
+    /// The field sits behind three variable-length subtrees that are impractical
+    /// to walk, so we anchor on the owner block that immediately follows it:
+    ///
+    /// ```text
+    /// <parent_key u32 LE> <legion_id u32> <u16 = 0> <u16 server_id> <len u8> <utf8 legion name>
+    /// ```
+    ///
+    /// preceded by the record's `mask & 0x0004` byte (constant `0x06`). Six
+    /// independent constraints have to line up at once, which is why this pinned
+    /// the owner on 81 of 81 summons in the reference capture with no false
+    /// positives — including a Spiritmaster's 54 pets whose owner had never been
+    /// named at the time they spawned.
+    fn find_spawn_parent_key(&self, packet: &[u8], search_from: usize, self_id: i32) -> Option<i32> {
+        let mut i = search_from.max(1);
+        while i + 13 <= packet.len() {
+            if packet[i - 1] == 0x06
+                && let Some(parent) = parse_spawn_owner_block(packet, i, self_id)
+            {
+                return Some(parent);
+            }
+            i += 1;
+        }
+        None
     }
 
     fn extract_summon_owner_from_spawn(&self, packet: &[u8], start_offset: usize) -> i32 {
@@ -1007,7 +1195,9 @@ impl StreamProcessor {
         for i in start_offset..=max_search {
             if packet[i..].starts_with(&anchor) {
                 let owner_info = read_varint(packet, i + anchor.len());
-                if owner_info.length > 0 && (100..=99_999).contains(&owner_info.value) {
+                // Low ids are real (see `is_plausible_entity_id`); the caller
+                // additionally requires the result to be a known player.
+                if owner_info.length > 0 && (1..=9_999_999).contains(&owner_info.value) {
                     return owner_info.value;
                 }
             }
@@ -1553,9 +1743,14 @@ impl StreamProcessor {
                 break;
             }
 
-            // Target
+            // Target. `>= 100` is a resync gate for the varint walk, not a real
+            // protocol bound — the game does hand out sub-100 entity ids, and a
+            // player who draws one had every hit they took (and dealt, below)
+            // silently dropped. Ids a spawn or identity record has confirmed are
+            // let through; unconfirmed small values still bail out, so the gate
+            // keeps doing its job.
             let target_value = match try_read_varint(packet, &mut offset) {
-                Some(v) if v >= 100 => v,
+                Some(v) if self.data_storage.is_plausible_entity_id(v) => v,
                 _ => { break; }
             };
 
@@ -1573,9 +1768,9 @@ impl StreamProcessor {
             // Unused flag
             if try_read_varint(packet, &mut offset).is_none() { break; }
 
-            // Actor
+            // Actor (same gate as the target above).
             let actor_value = match try_read_varint(packet, &mut offset) {
-                Some(v) if v >= 100 => v,
+                Some(v) if self.data_storage.is_plausible_entity_id(v) => v,
                 _ => { break; }
             };
 
@@ -1636,9 +1831,9 @@ impl StreamProcessor {
                 if mods & 0x20 != 0 { specials.push(SpecialDamage::Smite); }
                 if mods & 0x40 != 0 { specials.push(SpecialDamage::PowerShard); }
                 // Direction byte (2 later) = positional enum, NOT the modifications
-                // byte. Confirmed against the game combat log: 0x00 = normal (front),
-                // 0x01 = Back (e.g. 757/1301/11248 [Back]), 0x02 = Frontal (7926
-                // [Frontal Critical]).
+                // byte. Confirmed against the game combat log: 0x00 = no positional
+                // tag (untagged/parried hits), 0x01 = Back (12,030 [Back]),
+                // 0x02 = Front (14,561 [Front], 28,421 [Front Critical]).
                 if offset + 2 < packet.len() {
                     match packet[offset + 2] {
                         0x01 => specials.push(SpecialDamage::Back),
@@ -1668,13 +1863,19 @@ impl StreamProcessor {
             };
 
             // Post-2026-06 layout shift: these records now carry a leading zero
-            // pad plus a fixed marker field (e.g. `E6 6F` = 14310) ahead of the
-            // real value, so the damage lands one varint later than the parser
-            // historically expected. A `first_value` of 0 is that pad — realign by
-            // one varint (first <- the marker, second <- the real value). Verified
-            // live: a Power Burst crit read the 14310 marker instead of its true
-            // 60876, which sits in this next varint; the marker is constant across
-            // skills, which is why the same wrong number appeared everywhere.
+            // pad plus a POWER SCALAR ahead of the real value, so the damage lands
+            // one varint later than the parser historically expected. A
+            // `first_value` of 0 is that pad — realign by one varint (first <- the
+            // scalar, second <- the real value). Verified live: a Power Burst crit
+            // read the scalar instead of its true 60876, which sits in this next
+            // varint.
+            //
+            // The scalar is not a constant marker (as this once assumed): it is
+            // the actor's damage multiplier in hundredths of a percent — mobs read
+            // 10000 (= 100.00%), geared players 16000-22000 — and it shifts with
+            // buffs. Crucially a summon inherits its OWNER's value, which is what
+            // `note_power_scalar` records it for; see
+            // `DpsCalculator::infer_summon_owners`.
             if first_value == 0 {
                 let after_second_offset = offset;
                 if let Some(third) = try_read_varint(packet, &mut offset) {
@@ -1685,6 +1886,13 @@ impl StreamProcessor {
             }
 
             let first_is_damage = should_treat_first_value_as_damage(first_value, second_value, and_result, damage_type as i32);
+
+            // When the damage is in `second_value`, `first_value` is the actor's
+            // power scalar (see above). Recorded per actor so a summon whose spawn
+            // packet never arrived can still be tied to its owner.
+            if !first_is_damage && (1_000..=200_000).contains(&first_value) {
+                self.data_storage.note_power_scalar(actor_value, first_value);
+            }
 
             let mut final_damage = if first_is_damage {
                 offset = after_first_offset;
@@ -2092,6 +2300,188 @@ fn should_use_repeated_hit_damage(switch_value: i32, encoded_damage: i32, multi_
     let main_component = encoded_damage - multi_hit_count * repeated;
     if main_component > repeated { return false; }
     encoded_damage / 10 == repeated
+}
+
+/// Decode the body of a `02 97` party roster packet. `at` is the first byte
+/// after the opcode. Returns the members that parsed cleanly, or `None` if the
+/// header does not look like a roster (the opcode is scanned for in raw byte
+/// streams, so the header checks double as the false-positive filter).
+/// See `StreamProcessor::scan_party_roster` for the layout.
+#[allow(clippy::type_complexity)]
+fn parse_party_roster_at(
+    data: &[u8],
+    at: usize,
+) -> Option<(Vec<(String, crate::combat::data_storage::PartyMember)>, bool)> {
+    use crate::combat::data_storage::PartyMember;
+
+    let mut o = at.checked_add(4)?; // party_key u32
+    let name_len = *data.get(o)? as usize;
+    o += 1;
+    if !(1..=40).contains(&name_len) {
+        return None;
+    }
+    std::str::from_utf8(data.get(o..o + name_len)?).ok()?;
+    o += name_len;
+
+    let party_size = *data.get(o)? as usize;
+    o += 1;
+    if !(1..=12).contains(&party_size) {
+        return None;
+    }
+    o += 4 + 2 + 8 + 3; // dungeon_id, 2 pad, leader_dbid, 3 pad
+    let count_info = read_varint(data, o);
+    if count_info.length <= 0 || !(1..=12).contains(&count_info.value) {
+        return None;
+    }
+    o += count_info.length as usize;
+
+    let mut members = Vec::new();
+    let mut complete = false;
+    for index in 0..count_info.value {
+        if o + 20 > data.len() {
+            break;
+        }
+        let slot = data[o + 1];
+        o += 2; // presence_mask, slot
+        let dbid = u64::from_le_bytes(data.get(o..o + 8)?.try_into().ok()?);
+        o += 8;
+        let server_id = (dbid >> 48) as u16;
+        let nick_len = *data.get(o)? as usize;
+        o += 1;
+        // An empty name is a vacant slot. Those records are short and the ones
+        // after them are all vacant too, so the roster ends here.
+        if nick_len == 0 {
+            complete = true;
+            break;
+        }
+        if nick_len > 40 || o + nick_len > data.len() {
+            break;
+        }
+        let nickname = match std::str::from_utf8(&data[o..o + nick_len]) {
+            Ok(s) => s.to_string(),
+            Err(_) => break,
+        };
+        o += nick_len;
+        if o + 12 > data.len() {
+            break;
+        }
+        o += 4; // unnamed u32
+        let level = parse_u32_le(data, o) as i32;
+        o += 4;
+        if !(1..=200).contains(&level) {
+            break;
+        }
+        let gear_score = parse_u32_le(data, o) as i32;
+        o += 4;
+        if !(0..=1_000_000).contains(&gear_score) {
+            break;
+        }
+
+        // The stretch between the gear score and combat power is not fixed
+        // width — the same roster can carry an extra byte for one member and not
+        // another, and a party-state change widens every record's tail. Anchor
+        // on the member's world id instead: it is repeated here as a u16 and we
+        // already know its value from the top half of `dbid`. Combat power then
+        // sits a fixed distance past it.
+        let Some(anchor) = find_u16(data, o, o + 10, server_id) else {
+            break;
+        };
+        o = anchor + 2 + 2 + 1; // world id, a second u16, one tag byte
+        let combat_power = u64::from_le_bytes(data.get(o..o + 8)?.try_into().ok()?);
+        o += 8;
+        if combat_power > 100_000_000 {
+            break;
+        }
+
+        members.push((
+            nickname,
+            PartyMember {
+                slot,
+                level,
+                gear_score,
+                combat_power: combat_power as i64,
+                server_id,
+            },
+        ));
+
+        if index + 1 == count_info.value {
+            complete = true;
+            break;
+        }
+        // The record tail is likewise variable, so re-acquire the next member by
+        // its header: the following slot number, a world id in the top of its
+        // dbid, and a decodable name right behind it.
+        match find_next_member(data, o, slot.wrapping_add(1)) {
+            Some(next) => o = next,
+            None => break,
+        }
+    }
+    if members.is_empty() {
+        return None;
+    }
+    Some((members, complete))
+}
+
+/// Find a little-endian `u16` equal to `wanted` in `data[from..to]`.
+fn find_u16(data: &[u8], from: usize, to: usize, wanted: u16) -> Option<usize> {
+    let end = to.min(data.len().saturating_sub(2));
+    (from..=end).find(|&i| u16::from_le_bytes([data[i], data[i + 1]]) == wanted)
+}
+
+/// Re-acquire the start of the next party member record by its header shape:
+/// `<mask u8> <slot u8> <dbid u64> <name_len u8> <utf8 name>`, where the slot is
+/// known and the top `u16` of the dbid is a plausible world id.
+fn find_next_member(data: &[u8], from: usize, expected_slot: u8) -> Option<usize> {
+    let end = (from + 32).min(data.len().saturating_sub(12));
+    for i in from..=end {
+        if data[i + 1] != expected_slot {
+            continue;
+        }
+        let server_id = u16::from_le_bytes([data[i + 8], data[i + 9]]);
+        if server_id == 0 || server_id > 9_999 {
+            continue;
+        }
+        let name_len = data[i + 10] as usize;
+        if name_len == 0 || name_len > 40 || i + 11 + name_len > data.len() {
+            continue;
+        }
+        if std::str::from_utf8(&data[i + 11..i + 11 + name_len]).is_err() {
+            continue;
+        }
+        return Some(i);
+    }
+    None
+}
+
+/// Validate the owner block that follows a spawn's `parent_key` and return the
+/// parent id. See `StreamProcessor::find_spawn_parent_key`.
+///
+/// ```text
+/// <parent_key u32 LE> <legion_id u32> <u16 = 0> <u16 server_id> <len u8> <utf8 legion name>
+/// ```
+fn parse_spawn_owner_block(packet: &[u8], at: usize, self_id: i32) -> Option<i32> {
+    if at + 13 > packet.len() {
+        return None;
+    }
+    let parent = parse_u32_le(packet, at);
+    if parent == 0 || parent > 9_999_999 || parent as i32 == self_id {
+        return None;
+    }
+    // Two-byte pad that is always zero, then a plausible world id.
+    if u16::from_le_bytes([packet[at + 8], packet[at + 9]]) != 0 {
+        return None;
+    }
+    let server_id = u16::from_le_bytes([packet[at + 10], packet[at + 11]]);
+    if server_id == 0 || server_id > 9_999 {
+        return None;
+    }
+    let name_len = packet[at + 12] as usize;
+    if name_len > 40 || at + 13 + name_len > packet.len() {
+        return None;
+    }
+    // A legion-less owner has an empty name here; anything else must decode.
+    std::str::from_utf8(&packet[at + 13..at + 13 + name_len]).ok()?;
+    Some(parent as i32)
 }
 
 fn find_pattern(data: &[u8], start: usize, pattern: &[u8]) -> Option<usize> {

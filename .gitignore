@@ -36,6 +36,9 @@ settings.properties
 !/public/src/
 /public/src/*
 !/public/src/js/
+# ...except vendored third-party libs, which are source, not generated. Without
+# these a fresh clone builds an app whose icons 404.
+!/public/vendor/
 /assets/
 /data/
 /i18n/

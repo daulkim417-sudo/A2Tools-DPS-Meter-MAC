@@ -1,3 +1,15 @@
+// Settings whose change in the Settings window must redraw the meter, mapped to
+// the control that applies them. See DpsApp.applyRemoteSettingChange().
+const REMOTE_APPLIED_SETTING_CONTROLS = {
+  "dpsMeter.roundDps": ".roundDpsCheckbox",
+  "dpsMeter.showTotalDps": ".showTotalDpsCheckbox",
+  "dpsMeter.pinMeToTop": ".pinMeToTopCheckbox",
+  "dpsMeter.mainPlayerNamesBold": ".playerNamesBoldCheckbox",
+  "dpsMeter.mainPlayerDpsBold": ".playerDpsBoldCheckbox",
+  "dpsMeter.showPing": ".showPingCheckbox",
+  "dpsMeter.bossNameSize": ".bossNameSizeInput",
+};
+
 class DpsApp {
   constructor() {
     if (DpsApp.instance) return DpsApp.instance;
@@ -39,6 +51,7 @@ class DpsApp {
       mainPlayerDpsBold: "dpsMeter.mainPlayerDpsBold",
       showPing: "dpsMeter.showPing",
       showTotalDps: "dpsMeter.showTotalDps",
+      roundDps: "dpsMeter.roundDps",
       playerLimit: "dpsMeter.playerLimit",
       theme: "dpsMeter.theme",
       slimMode: "dpsMeter.slimMode",
@@ -46,6 +59,9 @@ class DpsApp {
       bossLogs: "dpsMeter.bossLogsEnabled",
       saveRawPackets: "dpsMeter.saveRawPackets",
       windowOpacity: "dpsMeter.windowOpacity",
+      bossNameSize: "dpsMeter.bossNameSize",
+      betaUi: "dpsMeter.betaUi",
+      detailsMonitor: "dpsMeter.detailsMonitor",
       showSuspendBtn: "dpsMeter.showSuspendBtn",
     };
 
@@ -54,6 +70,7 @@ class DpsApp {
     this.isCollapse = false;
     this._windowHidden = false;
     this.displayMode = "dps";
+    this.betaUi = true;
     this.theme = "aion2";
     this.availableThemes = [
       "aion2",
@@ -235,23 +252,44 @@ class DpsApp {
       },
       onLeaveUserRow: () => {
         this.hoveredDetailsRowId = null;
-        if (this.pinnedDetailsRowId !== null) return;
         requestAnimationFrame(() => {
           const hoveredRow = this.elList?.querySelector?.(".item:hover");
           if (hoveredRow) return;
+          // Only the hover tooltip belongs to hovering. Leaving a row used to
+          // close the Details view as well, which killed a Details opened any
+          // other way — the target-name path clears pinnedDetailsRowId before
+          // opening, so the pin guard never protected it. Hover never opens the
+          // panel (openHoverDetailsRow bails when it is already open), so there
+          // is nothing here for it to close.
           this.hideHoverTooltip();
-          this.detailsUI?.close?.({ keepPinned: false });
         });
       },
       onClickUserRow: (row) => {
         if (!row || this.isWindowDragging) return;
         const rowId = Number(row?.id);
-        this.pinnedDetailsRowId = Number.isFinite(rowId) && rowId > 0 ? rowId : null;
+        const pinnedId = Number.isFinite(rowId) && rowId > 0 ? rowId : null;
         this.hideHoverTooltip();
-        this.detailsUI.open(row, {
-          pin: true,
-          ...this.getDefaultDetailsOpenOptions(),
-        });
+        const options = this.getDefaultDetailsOpenOptions();
+        // Details lives in its own window; the overlay only says what to show.
+        // Only the in-overlay fallback pins the row — pinning suppresses the
+        // hover tooltip, which should stay live when the panel is elsewhere.
+        this.openDetailsSurface(
+          {
+            kind: "row",
+            row: {
+              id: pinnedId,
+              name: row?.name ?? "",
+              job: row?.job ?? "",
+              isIdentifying: !!row?.isIdentifying,
+            },
+            defaultTargetAll: !!options.defaultTargetAll,
+            defaultTargetId: options.defaultTargetId ?? null,
+          },
+          () => {
+            this.pinnedDetailsRowId = pinnedId;
+            this.detailsUI.open(row, { pin: true, ...options });
+          }
+        );
       },
     });
 
@@ -305,6 +343,8 @@ class DpsApp {
     this._pingTimer = setInterval(() => this.updatePing(), 30000);
 
     this.showTotalDps = this.safeGetSetting(this.storageKeys.showTotalDps) !== "false";
+    // Defaults on: `!== "false"` treats "never set" as enabled.
+    this.roundDps = this.safeGetSetting(this.storageKeys.roundDps) !== "false";
     this.meterTotalBar = document.querySelector(".meterTotalBar");
     this.meterTotalDpsEl = document.querySelector(".meterTotalDps");
     this.meterTotalDmgEl = document.querySelector(".meterTotalDmg");
@@ -336,7 +376,24 @@ class DpsApp {
         const nextId = Number(rowId);
         this.pinnedDetailsRowId = Number.isFinite(nextId) && nextId > 0 ? nextId : null;
       },
-      onBack: () => { this.historyUI?.open?.(); },
+      // "Back to History" means the History window now, not a list drawn over
+      // the fight — a fight window is one of several and the list is a window
+      // in its own right. Only the overlay still opens the panel inline.
+      onBack: () => {
+        if (window.A2_VIEW === "main") {
+          this.historyUI?.open?.();
+          return;
+        }
+        // detailsUI.close() already ran, so a fight window is now empty. Going
+        // back means "done with this fight": raise the list and dismiss this
+        // window rather than leaving a blank one behind.
+        const label = window.__TAURI__?.window?.getCurrentWindow?.()?.label || "";
+        const isFightWindow = label.startsWith("details-");
+        const sent = window.javaBridge?.requestDetailsView?.({ kind: "history" });
+        Promise.resolve(sent)
+          .catch(() => { if (!isFightWindow) this.historyUI?.open?.(); })
+          .then(() => { if (isFightWindow) window.javaBridge?.closeToolWindow?.(); });
+      },
     });
     if (this.detailsScreenshotBtn) {
       let screenshotNoteTimer = null;
@@ -433,11 +490,23 @@ class DpsApp {
     const storedDisplayMode = this.safeGetStorage(this.storageKeys.displayMode);
     this.setDisplayMode(storedDisplayMode || this.displayMode, { persist: false });
 
+    // History is a browser you leave open: picking a fight launches it into a
+    // window of its own so several can be compared, and the list stays put.
+    // Only the in-overlay fallback closes itself, because there the list and
+    // the fight would otherwise be stacked in the same 30px-row window.
     this.historyUI = typeof createHistoryUI === "function"
       ? createHistoryUI({
           onOpenFight: (record) => {
-            this.historyUI?.close?.();
-            this.detailsUI?.openHistoryFight?.(record);
+            const inPlace = () => {
+              this.historyUI?.close?.();
+              this.detailsUI?.openHistoryFight?.(record);
+            };
+            const fightId = record?.id ? String(record.id) : "";
+            if (!fightId) {
+              inPlace();
+              return;
+            }
+            this.openDetailsSurface({ kind: "fight", fightId }, inPlace);
           },
         })
       : null;
@@ -1065,6 +1134,10 @@ class DpsApp {
         continue;
       }
 
+      // Combat power comes from the party roster packet, so it only exists for
+      // players actually in your party; 0 means "unknown", not "zero CP".
+      const combatPower = Math.trunc(Number(isObj ? value.combatPower : 0)) || 0;
+
       rows.push({
         id: String(id),
         name,
@@ -1072,6 +1145,7 @@ class DpsApp {
         dps,
         totalDamage,
         damageContribution,
+        combatPower,
         isUser: name === this.USER_NAME,
         isIdentifying,
       });
@@ -1155,6 +1229,31 @@ class DpsApp {
     document.documentElement.style.setProperty("--meter-fill-opacity", String(normalized / 100));
     if (persist) {
       this.safeSetSetting(this.storageKeys.meterFillOpacity, String(normalized));
+    }
+  }
+
+  getDefaultBossNameSize() {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue("--boss-name-size")
+      .trim();
+    const value = Number.parseFloat(raw);
+    return Number.isFinite(value) ? value : 15;
+  }
+
+  normalizeBossNameSize(value, fallback = 15) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return fallback;
+    return Math.min(20, Math.max(8, Math.round(numeric * 2) / 2));
+  }
+
+  applyBossNameSize(px, { persist } = {}) {
+    const normalized = this.normalizeBossNameSize(px, 15);
+    document.documentElement.style.setProperty("--boss-name-size", `${normalized}px`);
+    // fitBossName reads the computed size, so re-run it: a bigger size may now
+    // overflow and need shrinking, a smaller one may have room to grow back.
+    this.fitBossName();
+    if (persist) {
+      this.safeSetSetting(this.storageKeys.bossNameSize, String(normalized));
     }
   }
 
@@ -1362,6 +1461,7 @@ class DpsApp {
       crit = 0,
       parry = 0,
       back = 0,
+      frontal = 0,
       perfect = 0,
       double = 0,
       smite = 0,
@@ -1408,6 +1508,7 @@ class DpsApp {
         crit: Number(crit) || 0,
         parry: Number(parry) || 0,
         back: Number(back) || 0,
+        frontal: Number(frontal) || 0,
         perfect: Number(perfect) || 0,
         double: Number(double) || 0,
         smite: Number(smite) || 0,
@@ -1460,6 +1561,7 @@ class DpsApp {
           crit: value.crit,
           parry: value.parry,
           back: value.back,
+          frontal: value.frontal,
           perfect: value.perfect,
           double: value.double,
           smite: value.smite,
@@ -1646,7 +1748,7 @@ class DpsApp {
         dmg: amt,
         time: ticks,
         isDot: isHot,
-        crit: 0, parry: 0, back: 0, perfect: 0, double: 0, smite: 0, powershard: 0,
+        crit: 0, parry: 0, back: 0, frontal: 0, perfect: 0, double: 0, smite: 0, powershard: 0,
         regen: 0, multiHitCount: 0, multiHitDamage: 0, multiHitHits: 0,
         minDmg: 0, maxDmg: 0, job: v.job ?? "", specs: null, hitTimestamps: [],
       });
@@ -1742,25 +1844,31 @@ class DpsApp {
     this.logoBtn?.setAttribute("data-no-drag", "true");
 
     // Click on boss name area → open Details for current mob (all players) or history
-    const bossNamesEl = document.querySelector(".bossNames");
-    if (bossNamesEl) {
-      bossNamesEl.addEventListener("click", () => {
+    // The target name is a plain label now: no click target and no data-no-drag,
+    // so the whole top of the window is grab-and-drag surface. Details is opened
+    // from a player row, History from its own header button.
+
+    const historyBtn = document.querySelector(".historyBtn");
+    if (historyBtn) {
+      // History is part of the Details surface, not the overlay: opening it
+      // here would make the 30px-tall meter grow to swallow a fight list. It
+      // goes to the Details window, which then swaps between the list and a
+      // fight in place. The in-overlay panel remains the fallback for when
+      // that window cannot be reached at all.
+      const openHistory = () => {
+        this.openDetailsSurface({ kind: "history" }, () => this.historyUI?.open?.());
+      };
+      historyBtn.addEventListener("click", () => {
         if (this.isWindowDragging) return;
-        const targetId = this.lastTargetId;
-        if (targetId > 0) {
-          this.pinnedDetailsRowId = null;
-          this.detailsUI?.open?.(null, {
-            defaultTargetId: targetId,
-            defaultTargetAll: false,
-            pin: true,
-            force: true,
-          });
-        } else {
-          this.historyUI?.open?.();
+        openHistory();
+      });
+      historyBtn.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openHistory();
         }
       });
-      bossNamesEl.setAttribute("data-no-drag", "true");
-      bossNamesEl.style.cursor = "pointer";
+      historyBtn.setAttribute("data-no-drag", "true");
     }
   }
 
@@ -1790,11 +1898,17 @@ class DpsApp {
     this.showPingCheckbox = document.querySelector(".showPingCheckbox");
     this.saveRawPacketsCheckbox = document.querySelector(".saveRawPacketsCheckbox");
     this.pinMeToTopCheckbox = document.querySelector(".pinMeToTopCheckbox");
-    this.slimModeCheckbox = document.querySelector(".slimModeCheckbox");
+    this.detailsMonitorDropdownBtn = document.querySelector(".detailsMonitorDropdownBtn");
+    this.detailsMonitorDropdownMenu = document.querySelector(".detailsMonitorDropdownMenu");
+    this.detailsMonitorHint = document.querySelector(".detailsMonitorHint");
+    this.meterLayoutDropdownBtn = document.querySelector(".meterLayoutDropdownBtn");
+    this.meterLayoutDropdownMenu = document.querySelector(".meterLayoutDropdownMenu");
     this.playerNamesBoldCheckbox = document.querySelector(".playerNamesBoldCheckbox");
     this.playerDpsBoldCheckbox = document.querySelector(".playerDpsBoldCheckbox");
     this.meterOpacityInput = document.querySelector(".meterOpacityInput");
     this.meterOpacityValue = document.querySelector(".meterOpacityValue");
+    this.bossNameSizeInput = document.querySelector(".bossNameSizeInput");
+    this.bossNameSizeValue = document.querySelector(".bossNameSizeValue");
     this.windowOpacityInput = document.querySelector(".windowOpacityInput");
     this.windowOpacityValue = document.querySelector(".windowOpacityValue");
     this.discordButton = document.querySelector(".discordButton");
@@ -1857,6 +1971,7 @@ class DpsApp {
     this.setOnlyShowUser(false, { persist: false });
     this.setDebugLogging(storedDebugLogging, { persist: false, syncBackend: true });
     this.setPinMeToTop(storedPinMeToTop, { persist: false });
+    this.setBetaUi(this.safeGetSetting(this.storageKeys.betaUi) !== "false", { persist: false });
     const storedSlimMode = this.safeGetSetting(this.storageKeys.slimMode) === "true";
     this.setSlimMode(storedSlimMode, { persist: false });
     this.setMainPlayerNamesBold(storedMainPlayerNamesBold, { persist: false });
@@ -1964,6 +2079,15 @@ class DpsApp {
         this.renderCurrentRows();
       });
     }
+    this.roundDpsCheckbox = document.querySelector(".roundDpsCheckbox");
+    if (this.roundDpsCheckbox) {
+      this.roundDpsCheckbox.checked = this.roundDps;
+      this.roundDpsCheckbox.addEventListener("change", (event) => {
+        this.roundDps = !!event.target?.checked;
+        this.safeSetSetting(this.storageKeys.roundDps, String(this.roundDps));
+        this.renderCurrentRows();
+      });
+    }
     this.autoHideMeterCheckbox = document.querySelector(".autoHideMeterCheckbox");
     if (this.autoHideMeterCheckbox) {
       const storedAutoHide = this.safeGetSetting(this.storageKeys.autoHideMeter) !== "false";
@@ -2011,13 +2135,6 @@ class DpsApp {
         this.setPinMeToTop(isChecked, { persist: true });
       });
     }
-    if (this.slimModeCheckbox) {
-      this.slimModeCheckbox.checked = this.slimMode;
-      this.slimModeCheckbox.addEventListener("change", (event) => {
-        const isChecked = !!event.target?.checked;
-        this.setSlimMode(isChecked, { persist: true });
-      });
-    }
     if (this.playerNamesBoldCheckbox) {
       this.playerNamesBoldCheckbox.checked = this.mainPlayerNamesBold;
       this.playerNamesBoldCheckbox.addEventListener("change", (event) => {
@@ -2055,6 +2172,27 @@ class DpsApp {
       });
     }
 
+    // Target name size
+    if (this.bossNameSizeInput && this.bossNameSizeValue) {
+      const defaultBossNameSize = this.getDefaultBossNameSize();
+      const storedBossNameSize = this.safeGetSetting(this.storageKeys.bossNameSize);
+      const resolvedBossNameSize =
+        storedBossNameSize !== null && String(storedBossNameSize).trim() !== ""
+          ? this.normalizeBossNameSize(storedBossNameSize, defaultBossNameSize)
+          : defaultBossNameSize;
+      this.applyBossNameSize(resolvedBossNameSize, { persist: false });
+      this.bossNameSizeInput.value = String(resolvedBossNameSize);
+      this.bossNameSizeValue.textContent = `${resolvedBossNameSize}px`;
+      const stopBossNameDrag = (event) => event.stopPropagation();
+      this.bossNameSizeInput.addEventListener("mousedown", stopBossNameDrag);
+      this.bossNameSizeInput.addEventListener("touchstart", stopBossNameDrag, { passive: true });
+      this.bossNameSizeInput.addEventListener("input", (event) => {
+        const next = this.normalizeBossNameSize(event.target?.value, defaultBossNameSize);
+        this.bossNameSizeValue.textContent = `${next}px`;
+        this.applyBossNameSize(next, { persist: true });
+      });
+    }
+
     // Window opacity
     if (this.windowOpacityInput && this.windowOpacityValue) {
       const storedWindowOpacity = this.safeGetStorage(this.storageKeys.windowOpacity);
@@ -2075,15 +2213,55 @@ class DpsApp {
       });
     }
 
+    // Mirror each slider's position into a CSS custom property so the track
+    // can paint a filled portion. Presentation only — no setting reads it.
+    const syncRangeFill = (input) => {
+      if (!input) return;
+      const min = Number(input.min);
+      const max = Number(input.max);
+      const value = Number(input.value);
+      if (!Number.isFinite(min) || !Number.isFinite(max) || !Number.isFinite(value) || max <= min) {
+        return;
+      }
+      const pct = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+      input.style.setProperty("--range-pct", `${pct}%`);
+    };
+    // Both panels: the Details settings menu uses the same slider geometry, so
+    // its tracks read the same property.
+    const isRange = (el) => el?.tagName === "INPUT" && el.type === "range";
+    [this.settingsPanel, this.detailsPanel].forEach((root) => {
+      if (!root) return;
+      root.querySelectorAll('input[type="range"]').forEach(syncRangeFill);
+      root.addEventListener("input", (event) => {
+        if (isRange(event.target)) syncRangeFill(event.target);
+      });
+    });
+
     this.setupKeybindButtons();
 
     const currentLanguage = this.i18n?.getLanguage?.() || storedLanguage || "en";
     this.settingsSelections.language = currentLanguage;
     this.settingsSelections.theme = this.theme;
 
+    this.detailsMonitor = this.getDetailsMonitorSetting();
+    this.refreshMonitorList().then(() => {
+      this.initializeSettingsDropdowns();
+      // Re-open the Details window if it was left enabled last session.
+      if (this.detailsMonitor !== "off" && window.A2_VIEW !== "details") {
+        this.applyDetailsMonitor(this.detailsMonitor, { persist: false });
+      }
+    });
+
     this.initializeSettingsDropdowns();
 
     this.settingsBtn?.addEventListener("click", () => {
+      // Settings is its own window now, so the overlay no longer grows to
+      // ~820px to contain it.
+      if (window.A2_VIEW === "main") {
+        window.javaBridge?.openSettingsWindow?.();
+        return;
+      }
+      this.refreshMonitorList().then(() => this.initializeSettingsDropdowns());
       this.toggleSettingsPanel();
     });
 
@@ -2465,14 +2643,14 @@ class DpsApp {
         this.applyTheme(value, { persist: true });
       },
       {
+        // Only the colours are set here; size and weight come from the
+        // stylesheet so the theme control matches every other dropdown.
         decorateItem: (item, value) => {
           const colors = previewThemeVars(value);
           item.style.background = colors.rowFill;
           item.style.opacity = "1";
           item.style.color = colors.textColor;
           item.style.textShadow = colors.nameShadow;
-          item.style.fontWeight = "500";
-          item.style.fontSize = "18px";
         },
         decorateButton: (button, value) => {
           const colors = previewThemeVars(value);
@@ -2480,8 +2658,6 @@ class DpsApp {
           button.style.opacity = "1";
           button.style.color = colors.textColor;
           button.style.textShadow = colors.nameShadow;
-          button.style.fontWeight = "500";
-          button.style.fontSize = "18px";
           const textEl = button.querySelector(".settingsDropdownText");
           if (textEl) {
             textEl.style.textShadow = colors.nameShadow;
@@ -2530,6 +2706,54 @@ class DpsApp {
         this.safeSetSetting(this.storageKeys.trainSelectionMode, value);
         window.javaBridge?.setTrainSelectionMode?.(value);
         if (!this.isCollapse) this.fetchDps();
+      }
+    );
+
+    // Monitor picker. Rebuilt every time the settings panel opens so hot-plugged
+    // displays appear without a restart.
+    {
+      const monitors = Array.isArray(this.monitorList) ? this.monitorList : [];
+      const offLabel = this.i18n?.t?.("settings.detailsMonitor.off", "Off") ?? "Off";
+      const detailsMonitorOptions = [{ value: "off", label: offLabel }].concat(
+        monitors.map((m, i) => ({ value: String(m.index), label: this.monitorLabel(m, i) }))
+      );
+      const current = this.detailsMonitor ?? this.getDetailsMonitorSetting();
+      setupDropdown(
+        this.detailsMonitorDropdownBtn,
+        this.detailsMonitorDropdownMenu,
+        detailsMonitorOptions,
+        detailsMonitorOptions.some((o) => o.value === current) ? current : "off",
+        (value) => {
+          this.applyDetailsMonitor(value, { persist: true });
+        }
+      );
+      if (monitors.length <= 1) {
+        this.setDetailsMonitorHint(
+          this.i18n?.t?.(
+            "settings.detailsMonitor.single",
+            "Only one display detected — connect a second screen to use this."
+          ) ?? "Only one display detected — connect a second screen to use this."
+        );
+      }
+    }
+
+    // One control for both axes of the main window: which skin, and how dense.
+    // They were two separate toggles, which made four states the user had to
+    // assemble themselves.
+    const meterLayoutOptions = [
+      { value: "beta", label: this.i18n?.t?.("settings.meterLayout.beta", "Beta UI") ?? "Beta UI" },
+      { value: "betaSlim", label: this.i18n?.t?.("settings.meterLayout.betaSlim", "Beta Slim") ?? "Beta Slim" },
+      { value: "classic", label: this.i18n?.t?.("settings.meterLayout.classic", "Classic UI") ?? "Classic UI" },
+      { value: "classicSlim", label: this.i18n?.t?.("settings.meterLayout.classicSlim", "Classic Slim") ?? "Classic Slim" },
+    ];
+    setupDropdown(
+      this.meterLayoutDropdownBtn,
+      this.meterLayoutDropdownMenu,
+      meterLayoutOptions,
+      this.getMeterLayout(),
+      (value) => {
+        if (!value) return;
+        this.setMeterLayout(value, { persist: true });
       }
     );
 
@@ -3158,11 +3382,333 @@ class DpsApp {
     this.renderCurrentRows();
   }
 
+  // The "details" window runs this same bundle. Rather than a second app, it
+  // reuses the panel that already exists in index.html: the overlay chrome is
+  // hidden by CSS and the panel is held open on the whole fight.
+  /** "off" or a monitor index as a string. */
+  getDetailsMonitorSetting() {
+    const raw = this.safeGetSetting(this.storageKeys.detailsMonitor);
+    if (raw === null || raw === undefined || String(raw).trim() === "") return "off";
+    return String(raw);
+  }
+
+  async refreshMonitorList() {
+    try {
+      const list = await window.javaBridge?.listMonitors?.();
+      this.monitorList = Array.isArray(list) ? list : [];
+    } catch {
+      this.monitorList = [];
+    }
+    return this.monitorList;
+  }
+
+  monitorLabel(monitor, position) {
+    const n = Number.isFinite(position) ? position + 1 : Number(monitor?.index) + 1;
+    const w = Math.round(Number(monitor?.width) || 0);
+    const h = Math.round(Number(monitor?.height) || 0);
+    const notes = [];
+    if (monitor?.isPrimary) {
+      notes.push(this.i18n?.t?.("settings.detailsMonitor.primary", "primary") ?? "primary");
+    }
+    // Where the screen physically sits — a resolution alone does not tell the
+    // user which of their monitors they just selected.
+    const side = String(monitor?.side || "");
+    if (side) {
+      notes.push(this.i18n?.t?.(`settings.detailsMonitor.side.${side}`, side) ?? side);
+    }
+    const suffix = notes.length ? ` (${notes.join(", ")})` : "";
+    return `${n} — ${w}×${h}${suffix}`;
+  }
+
+  /**
+   * Apply the "Show Details on monitor" setting. Opening is best-effort: if the
+   * chosen display has been unplugged since it was saved, fall back to off
+   * rather than leaving a window stranded off-screen.
+   */
+  async applyDetailsMonitor(value, { persist = false } = {}) {
+    const next = value === "off" || value === null || value === undefined ? "off" : String(value);
+    this.detailsMonitor = next;
+    if (persist) {
+      this.safeSetSetting(this.storageKeys.detailsMonitor, next);
+    }
+    if (next === "off") {
+      await window.javaBridge?.closeDetailsWindow?.();
+      this.setDetailsMonitorHint("");
+      return;
+    }
+    const index = Number(next);
+    const monitors = await this.refreshMonitorList();
+    if (!Number.isFinite(index) || !monitors.some((m) => Number(m.index) === index)) {
+      this.setDetailsMonitorHint(
+        this.i18n?.t?.("settings.detailsMonitor.missing", "That display is not connected.") ??
+          "That display is not connected."
+      );
+      await window.javaBridge?.closeDetailsWindow?.();
+      this.detailsMonitor = "off";
+      if (persist) this.safeSetSetting(this.storageKeys.detailsMonitor, "off");
+      return;
+    }
+    try {
+      await window.javaBridge?.openDetailsWindow?.(index);
+      this.setDetailsMonitorHint("");
+    } catch (err) {
+      this.setDetailsMonitorHint(String(err?.message || err || ""));
+    }
+  }
+
+  setDetailsMonitorHint(text) {
+    if (!this.detailsMonitorHint) return;
+    this.detailsMonitorHint.textContent = text || "";
+    this.detailsMonitorHint.style.display = text ? "" : "none";
+  }
+
+  /**
+   * Hand a Details view to the standalone Details window.
+   *
+   * Every route into Details from the overlay — a meter row, a fight picked in
+   * History — goes through here, so there is exactly one Details surface and
+   * the overlay never grows to contain the panel. The backend creates the
+   * window if it is not up yet and places it where the user last left it.
+   *
+   * `fallback` is the old in-overlay behaviour, run when the window cannot be
+   * reached at all (bridge without the command, window build failed). Showing
+   * the panel in the overlay beats showing nothing.
+   */
+  openDetailsSurface(request, fallback) {
+    const runFallback = () => {
+      try { fallback?.(); } catch (err) { console.error("[A2Tools] details fallback failed", err); }
+    };
+    // A Details window is already the destination, so it renders in place
+    // rather than asking for yet another window. The overlay and the History
+    // window are both senders: History in particular must route, or picking a
+    // fight would replace the list instead of opening beside it.
+    if (window.A2_VIEW === "details") {
+      runFallback();
+      return;
+    }
+    const send = window.javaBridge?.requestDetailsView;
+    if (typeof send !== "function") {
+      runFallback();
+      return;
+    }
+    let result;
+    try {
+      result = send.call(window.javaBridge, request);
+    } catch (err) {
+      console.error("[A2Tools] requestDetailsView failed", err);
+      runFallback();
+      return;
+    }
+    Promise.resolve(result).catch((err) => {
+      console.error("[A2Tools] requestDetailsView failed", err);
+      runFallback();
+    });
+  }
+
+  // The "settings" window runs this same bundle with only the settings panel
+  // visible, so its markup and wiring are reused rather than duplicated.
+  enterSettingsWindowMode() {
+    document.body.classList.add("isSettingsWindow");
+    this.refreshMonitorList().then(() => this.initializeSettingsDropdowns());
+    this.settingsPanel?.classList.add("isOpen");
+    const close = () => window.javaBridge?.closeSettingsWindow?.();
+    this.settingsClose?.addEventListener("click", close);
+    document.querySelector(".settingsWindowClose")?.addEventListener("click", close);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => window.javaBridge?.toolWindowReady?.("settings"));
+    });
+  }
+
+  // The Battle History window: this bundle again, showing only the history
+  // panel. It is a browser the user leaves open — picking a fight opens that
+  // fight in a window of its own and the list stays exactly as it was, so
+  // several fights can be read side by side.
+  enterHistoryWindowMode() {
+    document.body.classList.add("isHistoryWindow");
+    const openList = () => this.historyUI?.open?.();
+    openList();
+    // open() reads a cache that an async prefetch fills, and this window is
+    // created precisely in order to show the list — so it renders before its
+    // own prefetch lands and would otherwise sit empty forever. Re-render once
+    // the data is genuinely there. Safe to re-open blindly: this resolves in
+    // the first moments of the window, before anyone can scroll or filter.
+    Promise.resolve(window.javaBridge?.refreshFightHistory?.())
+      .then(() => openList())
+      .catch(() => {});
+
+    // Frameless, so the panel's own × closes the window rather than just
+    // hiding the list — there is nothing behind it here.
+    document.querySelector(".historyClose")?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      window.javaBridge?.closeToolWindow?.();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") window.javaBridge?.closeToolWindow?.();
+    });
+
+    // Nothing sits behind the list, so if something closes it, put it back.
+    if (this._historyWindowTimer) clearInterval(this._historyWindowTimer);
+    this._historyWindowTimer = setInterval(() => {
+      if (!this.historyUI?.isOpen?.()) openList();
+    }, 1000);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => window.javaBridge?.toolWindowReady?.("history"));
+    });
+  }
+
+  enterDetailsWindowMode() {
+    document.body.classList.add("isDetailsWindow");
+    // Two kinds of window run this mode: the single live "details" window, which
+    // is the one the monitor setting governs, and a "details-<fightId>" window
+    // showing one saved fight, of which there can be several.
+    const label = window.__TAURI__?.window?.getCurrentWindow?.()?.label || "details";
+    const isFightWindow = label.startsWith("details-");
+    if (isFightWindow) document.body.classList.add("isFightWindow");
+
+    // Frameless window, so the panel header supplies the close control.
+    document.querySelector(".detailsWindowClose")?.addEventListener("click", () => {
+      if (isFightWindow) {
+        // One of several, and nothing to do with the monitor setting.
+        window.javaBridge?.closeToolWindow?.();
+        return;
+      }
+      // Closing the live window also turns the setting off, otherwise it would
+      // reopen on next launch.
+      this.safeSetSetting(this.storageKeys.detailsMonitor, "off");
+      window.javaBridge?.closeDetailsWindow?.();
+    });
+    const openAll = () => {
+      this.detailsUI?.open?.(null, { defaultTargetAll: true, pin: true, force: true });
+    };
+    // Confirm on the screen itself which monitor this is. Backed by the
+    // placement the backend actually performed, not by what was requested.
+    window.__TAURI__?.event?.listen?.("details-placed", (event) => {
+      const badge = document.querySelector(".detailsMonitorBadge");
+      if (!badge) return;
+      const p = event?.payload || {};
+      const numEl = badge.querySelector(".detailsMonitorBadgeNum");
+      const textEl = badge.querySelector(".detailsMonitorBadgeText");
+      if (numEl) numEl.textContent = String(p.number ?? "");
+      if (textEl) {
+        const label = this.i18n?.t?.("settings.detailsMonitor.badge", "Monitor") ?? "Monitor";
+        const primary = p.isPrimary
+          ? ` · ${this.i18n?.t?.("settings.detailsMonitor.primary", "primary") ?? "primary"}`
+          : "";
+        textEl.textContent = `${label} ${p.number ?? ""} · ${p.width}×${p.height}${primary}`;
+      }
+      badge.classList.remove("isVisible");
+      void badge.offsetWidth; // restart the fade if it fires twice
+      badge.classList.add("isVisible");
+    });
+
+    // Views routed here from the overlay (a meter row, a fight from History).
+    // The request arrives two ways and only one of them can be relied on: a
+    // window that was created to serve the request has no listener attached
+    // when it is emitted, so it pulls the parked request on startup instead.
+    // The seq stamp makes applying it twice a no-op.
+    this._lastDetailsRequestSeq = 0;
+    this._detailsRequestsInFlight = 0;
+    const applyRequest = async (payload) => {
+      if (!payload || typeof payload !== "object") return;
+      const seq = Number(payload.seq) || 0;
+      if (seq && seq <= this._lastDetailsRequestSeq) return;
+      this._lastDetailsRequestSeq = seq;
+      // Hold off the keep-open watchdog: a fight has to be loaded from disk
+      // before the panel opens, and the panel is closed until it lands.
+      this._detailsRequestsInFlight += 1;
+      try {
+        if (payload.kind === "fight") {
+          const raw = await window.javaBridge?.getFightDetails?.(String(payload.fightId || ""));
+          const record = typeof raw === "string" ? this.safeParseJSON(raw, null) : raw;
+          if (!record) {
+            openAll();
+            return;
+          }
+          this.detailsUI?.resetDetailsMode?.();
+          await this.detailsUI?.openHistoryFight?.(record);
+          return;
+        }
+        const row = payload.row && typeof payload.row === "object" ? payload.row : null;
+        await this.detailsUI?.open?.(row, {
+          force: true,
+          pin: true,
+          defaultTargetAll: !!payload.defaultTargetAll,
+          defaultTargetId: payload.defaultTargetId ?? null,
+        });
+      } catch (err) {
+        console.error("[A2Tools] details request failed", err);
+      } finally {
+        this._detailsRequestsInFlight = Math.max(0, this._detailsRequestsInFlight - 1);
+      }
+    };
+    const listening = window.__TAURI__?.event?.listen?.(
+      "details-request",
+      (event) => { void applyRequest(event?.payload); }
+    );
+
+    // A fight window has a saved fight waiting for it, so showing live combat
+    // first would only flash the wrong content. The fight branch of
+    // applyRequest falls back to openAll() if the record cannot be loaded, so
+    // this cannot strand the window empty.
+    if (!isFightWindow) openAll();
+    // Tell the backend to reveal the window now that the panel has painted.
+    // Sequenced after the listener so a request emitted meanwhile is not lost.
+    Promise.resolve(listening)
+      .catch(() => {})
+      .then(() => window.javaBridge?.takePendingDetailsRequest?.())
+      .then((pending) => (pending ? applyRequest(pending) : undefined))
+      .catch(() => {})
+      .then(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => window.javaBridge?.detailsWindowReady?.());
+        });
+      });
+    // The panel can be closed from inside (back button, escape). In this window
+    // there is nothing behind it, so re-assert rather than leave a blank screen.
+    // History counts as content: it is the other panel that legitimately fills
+    // this window, and reopening Details over it would fight the back button.
+    // Only the live window: openAll() shows current combat, which in a window
+    // opened to display one saved fight would quietly replace that fight.
+    if (!isFightWindow) {
+      if (this._detailsWindowTimer) clearInterval(this._detailsWindowTimer);
+      this._detailsWindowTimer = setInterval(() => {
+        if (this._detailsRequestsInFlight > 0) return;
+        if (!this.detailsPanel?.classList?.contains("open")) openAll();
+      }, 1000);
+    }
+  }
+
+  getMeterLayout() {
+    const base = this.betaUi ? "beta" : "classic";
+    return this.slimMode ? `${base}Slim` : base;
+  }
+
+  setMeterLayout(value, { persist = false } = {}) {
+    const beta = String(value).startsWith("beta");
+    const slim = String(value).endsWith("Slim");
+    this.setBetaUi(beta, { persist });
+    this.setSlimMode(slim, { persist });
+  }
+
+  // Beta UI is the redesigned main window and is the default. Switching it off
+  // adds body.legacyUi, which activates the pre-redesign skin in styles.css.
+  setBetaUi(enabled, { persist = false } = {}) {
+    this.betaUi = !!enabled;
+    document.body.classList.toggle("legacyUi", !this.betaUi);
+    // Both skins show the same placeholder text; only the type scale and the
+    // uppercase transform differ, so the fitted size has to be recomputed.
+    this.fitBossName();
+    if (persist) {
+      this.safeSetSetting(this.storageKeys.betaUi, String(this.betaUi));
+    }
+  }
+
   setSlimMode(enabled, { persist = false } = {}) {
     this.slimMode = !!enabled;
-    if (this.slimModeCheckbox && document.activeElement !== this.slimModeCheckbox) {
-      this.slimModeCheckbox.checked = this.slimMode;
-    }
     document.querySelector(".meter")?.classList.toggle("slim", this.slimMode);
     if (persist) {
       this.safeSetSetting(this.storageKeys.slimMode, String(this.slimMode));
@@ -3275,7 +3821,17 @@ class DpsApp {
     this.elBossHpBar.classList.toggle("isMid", pct > 25 && pct <= 50);
     this.elBossHpBar.classList.toggle("isLow", pct <= 25);
     if (this.elBossHpText) {
-      this.elBossHpText.textContent = `${this.formatAbbreviatedNumber(remaining)} · ${Math.round(pct)}%`;
+      // Split to the two ends of the band: the percentage rides the fill,
+      // the absolute HP sits on the track. A single centred label was
+      // getting sliced in half by the fill's leading edge at mid HP.
+      const pctEl = this.elBossHpText.querySelector(".bossHpPct");
+      const amtEl = this.elBossHpText.querySelector(".bossHpAmt");
+      if (pctEl && amtEl) {
+        pctEl.textContent = `${Math.round(pct)}%`;
+        amtEl.textContent = `${this.formatAbbreviatedNumber(remaining)} / ${this.formatAbbreviatedNumber(max)}`;
+      } else {
+        this.elBossHpText.textContent = `${this.formatAbbreviatedNumber(remaining)} · ${Math.round(pct)}%`;
+      }
     }
   }
 
@@ -3297,6 +3853,21 @@ class DpsApp {
       }
     }
     return this.dpsFormatter.format(n);
+  }
+
+  // DPS to the nearest thousand: 1,012,326 reads as "1,012k", 554,874 as "555k".
+  // Same rule as the combat power beside the name, so the two numbers on a row
+  // are at the same precision. Below 500 the abbreviation would collapse to
+  // "0k", so show the raw figure there instead. Turned off by the "Round DPS"
+  // setting, which falls back to the exact figure.
+  formatDpsThousands(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return "-";
+    if (!this.roundDps) return this.dpsFormatter.format(Math.round(n));
+    const thousands = Math.round(n / 1000);
+    return thousands > 0
+      ? `${this.dpsFormatter.format(thousands)}k`
+      : this.dpsFormatter.format(Math.round(n));
   }
 
   refreshDamageData({ reason = "refresh" } = {}) {
@@ -3338,6 +3909,40 @@ class DpsApp {
     this.logDebug(`Damage data refreshed (${reason}).`);
   }
 
+  // Settings are edited in a separate window, so this window has to be told
+  // when one changes or it keeps rendering with the value it read at startup.
+  //
+  // Every window loads the same document, so the control for the setting exists
+  // here too, already wired to the handler that applies it. Rather than
+  // duplicate that logic, set the control to the incoming value and fire the
+  // same event a click would — one code path for local and remote changes.
+  //
+  // Only the options that change what the meter draws are listed. Custom
+  // dropdowns (theme, layout, player limit) are not native inputs and need
+  // their own handling, so they are deliberately absent.
+  applyRemoteSettingChange(key, value) {
+    const selector = REMOTE_APPLIED_SETTING_CONTROLS[key];
+    if (!selector) return;
+    const control = document.querySelector(selector);
+    if (!control) return;
+
+    // Bail when the value already matches — this is what stops the echo. The
+    // handler below writes the setting straight back, and the backend only
+    // broadcasts real changes, so the round trip ends here.
+    if (control.type === "checkbox") {
+      const next = value !== "false";
+      if (control.checked === next) return;
+      control.checked = next;
+    } else {
+      if (String(control.value) === String(value)) return;
+      control.value = value;
+    }
+    control.dispatchEvent(new Event("change", { bubbles: true }));
+    if (control.type === "range") {
+      control.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  }
+
   getMetricForRow(row) {
     if (this.displayMode === "totalDamage") {
       const totalDamage = Number(row?.totalDamage) || 0;
@@ -3349,7 +3954,7 @@ class DpsApp {
     const dps = Number(row?.dps) || 0;
     return {
       value: dps,
-      text: `${this.dpsFormatter.format(dps)}${this.i18n?.t("meter.dpsSuffix", "/s") ?? "/s"}`,
+      text: `${this.formatDpsThousands(dps)}${this.i18n?.t("meter.dpsSuffix", "/s") ?? "/s"}`,
     };
   }
 
@@ -3363,7 +3968,9 @@ class DpsApp {
     const totalDps = rows.reduce((sum, r) => sum + (Number(r?.dps) || 0), 0);
     this.meterTotalBar.style.display = "";
     if (this.meterTotalDpsEl) {
-      this.meterTotalDpsEl.textContent = `${this.dpsFormatter.format(totalDps)}${this.i18n?.t("meter.dpsSuffix", "/s") ?? "/s"}`;
+      // Matches the per-row readout directly above it; a full-precision total
+      // over abbreviated rows reads as two different units.
+      this.meterTotalDpsEl.textContent = `${this.formatDpsThousands(totalDps)}${this.i18n?.t("meter.dpsSuffix", "/s") ?? "/s"}`;
     }
     if (this.meterTotalDmgEl) {
       this.meterTotalDmgEl.textContent = this.formatAbbreviatedNumber(totalDmg);
@@ -3603,10 +4210,16 @@ class DpsApp {
     if (!el) return;
     const container = el.parentElement;
     if (!container) return;
-    const maxFs = this.slimMode ? 16 : 18;
-    const minFs = 10;
+    // The stylesheet owns the boss-name size; this only ever shrinks a long
+    // name to fit. It used to start from a hard-coded 18px (16 slim) and write
+    // that as an inline style, which silently overrode whatever the CSS asked
+    // for — so the header label ignored the design's type scale entirely.
     el.style.fontSize = "";
-    for (let fs = maxFs; fs >= minFs; fs--) {
+    const base = Number.parseFloat(getComputedStyle(el).fontSize);
+    if (!Number.isFinite(base) || base <= 0) return;
+    if (el.scrollWidth <= container.clientWidth) return;
+    const minFs = Math.max(7, base * 0.72);
+    for (let fs = base - 0.5; fs >= minFs; fs -= 0.5) {
       el.style.fontSize = `${fs}px`;
       if (el.scrollWidth <= container.clientWidth) return;
     }
@@ -3740,7 +4353,7 @@ class DpsApp {
       }
       return this.i18n?.t("target.train", "Training Scarecrow") ?? "Training Scarecrow";
     }
-    return this.i18n?.t("header.title", "DPS METER") ?? "DPS METER";
+    return this.i18n?.t("header.title", "A2Tools DPS Meter") ?? "A2Tools DPS Meter";
   }
 
   getTargetLabel({ targetId = 0, targetName = "", targetMode = "" } = {}) {
@@ -4118,6 +4731,13 @@ const startApp = async ({ forced = false } = {}) => {
     await window.i18n?.init?.();
     window.lucide?.createIcons?.();
     dpsApp.start();
+    if (window.A2_VIEW === "details") {
+      dpsApp.enterDetailsWindowMode();
+    } else if (window.A2_VIEW === "settings") {
+      dpsApp.enterSettingsWindowMode();
+    } else if (window.A2_VIEW === "history") {
+      dpsApp.enterHistoryWindowMode();
+    }
     window.javaBridge?.notifyUiReady?.();
 
   } catch (err) {

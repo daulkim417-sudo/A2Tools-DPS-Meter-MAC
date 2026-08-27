@@ -1487,6 +1487,10 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2090865": {
+    "name": "None",
+    "isBoss": false
+  },
   "2100000": {
     "name": "闪亮的卡克盖仑",
     "isBoss": false
@@ -3672,7 +3676,7 @@
     "isBoss": false
   },
   "2101202": {
-    "name": "希斯洛特亡命",
+    "name": "希斯洛特亡命之徒",
     "isBoss": false
   },
   "2101203": {
@@ -5548,11 +5552,11 @@
     "isBoss": false
   },
   "2110674": {
-    "name": "空中要塞健壮的不汗党",
+    "name": "空中要塞健壮的恶棍",
     "isBoss": false
   },
   "2110675": {
-    "name": "空中要塞不汗党",
+    "name": "空中要塞恶棍",
     "isBoss": false
   },
   "2200001": {
@@ -7187,21 +7191,21 @@
     "name": "沉没的艾蒙",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610011
   },
   "2300001": {
     "name": "深海帕伊迪温",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610011
   },
   "2300002": {
     "name": "唱歌的艾拉伊德",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610011
   },
   "2300003": {
@@ -7256,21 +7260,21 @@
     "name": "沉没的艾蒙",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610012
   },
   "2300016": {
     "name": "深海帕伊迪温",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610012
   },
   "2300017": {
     "name": "唱歌的艾拉伊德",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610012
   },
   "2300018": {
@@ -7325,21 +7329,21 @@
     "name": "沉没的艾蒙",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610013
   },
   "2300031": {
     "name": "深海帕伊迪温",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610013
   },
   "2300032": {
     "name": "唱歌的艾拉伊德",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610013
   },
   "2300033": {
@@ -7629,7 +7633,7 @@
   "2300104": {
     "name": "强化的哈尔坤",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600001
   },
@@ -7648,7 +7652,7 @@
   "2300108": {
     "name": "弃置的加迪尔顿",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600001
   },
@@ -7831,22 +7835,22 @@
   "2300153": {
     "name": "管理者纳吉温",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 610044
   },
   "2300154": {
     "name": "孵化那亚特曼",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 610044
   },
   "2300155": {
     "name": "腐败的杜勒巴提",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 610044
   },
   "2300156": {
@@ -7912,28 +7916,28 @@
   "2300171": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600001
   },
   "2300172": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600001
   },
   "2300173": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600001
   },
   "2300174": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600001
   },
@@ -7992,22 +7996,22 @@
   "2300188": {
     "name": "苏醒的艾图拉顿",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600141
   },
   "2300189": {
     "name": "贤明的巴温努特",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600141
   },
   "2300190": {
     "name": "膨胀的札伊尔佩",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600141
   },
   "2300191": {
@@ -8049,7 +8053,7 @@
   "2300200": {
     "name": "苏醒的艾图拉顿",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600142
   },
@@ -8076,14 +8080,14 @@
   "2300206": {
     "name": "守护队长劳尔",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600012
   },
   "2300207": {
     "name": "审判者乌拉姆",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600012
   },
@@ -8130,14 +8134,14 @@
   "2300218": {
     "name": "神圣的奥多勒",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600012
   },
   "2300219": {
     "name": "贤明的巴温努特",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600142
   },
@@ -8185,7 +8189,7 @@
   "2300230": {
     "name": "膨胀的札伊尔佩",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600142
   },
@@ -8240,22 +8244,22 @@
   "2300243": {
     "name": "苏醒的艾图拉顿",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600143
   },
   "2300244": {
     "name": "贤明的巴温努特",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600143
   },
   "2300245": {
     "name": "膨胀的札伊尔佩",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600143
   },
   "2300246": {
@@ -8314,21 +8318,21 @@
     "name": "罗塔尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610020
   },
   "2300260": {
     "name": "罗普斯提诺",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610020
   },
   "2300261": {
     "name": "克罗梅德深渊",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610020
   },
   "2300262": {
@@ -8395,14 +8399,14 @@
     "name": "罗塔尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610021
   },
   "2300300": {
     "name": "罗普斯提诺",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610021
   },
   "2300301": {
@@ -8444,21 +8448,21 @@
   "2300310": {
     "name": "银刃罗坦",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600022
   },
   "2300311": {
     "name": "红火花伊格努斯",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600022
   },
   "2300312": {
     "name": "黑烟穆勒特",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600022
   },
@@ -8482,7 +8486,7 @@
     "name": "克罗梅德深渊",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610021
   },
   "2300318": {
@@ -8553,21 +8557,21 @@
     "name": "罗塔尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610022
   },
   "2300335": {
     "name": "罗普斯提诺",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610022
   },
   "2300336": {
     "name": "克罗梅德深渊",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610022
   },
   "2300337": {
@@ -8638,21 +8642,21 @@
     "name": "罗塔尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610023
   },
   "2300354": {
     "name": "罗普斯提诺",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610023
   },
   "2300355": {
     "name": "克罗梅德深渊",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610023
   },
   "2300356": {
@@ -8691,36 +8695,84 @@
     "name": "None",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610020
   },
   "2300365": {
     "name": "None",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 610021
+  },
+  "2300366": {
+    "name": "被污染的斯拉克奴工",
+    "isBoss": false
   },
   "2300367": {
     "name": "None",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 610022
   },
   "2300368": {
     "name": "None",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610023
+  },
+  "2300370": {
+    "name": "被污染的斯拉克哨兵",
+    "isBoss": false
   },
   "2300371": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600022
+  },
+  "2300372": {
+    "name": "被污染的斯拉克监督官",
+    "isBoss": false
+  },
+  "2300376": {
+    "name": "被污染的斯拉克奴工",
+    "isBoss": false
+  },
+  "2300378": {
+    "name": "被污染的斯拉克哨兵",
+    "isBoss": false
+  },
+  "2300379": {
+    "name": "被污染的斯拉克监督官",
+    "isBoss": false
+  },
+  "2300383": {
+    "name": "被污染的斯拉克奴工",
+    "isBoss": false
+  },
+  "2300385": {
+    "name": "被污染的斯拉克哨兵",
+    "isBoss": false
+  },
+  "2300386": {
+    "name": "被污染的斯拉克监督官",
+    "isBoss": false
+  },
+  "2300390": {
+    "name": "被污染的斯拉克奴工",
+    "isBoss": false
+  },
+  "2300392": {
+    "name": "被污染的斯拉克哨兵",
+    "isBoss": false
+  },
+  "2300393": {
+    "name": "被污染的斯拉克监督官",
+    "isBoss": false
   },
   "2300397": {
     "name": "爱的试炼",
@@ -8741,7 +8793,7 @@
   "2300401": {
     "name": "梦幻拉克修米",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600032
   },
@@ -8752,7 +8804,7 @@
   "2300403": {
     "name": "捕食者萨拉斯瓦提",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600032
   },
@@ -8768,9 +8820,30 @@
     "name": "管理人亚巴图勒",
     "isBoss": false
   },
+  "2300407": {
+    "name": "傲慢亚提埃尔",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "探险",
+    "dungeonId": 600161
+  },
   "2300408": {
     "name": "副士官阿克巴尔",
     "isBoss": false
+  },
+  "2300409": {
+    "name": "研究所长札伊洛斯",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "探险",
+    "dungeonId": 600161
+  },
+  "2300410": {
+    "name": "监督官格罗卡斯",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "探险",
+    "dungeonId": 600161
   },
   "2300411": {
     "name": "德拉克纽特随行兵",
@@ -8836,6 +8909,10 @@
     "name": "腐败的深渊虫",
     "isBoss": false
   },
+  "2300427": {
+    "name": "实验体混种",
+    "isBoss": false
+  },
   "2300428": {
     "name": "羁绊花园管理员",
     "isBoss": false
@@ -8850,6 +8927,158 @@
   },
   "2300431": {
     "name": "羁绊花园管理员",
+    "isBoss": false
+  },
+  "2300432": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2300433": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2300434": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2300435": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2300436": {
+    "name": "阿斯克蓝",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第1阶段",
+    "dungeonId": 610030
+  },
+  "2300437": {
+    "name": "不完整的布劳恩特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第1阶段",
+    "dungeonId": 610030
+  },
+  "2300438": {
+    "name": "狂气克罗明斯特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第1阶段",
+    "dungeonId": 610030
+  },
+  "2300439": {
+    "name": "阿斯克蓝",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第2阶段",
+    "dungeonId": 610031
+  },
+  "2300440": {
+    "name": "不完整的布劳恩特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第2阶段",
+    "dungeonId": 610031
+  },
+  "2300441": {
+    "name": "狂气克罗明斯特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第2阶段",
+    "dungeonId": 610031
+  },
+  "2300442": {
+    "name": "阿斯克蓝",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第3阶段",
+    "dungeonId": 610032
+  },
+  "2300443": {
+    "name": "不完整的布劳恩特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第3阶段",
+    "dungeonId": 610032
+  },
+  "2300444": {
+    "name": "狂气克罗明斯特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第3阶段",
+    "dungeonId": 610032
+  },
+  "2300445": {
+    "name": "阿斯克蓝",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第4阶段",
+    "dungeonId": 610033
+  },
+  "2300446": {
+    "name": "不完整的布劳恩特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第4阶段",
+    "dungeonId": 610033
+  },
+  "2300447": {
+    "name": "狂气克罗明斯特",
+    "isBoss": true,
+    "category": "超越",
+    "tier": "第4阶段",
+    "dungeonId": 610033
+  },
+  "2300448": {
+    "name": "被污染的块状怪",
+    "isBoss": false
+  },
+  "2300450": {
+    "name": "被污染的块状怪",
+    "isBoss": false
+  },
+  "2300452": {
+    "name": "被污染的块状怪",
+    "isBoss": false
+  },
+  "2300454": {
+    "name": "被污染的块状怪",
+    "isBoss": false
+  },
+  "2300456": {
+    "name": "雷帕尔团警备队长",
+    "isBoss": false
+  },
+  "2300457": {
+    "name": "雷帕尔团警备队员",
+    "isBoss": false
+  },
+  "2300458": {
+    "name": "基地研究员",
+    "isBoss": false
+  },
+  "2300459": {
+    "name": "雷帕尔团首席警备队员",
+    "isBoss": false
+  },
+  "2300460": {
+    "name": "雷帕尔团警备队员",
+    "isBoss": false
+  },
+  "2300461": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2300462": {
+    "name": "实验体变异体",
+    "isBoss": false
+  },
+  "2300463": {
+    "name": "实验体捕食者",
+    "isBoss": false
+  },
+  "2300464": {
+    "name": "None",
     "isBoss": false
   },
   "2300465": {
@@ -8879,7 +9108,7 @@
   "2300471": {
     "name": "超越的巴卡尔摩",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600032
   },
@@ -8914,6 +9143,13 @@
   "2300480": {
     "name": "中毒的斯拉克车夫",
     "isBoss": false
+  },
+  "2300481": {
+    "name": "傲慢亚提埃尔",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "征服[困难]",
+    "dungeonId": 600163
   },
   "2300482": {
     "name": "深渊角杜杜卡工人",
@@ -8994,8 +9230,8 @@
   "2300502": {
     "name": "腐败的杜勒巴提(样本)",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600041
   },
   "2300503": {
@@ -9017,22 +9253,22 @@
   "2300507": {
     "name": "管理者纳吉温",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600041
   },
   "2300508": {
     "name": "孵化那亚特曼",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600041
   },
   "2300509": {
     "name": "腐败的杜勒巴提",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600041
   },
   "2300510": {
@@ -9058,8 +9294,8 @@
   "2300515": {
     "name": "腐败的杜勒巴提(样本)",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600041
   },
   "2300516": {
@@ -9069,8 +9305,8 @@
   "2300517": {
     "name": "腐败的杜勒巴提(样本)",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600041
   },
   "2300518": {
@@ -9213,8 +9449,156 @@
     "name": "深渊角路比利尼",
     "isBoss": false
   },
+  "2300555": {
+    "name": "研究所长札伊洛斯",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "征服[困难]",
+    "dungeonId": 600163
+  },
+  "2300556": {
+    "name": "监督官格罗卡斯",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "征服[困难]",
+    "dungeonId": 600163
+  },
+  "2300557": {
+    "name": "实验体混种",
+    "isBoss": false
+  },
+  "2300558": {
+    "name": "雷帕尔团警备队长",
+    "isBoss": false
+  },
+  "2300559": {
+    "name": "雷帕尔团警备队员",
+    "isBoss": false
+  },
+  "2300560": {
+    "name": "基地研究员",
+    "isBoss": false
+  },
+  "2300561": {
+    "name": "雷帕尔团首席警备队员",
+    "isBoss": false
+  },
+  "2300562": {
+    "name": "雷帕尔团警备队员",
+    "isBoss": false
+  },
+  "2300563": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2300564": {
+    "name": "实验体变异体",
+    "isBoss": false
+  },
+  "2300565": {
+    "name": "实验体捕食者",
+    "isBoss": false
+  },
+  "2300566": {
+    "name": "被污染的灵魂症结器",
+    "isBoss": false
+  },
+  "2300567": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2300568": {
+    "name": "奥德研究室雷射",
+    "isBoss": false
+  },
+  "2300571": {
+    "name": "岩石精灵",
+    "isBoss": false
+  },
+  "2300572": {
+    "name": "大地精灵",
+    "isBoss": false
+  },
+  "2300573": {
+    "name": "愤怒的岩石精灵",
+    "isBoss": false
+  },
+  "2300574": {
+    "name": "愤怒的大地精灵",
+    "isBoss": false
+  },
+  "2300575": {
+    "name": "堕落的小妖精",
+    "isBoss": false
+  },
+  "2300576": {
+    "name": "岛屿守护者弓手",
+    "isBoss": false
+  },
+  "2300577": {
+    "name": "奥德岩石精灵",
+    "isBoss": false
+  },
+  "2300578": {
+    "name": "森林可拉敦",
+    "isBoss": false
+  },
+  "2300579": {
+    "name": "被侵蚀的卡克盖仑",
+    "isBoss": false
+  },
+  "2300580": {
+    "name": "提耶",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "试炼",
+    "dungeonId": 600074
+  },
+  "2300581": {
+    "name": "塔蒙",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "试炼",
+    "dungeonId": 600074
+  },
+  "2300582": {
+    "name": "巴克隆",
+    "isBoss": true
+  },
+  "2300583": {
+    "name": "香甜毒气花",
+    "isBoss": false
+  },
+  "2300584": {
+    "name": "凶猛的女王蜂",
+    "isBoss": false
+  },
+  "2300585": {
+    "name": "巨大的蜂",
+    "isBoss": false
+  },
+  "2300586": {
+    "name": "漂浮电气石",
+    "isBoss": false
+  },
+  "2300587": {
+    "name": "漂浮电气石",
+    "isBoss": false
+  },
+  "2300588": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2300589": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2300590": {
+    "name": "None",
+    "isBoss": false
+  },
   "2300595": {
-    "name": "魅惑的迪欧那耶",
+    "name": "弹丸草",
     "isBoss": false
   },
   "2300601": {
@@ -9283,6 +9667,86 @@
   },
   "2300617": {
     "name": "德乌斯研究基地裂缝",
+    "isBoss": false
+  },
+  "2300621": {
+    "name": "冷酷的技术员",
+    "isBoss": false
+  },
+  "2300622": {
+    "name": "疯狂的研究员",
+    "isBoss": false
+  },
+  "2300623": {
+    "name": "歹毒的解剖学者",
+    "isBoss": false
+  },
+  "2300624": {
+    "name": "无情的警卫",
+    "isBoss": false
+  },
+  "2300625": {
+    "name": "变异实验体",
+    "isBoss": false
+  },
+  "2300626": {
+    "name": "冷酷的技术员",
+    "isBoss": false
+  },
+  "2300627": {
+    "name": "疯狂的研究员",
+    "isBoss": false
+  },
+  "2300628": {
+    "name": "歹毒的解剖学者",
+    "isBoss": false
+  },
+  "2300629": {
+    "name": "无情的警卫",
+    "isBoss": false
+  },
+  "2300630": {
+    "name": "变异实验体",
+    "isBoss": false
+  },
+  "2300631": {
+    "name": "冷酷的技术员",
+    "isBoss": false
+  },
+  "2300632": {
+    "name": "疯狂的研究员",
+    "isBoss": false
+  },
+  "2300633": {
+    "name": "歹毒的解剖学者",
+    "isBoss": false
+  },
+  "2300634": {
+    "name": "无情的警卫",
+    "isBoss": false
+  },
+  "2300635": {
+    "name": "变异实验体",
+    "isBoss": false
+  },
+  "2300636": {
+    "name": "冷酷的技术员",
+    "isBoss": false
+  },
+  "2300637": {
+    "name": "疯狂的研究员",
+    "isBoss": false
+  },
+  "2300638": {
+    "name": "歹毒的解剖学者",
+    "isBoss": false
+  },
+  "2300639": {
+    "name": "无情的警卫",
+    "isBoss": false
+  },
+  "2300640": {
+    "name": "变异实验体",
     "isBoss": false
   },
   "2300701": {
@@ -9360,14 +9824,14 @@
   "2300810": {
     "name": "提耶",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600072
   },
   "2300811": {
     "name": "塔蒙",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600072
   },
@@ -9430,28 +9894,28 @@
   "2300907": {
     "name": "闪耀的莱卡恩图腾",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600092
   },
   "2300908": {
     "name": "护卫犬库哈普",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600092
   },
   "2300909": {
     "name": "降灵术士杜安卡",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600092
   },
   "2300910": {
     "name": "凶猛的角努亚库",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600092
   },
@@ -9523,19 +9987,19 @@
   "2301006": {
     "name": "隔绝者拉胡",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 600082
   },
   "2301007": {
     "name": "深渊翅膀凯图",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 600082
   },
   "2301008": {
     "name": "中央深渊融合炉",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 600082
   },
   "2301009": {
@@ -9561,7 +10025,7 @@
   "2301014": {
     "name": "永劫卢德莱",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 600082
   },
   "2301015": {
@@ -9619,8 +10083,8 @@
   "2301055": {
     "name": "炎火守护剑",
     "isBoss": true,
-    "category": "聖域",
-    "tier": "困難",
+    "category": "圣域",
+    "tier": "困难",
     "dungeonId": 620021
   },
   "2301056": {
@@ -9638,22 +10102,22 @@
   "2301059": {
     "name": "伊斯卡利尔",
     "isBoss": true,
-    "category": "聖域",
-    "tier": "困難",
+    "category": "圣域",
+    "tier": "困难",
     "dungeonId": 620021
   },
   "2301060": {
     "name": "凯德利斯",
     "isBoss": true,
-    "category": "聖域",
-    "tier": "困難",
+    "category": "圣域",
+    "tier": "困难",
     "dungeonId": 620021
   },
   "2301061": {
     "name": "凯德利斯",
     "isBoss": true,
-    "category": "聖域",
-    "tier": "困難",
+    "category": "圣域",
+    "tier": "困难",
     "dungeonId": 620021
   },
   "2301062": {
@@ -9679,8 +10143,8 @@
   "2301067": {
     "name": "炎火守护剑",
     "isBoss": true,
-    "category": "聖域",
-    "tier": "困難",
+    "category": "圣域",
+    "tier": "困难",
     "dungeonId": 620021
   },
   "2301068": {
@@ -9710,7 +10174,7 @@
   "2301085": {
     "name": "炎火守护剑",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "tier": "普通",
     "dungeonId": 620022
   },
@@ -9729,21 +10193,21 @@
   "2301089": {
     "name": "伊斯卡利尔",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "tier": "普通",
     "dungeonId": 620022
   },
   "2301090": {
     "name": "凯德利斯",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "tier": "普通",
     "dungeonId": 620022
   },
   "2301091": {
     "name": "凯德利斯",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "tier": "普通",
     "dungeonId": 620022
   },
@@ -9770,7 +10234,7 @@
   "2301097": {
     "name": "炎火守护剑",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "tier": "普通",
     "dungeonId": 620022
   },
@@ -9805,19 +10269,19 @@
   "2301207": {
     "name": "黑血布拉特",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 620011
   },
   "2301208": {
     "name": "聚合物巴考特",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 620011
   },
   "2301209": {
     "name": "捕食的纽特拉",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 620011
   },
   "2301210": {
@@ -9847,7 +10311,7 @@
   "2301216": {
     "name": "监视装置",
     "isBoss": true,
-    "category": "聖域",
+    "category": "圣域",
     "dungeonId": 620011
   },
   "2301217": {
@@ -9861,22 +10325,22 @@
   "2301301": {
     "name": "苦恼的巴卡尔摩",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600121
   },
   "2301302": {
     "name": "多次元贝提拉斯",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600121
   },
   "2301303": {
     "name": "严肃的巴尔坎",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600121
   },
   "2301304": {
@@ -9950,22 +10414,22 @@
   "2301401": {
     "name": "格蕾丝贝因",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600131
   },
   "2301402": {
     "name": "那萨拉克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600131
   },
   "2301403": {
     "name": "纳特哈拉",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600131
   },
   "2301404": {
@@ -10020,21 +10484,21 @@
     "name": "沉没的艾蒙",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610010
   },
   "2301502": {
     "name": "深海帕伊迪温",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610010
   },
   "2301503": {
     "name": "唱歌的艾拉伊德",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 610010
   },
   "2301504": {
@@ -10088,22 +10552,22 @@
   "2301601": {
     "name": "意志图勒根",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600144
   },
   "2301602": {
     "name": "禁忌魔手格里欧萨",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600144
   },
   "2301603": {
     "name": "伪恶巴席路斯",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600144
   },
   "2301604": {
@@ -10153,21 +10617,21 @@
   "2301701": {
     "name": "意志图勒根",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600145
   },
   "2301702": {
     "name": "禁忌魔手格里欧萨",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600145
   },
   "2301703": {
     "name": "伪恶巴席路斯",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600145
   },
@@ -10230,22 +10694,22 @@
   "2301721": {
     "name": "意志图勒根",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600146
   },
   "2301722": {
     "name": "禁忌魔手格里欧萨",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600146
   },
   "2301723": {
     "name": "伪恶巴席路斯",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600146
   },
   "2301724": {
@@ -10296,6 +10760,75 @@
     "name": "None",
     "isBoss": false
   },
+  "2301748": {
+    "name": "傲慢亚提埃尔",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "征服",
+    "dungeonId": 600162
+  },
+  "2301749": {
+    "name": "研究所长札伊洛斯",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "征服",
+    "dungeonId": 600162
+  },
+  "2301750": {
+    "name": "监督官格罗卡斯",
+    "isBoss": true,
+    "category": "激战",
+    "tier": "征服",
+    "dungeonId": 600162
+  },
+  "2301751": {
+    "name": "实验体混种",
+    "isBoss": false
+  },
+  "2301752": {
+    "name": "雷帕尔团警备队长",
+    "isBoss": false
+  },
+  "2301753": {
+    "name": "雷帕尔团警备队员",
+    "isBoss": false
+  },
+  "2301754": {
+    "name": "基地研究员",
+    "isBoss": false
+  },
+  "2301755": {
+    "name": "雷帕尔团首席警备队员",
+    "isBoss": false
+  },
+  "2301756": {
+    "name": "雷帕尔团警备队员",
+    "isBoss": false
+  },
+  "2301757": {
+    "name": "被污染的史莱姆",
+    "isBoss": false
+  },
+  "2301758": {
+    "name": "实验体变异体",
+    "isBoss": false
+  },
+  "2301759": {
+    "name": "实验体捕食者",
+    "isBoss": false
+  },
+  "2301760": {
+    "name": "被污染的灵魂症结器",
+    "isBoss": false
+  },
+  "2301761": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2301762": {
+    "name": "奥德研究室雷射",
+    "isBoss": false
+  },
   "2310101": {
     "name": "克劳魔法实验体",
     "isBoss": false
@@ -10311,8 +10844,8 @@
   "2310104": {
     "name": "强化的哈尔坤",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600002
   },
   "2310106": {
@@ -10326,8 +10859,8 @@
   "2310108": {
     "name": "弃置的加迪尔顿",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600002
   },
   "2310109": {
@@ -10349,29 +10882,29 @@
   "2310171": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600002
   },
   "2310172": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600002
   },
   "2310173": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600002
   },
   "2310174": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600002
   },
   "2310175": {
@@ -10437,15 +10970,15 @@
   "2310206": {
     "name": "守护队长劳尔",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600011
   },
   "2310207": {
     "name": "审判者乌拉姆",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600011
   },
   "2310208": {
@@ -10491,8 +11024,8 @@
   "2310218": {
     "name": "神圣的奥多勒",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600011
   },
   "2310219": {
@@ -10579,22 +11112,22 @@
   "2310310": {
     "name": "银刃罗坦",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600021
   },
   "2310311": {
     "name": "红火花伊格努斯",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600021
   },
   "2310312": {
     "name": "黑烟穆勒特",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600021
   },
   "2310313": {
@@ -10616,15 +11149,15 @@
   "2310371": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600021
   },
   "2310401": {
     "name": "梦幻拉克修米",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600031
   },
   "2310402": {
@@ -10634,8 +11167,8 @@
   "2310403": {
     "name": "捕食者萨拉斯瓦提",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600031
   },
   "2310404": {
@@ -10713,8 +11246,8 @@
   "2310471": {
     "name": "超越的巴卡尔摩",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600031
   },
   "2310500": {
@@ -10728,7 +11261,7 @@
   "2310502": {
     "name": "腐败的杜勒巴提(样本)",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600042
   },
@@ -10751,21 +11284,21 @@
   "2310507": {
     "name": "管理者纳吉温",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600042
   },
   "2310508": {
     "name": "孵化那亚特曼",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600042
   },
   "2310509": {
     "name": "腐败的杜勒巴提",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600042
   },
@@ -10792,7 +11325,7 @@
   "2310515": {
     "name": "腐败的杜勒巴提(样本)",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600042
   },
@@ -10803,7 +11336,7 @@
   "2310517": {
     "name": "腐败的杜勒巴提(样本)",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600042
   },
@@ -10918,15 +11451,15 @@
   "2310810": {
     "name": "提耶",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600071
   },
   "2310811": {
     "name": "塔蒙",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600071
   },
   "2310812": {
@@ -10980,29 +11513,29 @@
   "2310907": {
     "name": "闪耀的莱卡恩图腾",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600091
   },
   "2310908": {
     "name": "护卫犬库哈普",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600091
   },
   "2310909": {
     "name": "降灵术士杜安卡",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600091
   },
   "2310910": {
     "name": "凶猛的角努亚库",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "探險",
+    "category": "激战",
+    "tier": "探险",
     "dungeonId": 600091
   },
   "2310911": {
@@ -11053,21 +11586,21 @@
   "2311301": {
     "name": "苦恼的巴卡尔摩",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600122
   },
   "2311302": {
     "name": "多次元贝提拉斯",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600122
   },
   "2311303": {
     "name": "严肃的巴尔坎",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600122
   },
@@ -11146,21 +11679,21 @@
   "2311401": {
     "name": "格蕾丝贝因",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600132
   },
   "2311402": {
     "name": "那萨拉克",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600132
   },
   "2311403": {
     "name": "纳特哈拉",
     "isBoss": true,
-    "category": "激戰",
+    "category": "激战",
     "tier": "征服",
     "dungeonId": 600132
   },
@@ -11235,8 +11768,8 @@
   "2320104": {
     "name": "强化的哈尔坤",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600004
   },
   "2320106": {
@@ -11250,8 +11783,8 @@
   "2320108": {
     "name": "弃置的加迪尔顿",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600004
   },
   "2320111": {
@@ -11277,29 +11810,29 @@
   "2320171": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600004
   },
   "2320172": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600004
   },
   "2320173": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600004
   },
   "2320174": {
     "name": "完成体贝尔克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600004
   },
   "2320175": {
@@ -11365,15 +11898,15 @@
   "2320206": {
     "name": "守护队长劳尔",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600013
   },
   "2320207": {
     "name": "审判者乌拉姆",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600013
   },
   "2320208": {
@@ -11419,8 +11952,8 @@
   "2320218": {
     "name": "神圣的奥多勒",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600013
   },
   "2320220": {
@@ -11503,22 +12036,22 @@
   "2320310": {
     "name": "银刃罗坦",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600023
   },
   "2320311": {
     "name": "红火花伊格努斯",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600023
   },
   "2320312": {
     "name": "黑烟穆勒特",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600023
   },
   "2320313": {
@@ -11540,15 +12073,15 @@
   "2320371": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600023
   },
   "2320401": {
     "name": "梦幻拉克修米",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600033
   },
   "2320402": {
@@ -11558,8 +12091,8 @@
   "2320403": {
     "name": "捕食者萨拉斯瓦提",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600033
   },
   "2320404": {
@@ -11649,8 +12182,8 @@
   "2320471": {
     "name": "超越的巴卡尔摩",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600033
   },
   "2320500": {
@@ -11737,7 +12270,7 @@
     "name": "亚提埃尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 600053
   },
   "2320602": {
@@ -11796,14 +12329,14 @@
     "name": "纳兹文",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 600053
   },
   "2320616": {
     "name": "格尔阔斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 600053
   },
   "2320617": {
@@ -11849,15 +12382,15 @@
   "2320810": {
     "name": "提耶",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600073
   },
   "2320811": {
     "name": "塔蒙",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600073
   },
   "2320812": {
@@ -11919,29 +12452,29 @@
   "2320907": {
     "name": "闪耀的莱卡恩图腾",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600093
   },
   "2320908": {
     "name": "护卫犬库哈普",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600093
   },
   "2320909": {
     "name": "降灵术士杜安卡",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600093
   },
   "2320910": {
     "name": "凶猛的角努亚库",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600093
   },
   "2320911": {
@@ -11996,22 +12529,22 @@
   "2321301": {
     "name": "苦恼的巴卡尔摩",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600123
   },
   "2321302": {
     "name": "多次元贝提拉斯",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600123
   },
   "2321303": {
     "name": "严肃的巴尔坎",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600123
   },
   "2321304": {
@@ -12089,22 +12622,22 @@
   "2321401": {
     "name": "格蕾丝贝因",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600133
   },
   "2321402": {
     "name": "那萨拉克",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600133
   },
   "2321403": {
     "name": "纳特哈拉",
     "isBoss": true,
-    "category": "激戰",
-    "tier": "征服[困難]",
+    "category": "激战",
+    "tier": "征服[困难]",
     "dungeonId": 600133
   },
   "2321404": {
@@ -13331,21 +13864,21 @@
     "name": "谎言席利亚多尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 600063
   },
   "2330708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 600063
   },
   "2330709": {
     "name": "空虚塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第1階段",
+    "tier": "第1阶段",
     "dungeonId": 600063
   },
   "2330710": {
@@ -13780,7 +14313,7 @@
     "name": "亚提埃尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 600055
   },
   "2340602": {
@@ -13839,14 +14372,14 @@
     "name": "纳兹文",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 600055
   },
   "2340616": {
     "name": "格尔阔斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 600055
   },
   "2340617": {
@@ -14049,7 +14582,7 @@
     "name": "亚提埃尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 600058
   },
   "2343602": {
@@ -14108,14 +14641,14 @@
     "name": "纳兹文",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 600058
   },
   "2343616": {
     "name": "格尔阔斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 600058
   },
   "2343617": {
@@ -14362,7 +14895,7 @@
     "name": "亚提埃尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610052
   },
   "2346602": {
@@ -14421,14 +14954,14 @@
     "name": "纳兹文",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610052
   },
   "2346616": {
     "name": "格尔阔斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第4階段",
+    "tier": "第4阶段",
     "dungeonId": 610052
   },
   "2346617": {
@@ -14539,21 +15072,21 @@
     "name": "谎言席利亚多尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 600065
   },
   "2350708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 600065
   },
   "2350709": {
     "name": "空虚塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第3階段",
+    "tier": "第3阶段",
     "dungeonId": 600065
   },
   "2350710": {
@@ -14676,21 +15209,21 @@
     "name": "谎言席利亚多尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第5階段",
+    "tier": "第5阶段",
     "dungeonId": 600068
   },
   "2353708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第5階段",
+    "tier": "第5阶段",
     "dungeonId": 600068
   },
   "2353709": {
     "name": "空虚塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第5階段",
+    "tier": "第5阶段",
     "dungeonId": 600068
   },
   "2353710": {
@@ -14817,21 +15350,21 @@
     "name": "谎言席利亚多尔",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 13
   },
   "2356708": {
     "name": "痛苦路堤里斯",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 13
   },
   "2356709": {
     "name": "空虚塔里斯拉",
     "isBoss": true,
     "category": "超越",
-    "tier": "第2階段",
+    "tier": "第2阶段",
     "dungeonId": 13
   },
   "2356710": {
@@ -17571,6 +18104,11 @@
     "name": "博德瑞克部下",
     "isBoss": false
   },
+  "2400035": {
+    "name": "近战训练用稻草人",
+    "isBoss": true,
+    "isDummy": true
+  },
   "2400051": {
     "name": "饥饿的亡者",
     "isBoss": false
@@ -17976,11 +18514,11 @@
     "isBoss": false
   },
   "2400267": {
-    "name": "被支配的的古代士兵",
+    "name": "被支配的古代士兵",
     "isBoss": false
   },
   "2400268": {
-    "name": "被支配的的古代弓手",
+    "name": "被支配的古代弓手",
     "isBoss": false
   },
   "2400269": {
@@ -19978,7 +20516,7 @@
     "isBoss": false
   },
   "2406011": {
-    "name": "柔顺的冰冻獠牙波沙",
+    "name": "温驯的冰冻獠牙波沙",
     "isBoss": false
   },
   "2406012": {
@@ -20207,7 +20745,7 @@
     "isBoss": false
   },
   "2406068": {
-    "name": "命运执政官断头台",
+    "name": "命运执政官斩首者",
     "isBoss": false
   },
   "2406069": {
@@ -20557,7 +21095,7 @@
     "isBoss": false
   },
   "2406165": {
-    "name": "库尔帕克拉尔拘禁区",
+    "name": "库尔帕克拉尔拘禁装置",
     "isBoss": false
   },
   "2406166": {
@@ -28406,8 +28944,8 @@
   "2701753": {
     "name": "分裂体阿布诺斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910011
   },
   "2701756": {
@@ -28465,8 +29003,8 @@
   "2701774": {
     "name": "羽毛砲火杜杜里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910034
   },
   "2701775": {
@@ -28516,14 +29054,14 @@
   "2701788": {
     "name": "觉醒的猛禽多多里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910034
   },
   "2701789": {
     "name": "分裂体阿布诺斯",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910012
   },
@@ -28562,8 +29100,8 @@
   "2701807": {
     "name": "分裂体阿布诺斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910013
   },
   "2701814": {
@@ -28617,15 +29155,15 @@
   "2701829": {
     "name": "羽毛砲火杜杜里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910033
   },
   "2701830": {
     "name": "觉醒的猛禽多多里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910033
   },
   "2701831": {
@@ -28671,14 +29209,14 @@
   "2701841": {
     "name": "羽毛砲火杜杜里",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910032
   },
   "2701842": {
     "name": "觉醒的猛禽多多里",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910032
   },
@@ -28725,15 +29263,15 @@
   "2701853": {
     "name": "羽毛砲火杜杜里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910031
   },
   "2701854": {
     "name": "觉醒的猛禽多多里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910031
   },
   "2701855": {
@@ -28783,8 +29321,8 @@
   "2701866": {
     "name": "分裂体阿布诺斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910014
   },
   "2701873": {
@@ -28854,8 +29392,8 @@
   "2701892": {
     "name": "克劳蒂亚",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910041
   },
   "2701899": {
@@ -28897,7 +29435,7 @@
   "2701913": {
     "name": "克劳蒂亚",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910042
   },
@@ -28928,8 +29466,8 @@
   "2701930": {
     "name": "克劳蒂亚",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910043
   },
   "2701937": {
@@ -28959,8 +29497,8 @@
   "2701947": {
     "name": "克劳蒂亚",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910044
   },
   "2701954": {
@@ -28990,8 +29528,8 @@
   "2701964": {
     "name": "梅诺克斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910021
   },
   "2701965": {
@@ -29073,7 +29611,7 @@
   "2701990": {
     "name": "梅诺克斯",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910022
   },
@@ -29120,8 +29658,8 @@
   "2702001": {
     "name": "梅诺克斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910023
   },
   "2702002": {
@@ -29167,8 +29705,8 @@
   "2702012": {
     "name": "梅诺克斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910024
   },
   "2702013": {
@@ -30060,7 +30598,7 @@
     "isBoss": false
   },
   "2702255": {
-    "name": "德拉坎魔力具体者",
+    "name": "德拉坎魔力操纵者",
     "isBoss": false
   },
   "2702259": {
@@ -30070,8 +30608,8 @@
   "2702274": {
     "name": "梅诺克斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910025
   },
   "2702275": {
@@ -30121,8 +30659,8 @@
   "2702286": {
     "name": "梅诺克斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910026
   },
   "2702287": {
@@ -30172,8 +30710,8 @@
   "2702298": {
     "name": "克劳蒂亚",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910045
   },
   "2702299": {
@@ -30211,8 +30749,8 @@
   "2702309": {
     "name": "克劳蒂亚",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910046
   },
   "2702310": {
@@ -30366,8 +30904,8 @@
   "2702359": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910061
   },
   "2702360": {
@@ -30417,15 +30955,15 @@
   "2702372": {
     "name": "羽毛砲火杜杜里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910035
   },
   "2702373": {
     "name": "觉醒的猛禽多多里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910035
   },
   "2702374": {
@@ -30471,15 +31009,15 @@
   "2702384": {
     "name": "羽毛砲火杜杜里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910036
   },
   "2702385": {
     "name": "觉醒的猛禽多多里",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910036
   },
   "2702386": {
@@ -30525,8 +31063,8 @@
   "2702396": {
     "name": "分裂体阿布诺斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910015
   },
   "2702397": {
@@ -30580,8 +31118,8 @@
   "2702409": {
     "name": "分裂体阿布诺斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910016
   },
   "2702410": {
@@ -30771,14 +31309,14 @@
   "2702461": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "簡單",
+    "category": "觉醒战",
+    "tier": "简单",
     "dungeonId": 910051
   },
   "2702462": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910062
   },
@@ -30821,8 +31359,8 @@
   "2702475": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910063
   },
   "2702476": {
@@ -30864,8 +31402,8 @@
   "2702488": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910064
   },
   "2702489": {
@@ -30907,8 +31445,8 @@
   "2702501": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910065
   },
   "2702502": {
@@ -31251,8 +31789,8 @@
   "2702611": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910066
   },
   "2702612": {
@@ -31294,8 +31832,8 @@
   "2702623": {
     "name": "耶尔罗恩",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "破滅",
+    "category": "觉醒战",
+    "tier": "破灭",
     "dungeonId": 910067
   },
   "2702624": {
@@ -31335,11 +31873,11 @@
     "isBoss": false
   },
   "2702635": {
-    "name": "鳍怪物",
+    "name": "鳍兽",
     "isBoss": false
   },
   "2702636": {
-    "name": "年幼的鳍怪物",
+    "name": "年幼的鳍兽",
     "isBoss": false
   },
   "2702637": {
@@ -31389,7 +31927,7 @@
   "2702648": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
+    "category": "觉醒战",
     "tier": "普通",
     "dungeonId": 910052
   },
@@ -31436,8 +31974,8 @@
   "2702659": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "困難",
+    "category": "觉醒战",
+    "tier": "困难",
     "dungeonId": 910053
   },
   "2702660": {
@@ -31483,8 +32021,8 @@
   "2702670": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "極限",
+    "category": "觉醒战",
+    "tier": "极限",
     "dungeonId": 910054
   },
   "2702671": {
@@ -31530,8 +32068,8 @@
   "2702681": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "絕望",
+    "category": "觉醒战",
+    "tier": "绝望",
     "dungeonId": 910055
   },
   "2702682": {
@@ -31577,8 +32115,8 @@
   "2702692": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "地獄",
+    "category": "觉醒战",
+    "tier": "地狱",
     "dungeonId": 910056
   },
   "2702693": {
@@ -31624,8 +32162,8 @@
   "2702703": {
     "name": "卡尔利斯",
     "isBoss": true,
-    "category": "覺醒戰",
-    "tier": "破滅",
+    "category": "觉醒战",
+    "tier": "破灭",
     "dungeonId": 910057
   },
   "2702704": {
@@ -32076,15 +32614,15 @@
     "isBoss": false
   },
   "2921298": {
-    "name": "亚提埃尔",
+    "name": "傲慢亚提埃尔",
     "isBoss": true
   },
   "2921299": {
-    "name": "亚提埃尔",
+    "name": "傲慢亚提埃尔",
     "isBoss": true
   },
   "2921300": {
-    "name": "亚提埃尔",
+    "name": "傲慢亚提埃尔",
     "isBoss": false
   },
   "2921315": {
@@ -32099,2112 +32637,2168 @@
     "name": "蓄电核",
     "isBoss": false
   },
+  "2921356": {
+    "name": "巴克隆尖刺藤蔓",
+    "isBoss": false
+  },
+  "2921357": {
+    "name": "巴克隆尖刺藤蔓",
+    "isBoss": false
+  },
   "2921382": {
     "name": "咆哮",
     "isBoss": false
+  },
+  "2921400": {
+    "name": "被实验体狙击",
+    "isBoss": true
+  },
+  "2921401": {
+    "name": "被实验体狙击",
+    "isBoss": true
+  },
+  "2921402": {
+    "name": "火焰弹轰炸",
+    "isBoss": true
   },
   "2921409": {
     "name": "奥德石矿石",
     "isBoss": false
   },
+  "2921411": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2921418": {
+    "name": "巴克隆尖刺藤蔓",
+    "isBoss": false
+  },
+  "2921425": {
+    "name": "巴克隆尖刺藤蔓",
+    "isBoss": true
+  },
+  "2921426": {
+    "name": "巴克隆尖刺藤蔓",
+    "isBoss": true
+  },
+  "2921427": {
+    "name": "巴克隆尖刺束缚",
+    "isBoss": true
+  },
+  "2921428": {
+    "name": "巴克隆尖刺束缚",
+    "isBoss": true
+  },
+  "2921429": {
+    "name": "巴克隆尖刺藤蔓",
+    "isBoss": true
+  },
+  "2921430": {
+    "name": "巴克隆尖刺束缚",
+    "isBoss": true
+  },
+  "2921511": {
+    "name": "傲慢亚提埃尔",
+    "isBoss": false
+  },
   "2980000": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980001": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980002": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980003": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980004": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980005": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980006": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980007": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980008": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980009": {
     "name": "大神官幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980010": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980011": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980012": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980013": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980014": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980015": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980016": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980017": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980018": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980019": {
     "name": "封印的修罗",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980020": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980021": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980022": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980023": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980024": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980025": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980026": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980027": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980028": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980029": {
     "name": "毁约者卡尔吐亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980040": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980041": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980042": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980043": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980044": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980045": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980046": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980047": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980048": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980049": {
     "name": "守门人皮诺彼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980050": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980051": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980052": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980053": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980054": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980055": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980056": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980057": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980058": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980059": {
     "name": "根之怪鸟奥特罗斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980060": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980061": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980062": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980063": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980064": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980065": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980066": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980067": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980068": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980069": {
     "name": "奥拉姆斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980070": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980071": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980072": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980073": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980074": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980075": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980076": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980077": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980078": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980079": {
     "name": "尖锐的乌拉克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980080": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980081": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980082": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980083": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980084": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980085": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980086": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980087": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980088": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980089": {
     "name": "祭司长奥乌利沙",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980090": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980091": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980092": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980093": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980094": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980095": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980096": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980097": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980098": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980099": {
     "name": "希尔拉德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980100": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980101": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980102": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980103": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980104": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980105": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980106": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980107": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980108": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980109": {
     "name": "处刑者努亚",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980110": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980111": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980112": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980113": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980114": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980115": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980116": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980117": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980118": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980119": {
     "name": "改造的巴考特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980120": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980121": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980122": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980123": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980124": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980125": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980126": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980127": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980128": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980129": {
     "name": "变异的邬尔古伦",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980130": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980131": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980132": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980133": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980134": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980135": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980136": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980137": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980138": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980139": {
     "name": "凯西内尔幻影",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980140": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980141": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980142": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980143": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980144": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980145": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980146": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980147": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980148": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980149": {
     "name": "愤怒的雷伊达",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980150": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980151": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980152": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980153": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980154": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980155": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980156": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980157": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980158": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980159": {
     "name": "狂暴的佩尔克",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980160": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980161": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980162": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980163": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980164": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980165": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980166": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980167": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980168": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980169": {
     "name": "灵魂收获者莱特曼",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980170": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980171": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980172": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980173": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980174": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980175": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980176": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980177": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980178": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980179": {
     "name": "要塞守护者诺顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980180": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980181": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980182": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980183": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980184": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980185": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980186": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980187": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980188": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980189": {
     "name": "狱警山特拉斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980190": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980191": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980192": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980193": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980194": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980195": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980196": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980197": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980198": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980199": {
     "name": "现身的庇护之羽",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980200": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980201": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980202": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980203": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980204": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980205": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980206": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980207": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980208": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980209": {
     "name": "暴君塔辛",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980210": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980211": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980212": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980213": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980214": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980215": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980216": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980217": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980218": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980219": {
     "name": "变异的凯洛特",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980220": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980221": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980222": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980223": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980224": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980225": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980226": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980227": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980228": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980229": {
     "name": "吉凯尔思念体",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980230": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980231": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980232": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980233": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980234": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980235": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980236": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980237": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980238": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980239": {
     "name": "圣所守护者卡乌斯",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980240": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980241": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980242": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980243": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980244": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980245": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980246": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980247": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980248": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980249": {
     "name": "法夫尼尔毒血",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980250": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980251": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980252": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980253": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980254": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980255": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980256": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980257": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980258": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980259": {
     "name": "亡灵芝捷尔",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980260": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980261": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980262": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980263": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980264": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980265": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980266": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980267": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980268": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980269": {
     "name": "克罗梅德欲望",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980270": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980271": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980272": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980273": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980274": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980275": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980276": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980277": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980278": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980279": {
     "name": "完整的帕顿",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980280": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980281": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980282": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980283": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980284": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980285": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980286": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980287": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980288": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980289": {
     "name": "觉醒阿特隆",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980290": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980291": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980292": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980293": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980294": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980295": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980296": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980297": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980298": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980299": {
     "name": "搜索队长凯德",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   },
   "2980300": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第1階段",
+    "category": "恶梦",
+    "tier": "第1阶段",
     "dungeonId": 200003
   },
   "2980301": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第2階段",
+    "category": "恶梦",
+    "tier": "第2阶段",
     "dungeonId": 200003
   },
   "2980302": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第3階段",
+    "category": "恶梦",
+    "tier": "第3阶段",
     "dungeonId": 200003
   },
   "2980303": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第4階段",
+    "category": "恶梦",
+    "tier": "第4阶段",
     "dungeonId": 200003
   },
   "2980304": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第5階段",
+    "category": "恶梦",
+    "tier": "第5阶段",
     "dungeonId": 200003
   },
   "2980305": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第6階段",
+    "category": "恶梦",
+    "tier": "第6阶段",
     "dungeonId": 200003
   },
   "2980306": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第7階段",
+    "category": "恶梦",
+    "tier": "第7阶段",
     "dungeonId": 200003
   },
   "2980307": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第8階段",
+    "category": "恶梦",
+    "tier": "第8阶段",
     "dungeonId": 200003
   },
   "2980308": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第9階段",
+    "category": "恶梦",
+    "tier": "第9阶段",
     "dungeonId": 200003
   },
   "2980309": {
     "name": "副官希夫兰",
     "isBoss": true,
-    "category": "惡夢",
-    "tier": "第10階段",
+    "category": "恶梦",
+    "tier": "第10阶段",
     "dungeonId": 200003
   }
 }

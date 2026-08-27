@@ -813,7 +813,9 @@ const createDetailsUI = ({
     perfect: "minmax(22px, 0.65fr)",
     double: "minmax(22px, 0.65fr)",
     back: "minmax(18px, 0.6fr)",
-    frontal: "minmax(20px, 0.6fr)",
+    // "FRONT" is the widest header in the 0.6fr group and clips at the shared
+    // share; it needs the extra room its neighbours don't.
+    frontal: "minmax(20px, 0.72fr)",
     powershard: "minmax(20px, 0.6fr)",
     regen: "minmax(28px, 0.8fr)",
     mindmg: "minmax(28px, 0.8fr)",
@@ -977,7 +979,10 @@ const createDetailsUI = ({
     const iconMargin = 6;
     const namePad = 4;
     const measureCanvas = document.createElement("canvas").getContext("2d");
-    const fontSize = parseFloat(getComputedStyle(skillsListEl).fontSize) * 0.88;
+    // .skillRow .cell is 0.875em of the panel font and .skillNameText another
+    // 0.92em inside it, so the name renders at their product. Measuring at any
+    // other size sizes the column for text that is never drawn.
+    const fontSize = parseFloat(getComputedStyle(skillsListEl).fontSize) * 0.875 * 0.92;
     measureCanvas.font = `700 ${fontSize}px ${getComputedStyle(skillsListEl).fontFamily}`;
     let maxNameWidth = 0;
     topDisplay.forEach((skill) => {

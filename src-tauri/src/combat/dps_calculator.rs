@@ -264,27 +264,89 @@ impl DpsCalculator {
             }
         }
 
-        // Orphan summon inference: merge unnamed actors into a same-class named actor
-        // ONLY if the orphan is not a known player (i.e. never used player-band skills).
-        // Also skip merging if multiple orphans share the same class — ambiguous.
+        // Orphan summon inference: attribute an entity that is really a summon to
+        // the player who owns it, for the summons the spawn packet never covered.
+        //
+        // Two things used to make this miss the case it exists for. It required the
+        // owner to be NAMED, and it skipped anything in `known_player_ids` — but a
+        // summon lands in that set automatically, because skills like Divine Aura
+        // (17153450) sit in the player band and `append_damage` classifies any
+        // actor using one as a player. So a Cleric's aura was filed as a player and
+        // then never reconsidered, which is why it showed as its own `#id` row next
+        // to an equally-unnamed Cleric.
+        //
+        // The discriminator is the power scalar carried in every damage record: a
+        // summon inherits its owner's (see `DataStorage::actor_power_scalars`).
+        // Matched against ground truth from a capture where the spawn packets DID
+        // arrive — 81 known summon/owner pairs — scalar + class + "the owner has a
+        // real rotation" decided 43 of them with **zero** wrong answers and never
+        // merged a real player into another.
         let known_players = self.data_storage.get_known_player_ids();
+        let scalars = self.data_storage.get_power_scalars();
+        // Distinct skills per actor, taken from the combat aggregates — this fast
+        // path builds PersonalData from totals and leaves `analyzed_data` empty,
+        // so counting that instead would silently read zero for everyone.
+        let mut skill_counts: HashMap<i32, HashSet<i32>> = HashMap::new();
+        for &tid in &target_ids {
+            if let Some(target_data) = combat_data.get(&tid) {
+                for (&actor_id, actor_data) in &target_data.actors {
+                    let e = skill_counts.entry(actor_id).or_default();
+                    for &(code, _) in actor_data.skills.keys() {
+                        e.insert(code);
+                    }
+                }
+            }
+        }
+        let skill_counts: HashMap<i32, usize> =
+            skill_counts.into_iter().map(|(k, v)| (k, v.len())).collect();
         let mut orphan_merges: Vec<(i32, i32)> = Vec::new();
         for (&uid, data) in &dps_data.map {
             if summon_data.contains_key(&uid) { continue; }
             if nickname_data.contains_key(&uid) { continue; }
-            if known_players.contains(&uid) { continue; }
             let job = &data.job;
             if job.is_empty() { continue; }
-            // Attribute an unnamed, non-player entity (a summon / spell-effect that
-            // deals class-band damage) to the same-class player when there is
-            // exactly one — that owner is unambiguous even if several such orphans
-            // share the class (e.g. a Sorcerer's spell entities).
-            let same_job: Vec<_> = dps_data.map.iter()
-                .filter(|(oid, od)| **oid != uid && od.job == *job && nickname_data.contains_key(oid))
+            let my_skills = skill_counts.get(&uid).copied().unwrap_or(0);
+
+            // Original path, unchanged: an entity never classified as a player,
+            // attributed to the one NAMED same-class player on the meter. The
+            // "named" test is what makes "exactly one candidate" meaningful here —
+            // without it, other unnamed orphans of the same class count as
+            // candidates and the rule stops firing at all.
+            if !known_players.contains(&uid) {
+                let same_job: Vec<_> = dps_data.map.iter()
+                    .filter(|(oid, od)| **oid != uid && od.job == *job && nickname_data.contains_key(oid))
+                    .map(|(&oid, _)| oid)
+                    .collect();
+                if same_job.len() == 1 {
+                    orphan_merges.push((uid, same_job[0]));
+                    continue;
+                }
+            }
+
+            // Scalar path, for a summon that skill band alone made look like a
+            // player. A summon spams one or two abilities; a real player runs a
+            // rotation, so requiring the candidate to show at least three times as
+            // many distinct skills keeps two genuine players apart even when their
+            // scalars happen to coincide.
+            let Some(my_scalars) = scalars.get(&uid) else { continue };
+            if my_scalars.is_empty() || my_skills == 0 {
+                continue;
+            }
+            let owners: Vec<i32> = dps_data.map.iter()
+                .filter(|(oid, od)| {
+                    **oid != uid
+                        && od.job == *job
+                        && skill_counts.get(*oid).copied().unwrap_or(0) >= 3 * my_skills
+                        && scalars.get(*oid).is_some_and(|s| !s.is_disjoint(my_scalars))
+                })
                 .map(|(&oid, _)| oid)
                 .collect();
-            if same_job.len() == 1 {
-                orphan_merges.push((uid, same_job[0]));
+            if owners.len() == 1 {
+                tracing::debug!(
+                    "Summon {} attributed to owner {} by power scalar {:?}",
+                    uid, owners[0], my_scalars
+                );
+                orphan_merges.push((uid, owners[0]));
             }
         }
         for (orphan, owner) in orphan_merges {
@@ -297,9 +359,16 @@ impl DpsCalculator {
 
         // Filter and compute DPS
         let local_ids = self.resolve_local_ids(&summon_data);
+        let party_members = self.data_storage.get_party_members();
         let bt = battle_time.max(1000);
         let mut to_remove = Vec::new();
         for (&uid, data) in &mut dps_data.map {
+            // Combat power joins on the character name: the roster carries an
+            // account-level dbid, not the session entity id keyed here.
+            data.combat_power = party_members
+                .get(&data.nickname)
+                .map(|m| m.combat_power)
+                .unwrap_or(0);
             if data.job.is_empty() {
                 if local_ids.as_ref().is_some_and(|ids| ids.contains(&uid)) {
                     data.job = "Unknown".to_string();

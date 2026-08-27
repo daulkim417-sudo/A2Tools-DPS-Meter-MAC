@@ -1487,6 +1487,10 @@
     "isBoss": false,
     "isDummy": true
   },
+  "2090865": {
+    "name": "None",
+    "isBoss": false
+  },
   "2100000": {
     "name": "반짝이는 칼크겔름",
     "isBoss": false
@@ -8701,6 +8705,10 @@
     "tier": "2단계",
     "dungeonId": 610021
   },
+  "2300366": {
+    "name": "오염된 슈라크 노역꾼",
+    "isBoss": false
+  },
   "2300367": {
     "name": "None",
     "isBoss": true,
@@ -8715,12 +8723,56 @@
     "tier": "4단계",
     "dungeonId": 610023
   },
+  "2300370": {
+    "name": "오염된 슈라크 보초병",
+    "isBoss": false
+  },
   "2300371": {
     "name": "크로메데의 욕망",
     "isBoss": true,
     "category": "격돌",
     "tier": "정복",
     "dungeonId": 600022
+  },
+  "2300372": {
+    "name": "오염된 슈라크 감독관",
+    "isBoss": false
+  },
+  "2300376": {
+    "name": "오염된 슈라크 노역꾼",
+    "isBoss": false
+  },
+  "2300378": {
+    "name": "오염된 슈라크 보초병",
+    "isBoss": false
+  },
+  "2300379": {
+    "name": "오염된 슈라크 감독관",
+    "isBoss": false
+  },
+  "2300383": {
+    "name": "오염된 슈라크 노역꾼",
+    "isBoss": false
+  },
+  "2300385": {
+    "name": "오염된 슈라크 보초병",
+    "isBoss": false
+  },
+  "2300386": {
+    "name": "오염된 슈라크 감독관",
+    "isBoss": false
+  },
+  "2300390": {
+    "name": "오염된 슈라크 노역꾼",
+    "isBoss": false
+  },
+  "2300392": {
+    "name": "오염된 슈라크 보초병",
+    "isBoss": false
+  },
+  "2300393": {
+    "name": "오염된 슈라크 감독관",
+    "isBoss": false
   },
   "2300397": {
     "name": "사랑의 시련",
@@ -8768,9 +8820,30 @@
     "name": "관리인 아바투르",
     "isBoss": false
   },
+  "2300407": {
+    "name": "오만의 아티엘",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "탐험",
+    "dungeonId": 600161
+  },
   "2300408": {
     "name": "부사관 아크바르",
     "isBoss": false
+  },
+  "2300409": {
+    "name": "연구소장 자일러스",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "탐험",
+    "dungeonId": 600161
+  },
+  "2300410": {
+    "name": "감독관 그롬카스",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "탐험",
+    "dungeonId": 600161
   },
   "2300411": {
     "name": "드라코뉴트 수행병",
@@ -8836,6 +8909,10 @@
     "name": "부패한 심연벌레",
     "isBoss": false
   },
+  "2300427": {
+    "name": "실험체 혼종",
+    "isBoss": false
+  },
   "2300428": {
     "name": "연심의 화원지기",
     "isBoss": false
@@ -8850,6 +8927,158 @@
   },
   "2300431": {
     "name": "연심의 화원지기",
+    "isBoss": false
+  },
+  "2300432": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2300433": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2300434": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2300435": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2300436": {
+    "name": "아스크란",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "1단계",
+    "dungeonId": 610030
+  },
+  "2300437": {
+    "name": "불완전한 브라운트",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "1단계",
+    "dungeonId": 610030
+  },
+  "2300438": {
+    "name": "광기의 클로민스터",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "1단계",
+    "dungeonId": 610030
+  },
+  "2300439": {
+    "name": "아스크란",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "2단계",
+    "dungeonId": 610031
+  },
+  "2300440": {
+    "name": "불완전한 브라운트",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "2단계",
+    "dungeonId": 610031
+  },
+  "2300441": {
+    "name": "광기의 클로민스터",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "2단계",
+    "dungeonId": 610031
+  },
+  "2300442": {
+    "name": "아스크란",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "3단계",
+    "dungeonId": 610032
+  },
+  "2300443": {
+    "name": "불완전한 브라운트",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "3단계",
+    "dungeonId": 610032
+  },
+  "2300444": {
+    "name": "광기의 클로민스터",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "3단계",
+    "dungeonId": 610032
+  },
+  "2300445": {
+    "name": "아스크란",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "4단계",
+    "dungeonId": 610033
+  },
+  "2300446": {
+    "name": "불완전한 브라운트",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "4단계",
+    "dungeonId": 610033
+  },
+  "2300447": {
+    "name": "광기의 클로민스터",
+    "isBoss": true,
+    "category": "초월",
+    "tier": "4단계",
+    "dungeonId": 610033
+  },
+  "2300448": {
+    "name": "오염된 덩어리",
+    "isBoss": false
+  },
+  "2300450": {
+    "name": "오염된 덩어리",
+    "isBoss": false
+  },
+  "2300452": {
+    "name": "오염된 덩어리",
+    "isBoss": false
+  },
+  "2300454": {
+    "name": "오염된 덩어리",
+    "isBoss": false
+  },
+  "2300456": {
+    "name": "레파르단 경비대장",
+    "isBoss": false
+  },
+  "2300457": {
+    "name": "레파르단 경비대원",
+    "isBoss": false
+  },
+  "2300458": {
+    "name": "기지 연구원",
+    "isBoss": false
+  },
+  "2300459": {
+    "name": "레파르단 수석 경비대원",
+    "isBoss": false
+  },
+  "2300460": {
+    "name": "레파르단 경비대원",
+    "isBoss": false
+  },
+  "2300461": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2300462": {
+    "name": "실험체 변이체",
+    "isBoss": false
+  },
+  "2300463": {
+    "name": "실험체 포식자",
+    "isBoss": false
+  },
+  "2300464": {
+    "name": "None",
     "isBoss": false
   },
   "2300465": {
@@ -8914,6 +9143,13 @@
   "2300480": {
     "name": "중독된 슈라크 수레꾼",
     "isBoss": false
+  },
+  "2300481": {
+    "name": "오만의 아티엘",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "정복[어려움]",
+    "dungeonId": 600163
   },
   "2300482": {
     "name": "심연의 뿔 두두카 일꾼",
@@ -9213,8 +9449,156 @@
     "name": "심연의 뿔 루필리니",
     "isBoss": false
   },
+  "2300555": {
+    "name": "연구소장 자일러스",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "정복[어려움]",
+    "dungeonId": 600163
+  },
+  "2300556": {
+    "name": "감독관 그롬카스",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "정복[어려움]",
+    "dungeonId": 600163
+  },
+  "2300557": {
+    "name": "실험체 혼종",
+    "isBoss": false
+  },
+  "2300558": {
+    "name": "레파르단 경비대장",
+    "isBoss": false
+  },
+  "2300559": {
+    "name": "레파르단 경비대원",
+    "isBoss": false
+  },
+  "2300560": {
+    "name": "기지 연구원",
+    "isBoss": false
+  },
+  "2300561": {
+    "name": "레파르단 수석 경비대원",
+    "isBoss": false
+  },
+  "2300562": {
+    "name": "레파르단 경비대원",
+    "isBoss": false
+  },
+  "2300563": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2300564": {
+    "name": "실험체 변이체",
+    "isBoss": false
+  },
+  "2300565": {
+    "name": "실험체 포식자",
+    "isBoss": false
+  },
+  "2300566": {
+    "name": "오염된 영혼 매듭기",
+    "isBoss": false
+  },
+  "2300567": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2300568": {
+    "name": "오드 연구실 레이저",
+    "isBoss": false
+  },
+  "2300571": {
+    "name": "바위 정령",
+    "isBoss": false
+  },
+  "2300572": {
+    "name": "대지 정령",
+    "isBoss": false
+  },
+  "2300573": {
+    "name": "분노한 바위 정령",
+    "isBoss": false
+  },
+  "2300574": {
+    "name": "분노한 대지 정령",
+    "isBoss": false
+  },
+  "2300575": {
+    "name": "타락한 페어리",
+    "isBoss": false
+  },
+  "2300576": {
+    "name": "섬의 수호자 궁수",
+    "isBoss": false
+  },
+  "2300577": {
+    "name": "오드 바위 정령",
+    "isBoss": false
+  },
+  "2300578": {
+    "name": "숲의 코라돈",
+    "isBoss": false
+  },
+  "2300579": {
+    "name": "침식된 칼크겔름",
+    "isBoss": false
+  },
+  "2300580": {
+    "name": "티에",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "시련",
+    "dungeonId": 600074
+  },
+  "2300581": {
+    "name": "타몬",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "시련",
+    "dungeonId": 600074
+  },
+  "2300582": {
+    "name": "바크론",
+    "isBoss": true
+  },
+  "2300583": {
+    "name": "달콤한 독기 꽃",
+    "isBoss": false
+  },
+  "2300584": {
+    "name": "사나운 여왕 벌",
+    "isBoss": false
+  },
+  "2300585": {
+    "name": "거대한 꿀벌",
+    "isBoss": false
+  },
+  "2300586": {
+    "name": "부유 전기석",
+    "isBoss": false
+  },
+  "2300587": {
+    "name": "부유 전기석",
+    "isBoss": false
+  },
+  "2300588": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2300589": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2300590": {
+    "name": "None",
+    "isBoss": false
+  },
   "2300595": {
-    "name": "매혹하는 디오나에",
+    "name": "탄환초",
     "isBoss": false
   },
   "2300601": {
@@ -9283,6 +9667,86 @@
   },
   "2300617": {
     "name": "데우스 연구기지 균열",
+    "isBoss": false
+  },
+  "2300621": {
+    "name": "냉혹한 기술자",
+    "isBoss": false
+  },
+  "2300622": {
+    "name": "광기 어린 연구원",
+    "isBoss": false
+  },
+  "2300623": {
+    "name": "악랄한 해부학자",
+    "isBoss": false
+  },
+  "2300624": {
+    "name": "무자비한 경호원",
+    "isBoss": false
+  },
+  "2300625": {
+    "name": "변이 실험체",
+    "isBoss": false
+  },
+  "2300626": {
+    "name": "냉혹한 기술자",
+    "isBoss": false
+  },
+  "2300627": {
+    "name": "광기 어린 연구원",
+    "isBoss": false
+  },
+  "2300628": {
+    "name": "악랄한 해부학자",
+    "isBoss": false
+  },
+  "2300629": {
+    "name": "무자비한 경호원",
+    "isBoss": false
+  },
+  "2300630": {
+    "name": "변이 실험체",
+    "isBoss": false
+  },
+  "2300631": {
+    "name": "냉혹한 기술자",
+    "isBoss": false
+  },
+  "2300632": {
+    "name": "광기 어린 연구원",
+    "isBoss": false
+  },
+  "2300633": {
+    "name": "악랄한 해부학자",
+    "isBoss": false
+  },
+  "2300634": {
+    "name": "무자비한 경호원",
+    "isBoss": false
+  },
+  "2300635": {
+    "name": "변이 실험체",
+    "isBoss": false
+  },
+  "2300636": {
+    "name": "냉혹한 기술자",
+    "isBoss": false
+  },
+  "2300637": {
+    "name": "광기 어린 연구원",
+    "isBoss": false
+  },
+  "2300638": {
+    "name": "악랄한 해부학자",
+    "isBoss": false
+  },
+  "2300639": {
+    "name": "무자비한 경호원",
+    "isBoss": false
+  },
+  "2300640": {
+    "name": "변이 실험체",
     "isBoss": false
   },
   "2300701": {
@@ -10294,6 +10758,75 @@
   },
   "2301736": {
     "name": "None",
+    "isBoss": false
+  },
+  "2301748": {
+    "name": "오만의 아티엘",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "정복",
+    "dungeonId": 600162
+  },
+  "2301749": {
+    "name": "연구소장 자일러스",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "정복",
+    "dungeonId": 600162
+  },
+  "2301750": {
+    "name": "감독관 그롬카스",
+    "isBoss": true,
+    "category": "격돌",
+    "tier": "정복",
+    "dungeonId": 600162
+  },
+  "2301751": {
+    "name": "실험체 혼종",
+    "isBoss": false
+  },
+  "2301752": {
+    "name": "레파르단 경비대장",
+    "isBoss": false
+  },
+  "2301753": {
+    "name": "레파르단 경비대원",
+    "isBoss": false
+  },
+  "2301754": {
+    "name": "기지 연구원",
+    "isBoss": false
+  },
+  "2301755": {
+    "name": "레파르단 수석 경비대원",
+    "isBoss": false
+  },
+  "2301756": {
+    "name": "레파르단 경비대원",
+    "isBoss": false
+  },
+  "2301757": {
+    "name": "오염된 슬라임",
+    "isBoss": false
+  },
+  "2301758": {
+    "name": "실험체 변이체",
+    "isBoss": false
+  },
+  "2301759": {
+    "name": "실험체 포식자",
+    "isBoss": false
+  },
+  "2301760": {
+    "name": "오염된 영혼 매듭기",
+    "isBoss": false
+  },
+  "2301761": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2301762": {
+    "name": "오드 연구실 레이저",
     "isBoss": false
   },
   "2310101": {
@@ -17570,6 +18103,11 @@
   "2400034": {
     "name": "볼드릭의 부하",
     "isBoss": false
+  },
+  "2400035": {
+    "name": "근접 훈련용 허수아비",
+    "isBoss": true,
+    "isDummy": true
   },
   "2400051": {
     "name": "굶주린 망자",
@@ -32076,15 +32614,15 @@
     "isBoss": false
   },
   "2921298": {
-    "name": "아티엘",
+    "name": "오만의 아티엘",
     "isBoss": true
   },
   "2921299": {
-    "name": "아티엘",
+    "name": "오만의 아티엘",
     "isBoss": true
   },
   "2921300": {
-    "name": "아티엘",
+    "name": "오만의 아티엘",
     "isBoss": false
   },
   "2921315": {
@@ -32099,12 +32637,68 @@
     "name": "축전핵",
     "isBoss": false
   },
+  "2921356": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2921357": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
   "2921382": {
     "name": "포효",
     "isBoss": false
   },
+  "2921400": {
+    "name": "피실험체 저격",
+    "isBoss": true
+  },
+  "2921401": {
+    "name": "피실험체 저격",
+    "isBoss": true
+  },
+  "2921402": {
+    "name": "화염탄 폭격",
+    "isBoss": true
+  },
   "2921409": {
     "name": "오디움 광석",
+    "isBoss": false
+  },
+  "2921411": {
+    "name": "None",
+    "isBoss": false
+  },
+  "2921418": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": false
+  },
+  "2921425": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": true
+  },
+  "2921426": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": true
+  },
+  "2921427": {
+    "name": "바크론의 가시속박",
+    "isBoss": true
+  },
+  "2921428": {
+    "name": "바크론의 가시속박",
+    "isBoss": true
+  },
+  "2921429": {
+    "name": "바크론의 가시덩굴",
+    "isBoss": true
+  },
+  "2921430": {
+    "name": "바크론의 가시속박",
+    "isBoss": true
+  },
+  "2921511": {
+    "name": "오만의 아티엘",
     "isBoss": false
   },
   "2980000": {

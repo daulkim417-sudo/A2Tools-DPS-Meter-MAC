@@ -10,6 +10,104 @@
   const { listen } = window.__TAURI__.event;
   const { open: shellOpen } = window.__TAURI__.opener;
 
+  // Three windows share this bundle: the game overlay (label "main"), the
+  // Details view ("details") which the user can park on a second monitor, and
+  // Settings ("settings"). Which one we are is needed synchronously, before
+  // anything else initialises.
+  //
+  // __A2_VIEW__ is injected by the window's initialization_script and runs
+  // before any page script. getCurrentWindow().label agrees with it and is kept
+  // as a fallback, but the injected value is preferred because it does not
+  // depend on the Tauri JS API being present: a window missing from
+  // capabilities/default.json gets no API injected at all, and the fallback
+  // would then throw rather than answer.
+  let viewMode = "main";
+  try {
+    const injected = window.__A2_VIEW__;
+    const fromUrl = new URLSearchParams(window.location.search).get("view");
+    // Per-fight windows are labelled details-<id>, so the label is only a
+    // fallback for the singletons; the injected value is what identifies them.
+    const label = window.__TAURI__?.window?.getCurrentWindow?.()?.label;
+    const candidate = injected || fromUrl || label;
+    if (candidate === "details" || candidate === "settings" || candidate === "history") {
+      viewMode = candidate;
+    }
+  } catch {}
+  window.A2_VIEW = viewMode;
+  if (viewMode === "details") {
+    document.documentElement.classList.add("detailsWindow");
+  } else if (viewMode === "settings") {
+    document.documentElement.classList.add("settingsWindow");
+  } else if (viewMode === "history") {
+    document.documentElement.classList.add("historyWindow");
+  }
+
+  // Tool-window bootstrap. This runs regardless of whether app startup
+  // succeeds, so a failure in core.js can never leave a window the user can see
+  // but not use.
+  if (viewMode !== "main") {
+    // Show this window's panel here rather than relying on core.js. Its start()
+    // does a lot of work and is wrapped in a try/catch, so a single failure in
+    // an unrelated part of it used to leave the tool window blank.
+    const PANEL_FOR_VIEW = {
+      settings: [".settingsPanel", "isOpen"],
+      history: [".historyPanel", "open"],
+      details: [".detailsPanel", "open"],
+    };
+    const showPanel = () => {
+      const [sel, cls] = PANEL_FOR_VIEW[viewMode] || PANEL_FOR_VIEW.details;
+      document.querySelector(sel)?.classList.add(cls);
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showPanel, { once: true });
+    } else {
+      showPanel();
+    }
+
+    // A blank tool window is impossible to diagnose from the outside, so make
+    // startup failures visible in the window itself.
+    window.addEventListener("error", (event) => {
+      try {
+        let bar = document.querySelector(".toolWindowError");
+        if (!bar) {
+          bar = document.createElement("div");
+          bar.className = "toolWindowError";
+          bar.style.cssText =
+            "position:fixed;left:0;right:0;bottom:0;z-index:99999;padding:8px 12px;" +
+            "background:#4a1220;color:#ffd9df;font:12px/1.4 ui-monospace,Consolas,monospace;" +
+            "white-space:pre-wrap;max-height:40vh;overflow:auto;border-top:1px solid #ff5f7a";
+          document.body.appendChild(bar);
+        }
+        bar.textContent += `${event.message}
+    at ${event.filename}:${event.lineno}:${event.colno}
+`;
+      } catch {}
+    });
+
+    // Tool windows are now built visible (a hidden WebView2 window may never
+    // load its content, so a page-driven reveal deadlocked). show() is kept as
+    // a no-op safety net; setFocus() is the part that still does work, and it
+    // must be called from the window's own webview — the same call from a
+    // spawned task on the Rust side silently did nothing.
+    const reveal = () => {
+      try {
+        const w = window.__TAURI__.window.getCurrentWindow();
+        w.show();
+        w.setFocus();
+      } catch (e) {
+        console.error("[A2Tools] reveal failed", e);
+      }
+    };
+    const scheduleReveal = () => requestAnimationFrame(() => requestAnimationFrame(reveal));
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", scheduleReveal, { once: true });
+    } else {
+      scheduleReveal();
+    }
+    // Belt and braces if rAF never fires (window fully occluded at creation).
+    setTimeout(reveal, 1200);
+  }
+
   // --- Cached state ---
   let settingsCache = {};
   let settingsLoaded = false;
@@ -58,6 +156,18 @@
 
   listen("capture-status-changed", (event) => {
     cachedCaptureStatus = event.payload;
+  });
+
+  // Settings live in their own window, so a change there has to reach the meter.
+  // Refresh the local cache and hand the app the key so it can re-apply just
+  // that option — see applyRemoteSettingChange() in core.js.
+  listen("setting-changed", (event) => {
+    const key = event?.payload?.key;
+    const value = event?.payload?.value;
+    if (typeof key !== "string") return;
+    settingsCache[key] = String(value);
+    try { localStorage.setItem(key, String(value)); } catch {}
+    window._dpsApp?.applyRemoteSettingChange?.(key, String(value));
   });
 
   listen("npcap-missing", () => {
@@ -139,6 +249,61 @@
 
   // ===== window.javaBridge — called by various JS modules =====
   window.javaBridge = {
+    // --- Details window (second monitor) ---
+    listMonitors() {
+      return invoke("list_monitors").catch(() => []);
+    },
+    openDetailsWindow(monitorIndex) {
+      return invoke("open_details_window", { monitorIndex: Number(monitorIndex) || 0 });
+    },
+    closeDetailsWindow() {
+      return invoke("close_details_window").catch(() => {});
+    },
+    // Details is one surface. The overlay never opens the panel inside itself —
+    // it describes what to show and the standalone window (created on demand)
+    // renders it. Rejections are surfaced so core.js can fall back in-overlay.
+    requestDetailsView(payload) {
+      return invoke("request_details_view", { payload: payload || {} });
+    },
+    takePendingDetailsRequest() {
+      // No label argument — the backend reads it from the calling window, so a
+      // window can only ever claim the request that was parked for it.
+      return invoke("take_pending_details_request").catch(() => null);
+    },
+    closeToolWindow() {
+      return invoke("close_tool_window").catch(() => {});
+    },
+    detailsWindowReady() {
+      try {
+        const w = window.__TAURI__.window.getCurrentWindow();
+        w.show();
+        w.setFocus();
+      } catch (e) {
+        console.error("[A2Tools] revealSelf failed", e);
+      }
+      return invoke("details_window_ready").catch(() => {});
+    },
+    openSettingsWindow() {
+      return invoke("open_settings_window").catch((e) => console.error("[A2Tools] openSettingsWindow", e));
+    },
+    closeSettingsWindow() {
+      return invoke("close_settings_window").catch(() => {});
+    },
+    toolWindowReady(label) {
+      // Reveal from the window's own webview thread. Calling show() on the Rust
+      // side from a spawned task did not take effect — the window stayed created
+      // but unmapped — so the window shows itself and the backend call is only
+      // a fallback for focus.
+      try {
+        const w = window.__TAURI__.window.getCurrentWindow();
+        w.show();
+        w.setFocus();
+      } catch (e) {
+        console.error("[A2Tools] revealSelf failed", e);
+      }
+      return invoke("tool_window_ready", { label: String(label) }).catch(() => {});
+    },
+
     // --- Settings ---
     getSetting(key) {
       return settingsCache[key] ?? localStorage.getItem(key);
@@ -348,6 +513,16 @@
       return "[]";
     },
 
+    // Await the cache actually being filled. getFightHistory() is synchronous
+    // and answers from window._cachedFightHistory, which a prefetch populates
+    // asynchronously — so a window created in order to show History renders
+    // before its own prefetch lands and gets an empty list.
+    refreshFightHistory() {
+      return invoke("get_fight_history")
+        .then((h) => { window._cachedFightHistory = h; return true; })
+        .catch(() => false);
+    },
+
     getFightDetails(id) {
       // Async — returns a promise
       return invoke("load_fight", { id }).then((r) => JSON.stringify(r)).catch(() => null);
@@ -442,6 +617,10 @@
 
   const updateWindowSize = () => {
     if (resizeActive) return; // Don't fight the user while they're resizing
+    // Tool windows own their own geometry (and remember it). The overlay's
+    // auto-sizing would otherwise shrink them to meter dimensions.
+    if (window.A2_VIEW !== "main") return;
+
     const fullPanel = !!(
       document.querySelector(".settingsPanel.isOpen") ||
       document.querySelector(".detailsPanel.open") ||
@@ -457,8 +636,14 @@
     if (meter) {
       contentW = Math.ceil(meter.offsetWidth) + 16;
       const meterH = Math.max(meter.offsetHeight, meter.scrollHeight);
-      const ping = document.querySelector(".pingDisplay");
-      const pingH = ping ? ping.offsetHeight + 8 : 0;
+      // In the beta UI the ping sits inside the footer row, so it is already
+      // part of offsetHeight. The legacy skin hangs it below the window, where
+      // it still needs its own allowance.
+      let pingH = 0;
+      if (document.body.classList.contains("legacyUi")) {
+        const ping = document.querySelector(".pingDisplay");
+        pingH = ping ? ping.offsetHeight + 8 : 0;
+      }
       contentH = Math.ceil(meterH + pingH) + 10;
     }
 

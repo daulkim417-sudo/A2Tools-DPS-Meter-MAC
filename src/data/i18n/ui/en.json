@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "DPS METER",
+    "title": "A2Tools DPS Meter",
     "display": {
       "dps": "DPS",
       "total": "DMG",
@@ -59,6 +59,12 @@
       "doubleTooltip": "Double %",
       "back": "Back",
       "backTooltip": "Back Attack %",
+      "frontal": "Front",
+      "frontalTooltip": "Frontal %",
+      "powershard": "PS",
+      "powershardTooltip": "PowerShard %",
+      "regen": "Reg",
+      "regenTooltip": "Life-steal Regen",
       "multiHit": "MH%",
       "multiHitTooltip": "Multi-hit %",
       "multiHitDamage": "MHD",
@@ -122,8 +128,34 @@
     "characterNamePlaceholder": "Enter your character name",
     "pinMeToTop": "Always show me at the top",
     "slimMode": "Slim mode",
+    "meterLayout": {
+      "label": "Meter layout",
+      "beta": "Beta UI",
+      "betaSlim": "Beta Slim",
+      "classic": "Classic UI",
+      "classicSlim": "Classic Slim"
+    },
+    "detailsMonitor": {
+      "label": "Show Details on monitor",
+      "off": "Off",
+      "primary": "primary",
+      "missing": "That display is not connected.",
+      "single": "Only one display detected — connect a second screen to use this.",
+      "badge": "Monitor",
+      "side": {
+        "left": "left",
+        "right": "right",
+        "above": "above",
+        "below": "below"
+      }
+    },
     "appearance": "Appearance",
     "connection": "Connection",
+    "diagnostics": "Diagnostics",
+    "device": {
+      "label": "Capture device",
+      "autoDetect": "Auto-detect"
+    },
     "advanced": "Advanced",
     "bossLogs": "Enable per-boss logs",
     "saveRawPackets": "Enable packet logging",
@@ -135,6 +167,7 @@
     },
     "showPing": "Show ping",
     "showTotalDps": "Show total DPS/DMG",
+    "roundDps": "Round DPS",
     "autoHideMeter": "Auto-hide meter",
     "showSuspendBtn": "Show suspend button",
     "playerLimit": {
@@ -167,6 +200,9 @@
     },
     "meterOpacity": {
       "label": "Meter bar opacity"
+    },
+    "bossNameSize": {
+      "label": "Target name size"
     },
     "targetWindow": {
       "label": "Target time range",

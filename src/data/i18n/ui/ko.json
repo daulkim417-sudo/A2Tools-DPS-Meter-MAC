@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "DPS 미터",
+    "title": "A2Tools DPS Meter",
     "display": {
       "dps": "DPS",
       "total": "DMG",
@@ -59,6 +59,12 @@
       "doubleTooltip": "더블 %",
       "back": "백",
       "backTooltip": "백어택 %",
+      "frontal": "정면",
+      "frontalTooltip": "정면 공격 %",
+      "powershard": "샤드",
+      "powershardTooltip": "파워샤드 %",
+      "regen": "회복",
+      "regenTooltip": "흡혈 회복량",
       "multiHit": "MH%",
       "multiHitTooltip": "다중타 %",
       "multiHitDamage": "MHD",
@@ -120,8 +126,34 @@
     "characterNamePlaceholder": "캐릭터 이름 입력",
     "pinMeToTop": "내 캐릭터를 맨 위에 고정",
     "slimMode": "슬림 모드",
+    "meterLayout": {
+      "label": "미터 레이아웃",
+      "beta": "베타 UI",
+      "betaSlim": "베타 슬림",
+      "classic": "클래식 UI",
+      "classicSlim": "클래식 슬림"
+    },
+    "detailsMonitor": {
+      "label": "상세 정보를 표시할 모니터",
+      "off": "끕",
+      "primary": "기본",
+      "missing": "해당 디스플레이가 연결되어 있지 않습니다.",
+      "single": "디스플레이가 하나만 감지되었습니다 — 두 번째 화면을 연결하세요.",
+      "badge": "모니터",
+      "side": {
+        "left": "왼쪽",
+        "right": "오른쪽",
+        "above": "위",
+        "below": "아래"
+      }
+    },
     "appearance": "외관",
     "connection": "연결",
+    "diagnostics": "진단",
+    "device": {
+      "label": "캡처 장치",
+      "autoDetect": "자동 감지"
+    },
     "advanced": "고급",
     "bossLogs": "보스별 로그 활성화",
     "saveRawPackets": "패킷 로깅 활성화",
@@ -133,6 +165,7 @@
     },
     "showPing": "핑 표시",
     "showTotalDps": "총 DPS/DMG 표시",
+    "roundDps": "DPS 반올림",
     "autoHideMeter": "미터 자동 숨기기",
     "showSuspendBtn": "일시정지 버튼 표시",
     "playerLimit": {
@@ -165,6 +198,9 @@
     },
     "meterOpacity": {
       "label": "미터 바 불투명도"
+    },
+    "bossNameSize": {
+      "label": "대상 이름 크기"
     },
     "targetWindow": {
       "label": "대상 시간 범위",

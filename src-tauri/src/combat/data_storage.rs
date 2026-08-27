@@ -119,6 +119,23 @@ impl SkillCombatData {
     }
 }
 
+/// One entry of the party roster packet (`0x9702`). Keyed by character name,
+/// because the roster carries the account-level `dbid` rather than the
+/// session-scoped entity id — the name is the only field that joins it to the
+/// in-world entities the meter tracks.
+#[derive(Debug, Clone, Default)]
+pub struct PartyMember {
+    /// 1-based party slot.
+    pub slot: u8,
+    pub level: i32,
+    /// Equipment item level ("gear score").
+    pub gear_score: i32,
+    /// Combat power — the number the game shows on the character sheet.
+    pub combat_power: i64,
+    /// World/server id (the bracket tag next to a cross-server player's name).
+    pub server_id: u16,
+}
+
 #[derive(Debug, Clone)]
 pub struct ActorCombatData {
     pub total_damage: i64,
@@ -215,6 +232,23 @@ struct Inner {
     /// entity — it must not be flagged as a known player, and is a candidate for
     /// attribution to the same-class player.
     summon_spawn_ids: HashSet<i32>,
+    /// Entity ids below the usual `>= 100` sanity floor that a spawn or identity
+    /// record has proven real. The damage parser uses `>= 100` as a resync gate
+    /// while walking varints, which silently discarded every hit from players
+    /// whose session entity id happened to be tiny (observed live: an
+    /// Elementalist at id 48 lost 939 hits plus all 114 of their pets). Ids
+    /// confirmed here are allowed through that gate; unconfirmed low values are
+    /// still rejected, so the gate keeps its resync value.
+    low_id_entities: HashSet<i32>,
+    /// Party roster from the `0x9702` packet, keyed by character name.
+    party_members: HashMap<String, PartyMember>,
+    /// Power-scalar values observed per actor in its damage records. A summon
+    /// inherits its owner's, so this links the two when no spawn packet (and
+    /// therefore no `parent_key`) ever arrives — the case for a Cleric's Divine
+    /// Aura, which the server creates without announcing. A set rather than one
+    /// value because the scalar shifts as buffs come and go, and owner and summon
+    /// are not always in the same buff state at the same instant.
+    actor_power_scalars: HashMap<i32, HashSet<i32>>,
     hostile_target_ids: HashSet<i32>,
     dead_entity_ids: HashSet<i32>,
     /// Boss entity IDs identified from NPC DB boss flags
@@ -246,6 +280,9 @@ impl DataStorage {
                 authoritative_name_ids: HashSet::new(),
                 confirmed_summon_ids: HashSet::new(),
                 summon_spawn_ids: HashSet::new(),
+                low_id_entities: HashSet::new(),
+                party_members: HashMap::new(),
+                actor_power_scalars: HashMap::new(),
                 hostile_target_ids: HashSet::new(),
                 dead_entity_ids: HashSet::new(),
                 boss_entity_ids: HashSet::new(),
@@ -557,6 +594,66 @@ impl DataStorage {
         self.inner.read().summon_spawn_ids.clone()
     }
 
+    /// Confirm that a sub-100 entity id is a real entity (seen in a spawn or an
+    /// identity record), so the damage parser's `>= 100` resync gate lets it
+    /// through. See `Inner::low_id_entities`.
+    pub fn note_low_id_entity(&self, id: i32) {
+        if (1..100).contains(&id) {
+            self.inner.write().low_id_entities.insert(id);
+        }
+    }
+
+    /// True when `id` passes the entity-id sanity gate used while walking damage
+    /// records: anything at or above the usual floor, plus tiny ids the game has
+    /// explicitly announced.
+    pub fn is_plausible_entity_id(&self, id: i32) -> bool {
+        if id >= 100 {
+            return true;
+        }
+        id >= 1 && self.inner.read().low_id_entities.contains(&id)
+    }
+
+    /// Take a party roster from a `0x9702` packet.
+    ///
+    /// `complete` says whether every member the packet declared was decoded. A
+    /// complete roster replaces what we had, so a member who left the party
+    /// disappears; a partial one only updates the members it did decode, so a
+    /// record this parser trips over costs that member a refresh rather than
+    /// costing the whole party their combat power.
+    pub fn set_party_roster(&self, members: Vec<(String, PartyMember)>, complete: bool) {
+        if members.is_empty() {
+            return;
+        }
+        let mut inner = self.inner.write();
+        if complete {
+            inner.party_members.clear();
+        }
+        for (name, member) in members {
+            inner.party_members.insert(name, member);
+        }
+    }
+
+    pub fn get_party_members(&self) -> HashMap<String, PartyMember> {
+        self.inner.read().party_members.clone()
+    }
+
+    /// Record a power-scalar reading for an actor. See `Inner::actor_power_scalars`.
+    pub fn note_power_scalar(&self, actor_id: i32, scalar: i32) {
+        if actor_id <= 0 || scalar <= 0 {
+            return;
+        }
+        let mut inner = self.inner.write();
+        let set = inner.actor_power_scalars.entry(actor_id).or_default();
+        // Bounded: buff churn produces a handful of distinct values, not many.
+        if set.len() < 16 {
+            set.insert(scalar);
+        }
+    }
+
+    pub fn get_power_scalars(&self) -> HashMap<i32, HashSet<i32>> {
+        self.inner.read().actor_power_scalars.clone()
+    }
+
     pub fn register_confirmed_summon_by_id(&self, summon_id: i32, owner_id: i32) {
         tracing::trace!("Summon confirmed (5F 00): {} owned by {}", summon_id, owner_id);
         let mut inner = self.inner.write();
@@ -604,14 +701,21 @@ impl DataStorage {
         append_nickname_inner(&mut inner, uid, nickname);
     }
 
-    /// Bind a nickname from an AUTHORITATIVE source (a 45/44 36 player spawn or
-    /// the account char-list). Not gated — the id↔name pairing is trusted — and
-    /// marks the id so fuzzy parsers can't later steal the name. A stale/junk
-    /// prior binding of this name is evicted, reclaiming the name to the real id.
+    /// Bind a nickname from an AUTHORITATIVE source (a masked identity record, a
+    /// 45/44 36 player spawn, or the account char-list). Not gated — the id↔name
+    /// pairing is stated by the protocol — and marks the id so fuzzy parsers
+    /// can't later steal the name. A stale/junk prior binding of this name is
+    /// evicted, reclaiming the name to the real id.
+    ///
+    /// Applied with `force`, so the length/script heuristics that protect against
+    /// bad fuzzy scan results cannot reject a real name. Those heuristics cost a
+    /// live capture its Ranger: a fuzzy parser had bound the LEGION name
+    /// "BaroqueWorks" to that player, and the "don't replace a longer name with a
+    /// short ASCII one" rule then refused their actual name, "M7".
     pub fn append_nickname_authoritative(&self, uid: i32, nickname: &str) {
         let mut inner = self.inner.write();
         inner.authoritative_name_ids.insert(uid);
-        append_nickname_inner(&mut inner, uid, nickname);
+        append_nickname_inner_with_force(&mut inner, uid, nickname, true);
     }
 
     pub fn set_permanent_nickname(&self, uid: i32, nickname: &str) {
@@ -710,7 +814,7 @@ impl DataStorage {
     /// Record a heal tick done by `actor_id` with `skill_code` (is_hot marks a HoT).
     /// Keyed by the healer so "healing done" can be shown per player. Self-heals count.
     pub fn append_heal(&self, actor_id: i32, skill_code: i32, amount: i64, is_hot: bool) {
-        if amount <= 0 || actor_id < 100 {
+        if amount <= 0 || !self.is_plausible_entity_id(actor_id) {
             return;
         }
         let mut inner = self.inner.write();
@@ -805,6 +909,7 @@ impl DataStorage {
         inner.known_player_ids.clear();
         inner.confirmed_summon_ids.clear();
         inner.summon_spawn_ids.clear();
+        inner.actor_power_scalars.clear();
         inner.hostile_target_ids.clear();
         inner.dead_entity_ids.clear();
         inner.has_boss_in_segment = false;
@@ -866,6 +971,16 @@ fn fuzzy_bind_allowed(inner: &Inner, uid: i32, nickname: &str) -> bool {
         if id != uid && name == nickname && inner.authoritative_name_ids.contains(&id) {
             return false;
         }
+    }
+    // (3) Don't let a fuzzy source rename an id the protocol already named. The
+    // spawn packets carry the owner's LEGION name a few fields past their
+    // character name, and the loose scanners happily bind that to the player —
+    // which is how a live capture ended up showing a legion ("BaroqueWorks")
+    // where a Ranger's name should have been.
+    if inner.authoritative_name_ids.contains(&uid)
+        && inner.nickname_storage.get(&uid).is_some_and(|n| n != nickname)
+    {
+        return false;
     }
     true
 }
